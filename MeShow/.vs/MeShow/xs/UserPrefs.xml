@@ -1,6 +1,11 @@
 ﻿<Properties StartupConfiguration="{20B15C20-7C39-43BC-9098-95CF55D9A13F}|Default">
   <MonoDevelop.Ide.ItemProperties.MeShow.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC80BB87-8B0B-4ABA-ABC3-5FAA1F41DEA5" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MeShow/MeShow/Views/ItemsPage.xaml">
+    <Files>
+      <File FileName="MeShow/MeShow/Views/MainPage.xaml" Line="13" Column="63" />
+      <File FileName="MeShow/MeShow/Views/ItemsPage.xaml" Line="46" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
