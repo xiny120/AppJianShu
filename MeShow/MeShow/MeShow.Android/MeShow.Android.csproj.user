@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>my_device8_1</SelectedDevice>
     <AndroidDesignerPreferredTheme>Theme.DeviceDefault.NoActionBar.Fullscreen</AndroidDesignerPreferredTheme>
+    <DefaultDevice>my_device8_1</DefaultDevice>
   </PropertyGroup>
 </Project>
