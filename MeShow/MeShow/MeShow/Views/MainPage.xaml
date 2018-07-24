@@ -10,7 +10,7 @@
             android:TabbedPage.BarSelectedItemColor="White"        
             x:Class="MeShow.Views.MainPage">
     <TabbedPage.Children>
-        <NavigationPage Title="{Binding Items[0].tabItems[0].Text}">
+        <NavigationPage Title="{Binding Items[0].tabItems[0].Text}" >
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="tab_feed.png"/>
