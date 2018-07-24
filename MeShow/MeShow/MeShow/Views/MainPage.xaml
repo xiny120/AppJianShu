@@ -2,16 +2,19 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:MeShow.Views"
+            BarBackgroundColor="#2196F3"
+            BarTextColor="White"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
-            android:TabbedPage.BarItemColor="#666666"
-            android:TabbedPage.BarSelectedItemColor="Black"            
+            android:TabbedPage.BarItemColor="#66FFFFFF"
+            android:TabbedPage.BarSelectedItemColor="White"        
             x:Class="MeShow.Views.MainPage">
     <TabbedPage.Children>
-        <NavigationPage Title="米秀">
+        <NavigationPage Title="{Binding Items[0].tabItems[0].Text}">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="tab_feed.png"/>
+                    <On Platform="Android" Value="Icon.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -30,18 +33,7 @@
             </x:Arguments>
         </NavigationPage>  
         
-        <NavigationPage Title="群组">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:AboutPage />
-            </x:Arguments>
-        </NavigationPage>
-
-        
+       
         
         <NavigationPage Title="我的">
             <NavigationPage.Icon>
