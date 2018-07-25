@@ -7,7 +7,7 @@
             BarTextColor="White"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
-            android:TabbedPage.BarItemColor="#66FFFFFF"
+            android:TabbedPage.BarItemColor="#FFFFFF"
             android:TabbedPage.BarSelectedItemColor="White"        
             x:Class="MeShow.Views.MainPage">
     <TabbedPage.Children>

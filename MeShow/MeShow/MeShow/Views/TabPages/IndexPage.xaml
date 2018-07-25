@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="首页"
@@ -11,11 +11,26 @@
     </ContentPage.Icon>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout x:Name="topItem" BackgroundColor="#aaf36e21" HeightRequest="150">
-                <StackLayout HeightRequest="10">
+            <StackLayout x:Name="topItem" BackgroundColor="#aaf36e21" HeightRequest="210">
+                <StackLayout x:Name="liuhai" HeightRequest="32" >
                     
                 </StackLayout>
                 <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition Height="100"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="唐能通：上证指数将来会涨到哪里呢？" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                        <Label HorizontalTextAlignment="End" Text="2016-12-12" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="Small" />
+                        <BoxView Grid.Row="2" Grid.Column="0"  BackgroundColor="Red" />
+                        <Label Text="今日早盘，上证指数开盘大涨30点！消息面，央行，财政部提到宽松经济，应对美国关税制裁。" FontSize="Default" Grid.Row="2" Grid.Column="1"  />
+                    </Grid>
                     
                 </StackLayout>
                 

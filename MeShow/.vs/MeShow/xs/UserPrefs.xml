@@ -1,9 +1,10 @@
 ﻿<Properties StartupConfiguration="{20B15C20-7C39-43BC-9098-95CF55D9A13F}|Default">
   <MonoDevelop.Ide.ItemProperties.MeShow.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC80BB87-8B0B-4ABA-ABC3-5FAA1F41DEA5" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MeShow/MeShow/Views/ItemsPage.xaml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MeShow/MeShow/Views/TabPages/IndexPage.xaml">
     <Files>
-      <File FileName="MeShow/MeShow/Views/MainPage.xaml" Line="33" Column="34" />
-      <File FileName="MeShow/MeShow/Views/ItemsPage.xaml" Line="19" Column="46" />
+      <File FileName="MeShow/MeShow/Views/MainPage.xaml" Line="10" Column="47" />
+      <File FileName="MeShow/MeShow/Views/ItemsPage.xaml" Line="37" Column="15" />
+      <File FileName="MeShow/MeShow/Views/TabPages/IndexPage.xaml" Line="14" Column="88" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
