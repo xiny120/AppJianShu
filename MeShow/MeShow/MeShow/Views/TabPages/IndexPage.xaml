@@ -15,7 +15,9 @@
                 <StackLayout HeightRequest="10">
                     
                 </StackLayout>
-                <StackLayout></StackLayout>
+                <StackLayout>
+                    
+                </StackLayout>
                 
             </StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
