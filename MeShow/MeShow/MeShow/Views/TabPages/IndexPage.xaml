@@ -11,33 +11,62 @@
     </ContentPage.Icon>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout x:Name="topItem" BackgroundColor="#aaf36e21" HeightRequest="210">
-                <StackLayout x:Name="liuhai" HeightRequest="32" >
+            <StackLayout x:Name="topItem" HeightRequest="172" Spacing="0">
+                <StackLayout x:Name="liuhai" HeightRequest="32"  >
                     
                 </StackLayout>
-                <StackLayout>
+                <StackLayout Margin="8,0,8,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="20"></RowDefinition>
-                            <RowDefinition Height="100"></RowDefinition>
+                            <RowDefinition Height="70"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="唐能通：上证指数将来会涨到哪里呢？" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-                        <Label HorizontalTextAlignment="End" Text="2016-12-12" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="Small" />
-                        <BoxView Grid.Row="2" Grid.Column="0"  BackgroundColor="Red" />
+                        <Label VerticalTextAlignment="Center" FontSize="Medium" Text="唐能通：上证指数将来会涨到哪里呢？" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                        <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Image VerticalOptions="Center" Source="my.png" HeightRequest="14" />
+                            <Label VerticalOptions="Center" Margin="0,0,4,0" Text="唐能通短线是银" FontSize="Micro" />
+                            <Image VerticalOptions="Center" Source="zan.png" HeightRequest="14" />
+                            <Label VerticalOptions="Center" Margin="0,0,4,0" Text="101" FontSize="Micro" />
+                            <Label VerticalOptions="Center" Margin="4,0,4,0" Text="2016-12-12" FontSize="Micro" />
+                        </StackLayout>
+                        <StackLayout  Grid.Row="2" Grid.Column="0" BackgroundColor="Red">
+                            <Image  Source="http://www.gwgz.com/tnt8/tdx7_01.jpg" />
+                        </StackLayout>
                         <Label Text="今日早盘，上证指数开盘大涨30点！消息面，央行，财政部提到宽松经济，应对美国关税制裁。" FontSize="Default" Grid.Row="2" Grid.Column="1"  />
                     </Grid>
                     
                 </StackLayout>
-                
+                <BoxView Margin="4,4,4,4" BackgroundColor="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+                <StackLayout Margin="8,0,8,0">
+                    <ListView x:Name="ItemsListView" 
+                              ItemsSource="{Binding Items}"
+                              VerticalOptions="FillAndExpand"
+                              HasUnevenRows="true"
+                              RefreshCommand="{Binding LoadItemsCommand}"
+                              IsPullToRefreshEnabled="true"
+                              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                              CachingStrategy="RecycleElement"
+                              ItemSelected="OnItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Padding="10">
+                                        <Label Text="{Binding Text}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                                        <Label Text="{Binding Description}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
             </StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
