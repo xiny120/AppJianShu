@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-func Account(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request) {
 
 	t, err := template.ParseFiles(
-		"wwwroot/tpl/Register.html",
+		"wwwroot/tpl/Index.html",
 		"wwwroot/tpl/public/header.html",
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
@@ -20,7 +20,7 @@ func Account(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Title string
 	}{
-		Title: "load common template",
+		Title: "首页",
 	}
 
 	err = t.Execute(w, data)
