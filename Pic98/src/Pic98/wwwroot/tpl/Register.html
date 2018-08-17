@@ -11,23 +11,37 @@
 		
 		<div class="row">
 		    <div class="col-md-5">
-				<form method="post" action="/Identity/Account/Register">
+				<form class="needs-validation" novalidate method="post" action="/Identity/Account/Register" onsubmit="return form_submit()">
 					<h4>注册新用户，成为本站会员。</h4>
 					<hr />
 					<div class="form-group">
-					  <label for="exampleInputEmail1">Email address</label>
-					  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-					  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					  <label for="exampleInputEmail1">您要注册的用户名：</label>
+					  <input type="text" class="form-control" id="name" onchange="name_onchange()" aria-describedby="emailHelp" placeholder="" required>
+				        <div class="invalid-feedback">
+				          请填写一个您中意得用户名。
+				        </div>					
+					  <small id="emailHelp" class="form-text text-muted">用户名为字母(a-z,A-Z)开头包含数字(0-9)和_的组合.</small>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">Password</label>
-					  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					  <label for="pwd1">密码：</label>
+					  <input type="password" class="form-control" id="pwd1" placeholder="输入密码" required>
+						<div class="invalid-feedback">
+				          密码不能为空。
+				        </div>	
 					</div>
-					<div class="form-group form-check">
+					<div class="form-group">
+					  <label for="pwd2">确认密码：</label>
+					  <input type="password" class="form-control" id="pwd2" placeholder="再输入一次密码" oninput="pwd2_oninput()" required>
+						<div class="invalid-feedback">
+				          确认密码输入不一致！
+				        </div>	
+					
+					</div>					
+					<div class="form-group form-check" style="display:none;">
 					  <input type="checkbox" class="form-check-input" id="exampleCheck1">
 					  <label class="form-check-label" for="exampleCheck1">Check me out</label>
 					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary">确认注册</button>
 				</form>			
 			
 					    
@@ -42,6 +56,49 @@
  
     {{template "footer"}}
 	<script>
+		function name_onchange(){
+			var jqxhr = $.ajax( "/Account/Register/Id",{'name': 'dddd'} )
+			  .done(function(data,status,xhr) {
+			    alert(data)
+			  })
+			  .fail(function() {
+			    alert( "error" );
+			  })
+			  .always(function() {
+			    alert( "complete" );
+			  });
+			 
+			// Perform other work here ...
+			 
+			// Set another completion function for the request above
+			jqxhr.always(function() {
+			  alert( "second complete" );
+			});			
+						
+		}
+	
+		function pwd2_oninput(){
+			if($("#pwd1").val() != $("#pwd2").val()){ 
+				$("#pwd2").get(0).setCustomValidity("密码不一致");
+				
+			}
+			else{
+				$("#pwd2").get(0).setCustomValidity("");
+			}
+			$(".needs-validation").addClass('was-validated');
+			return false;
+			
+		}
+		function form_submit(){
+			if($("#pwd1").val() != $("#pwd2").val()){ 
+				$("#pwd2").get(0).setCustomValidity("密码不一致");
+				return false;
+			}
+			else{
+				$("#pwd2").get(0).setCustomValidity("");
+			}			
+			return false;
+		}
 		function go01(){
 			$("label#mobile").text("手机号："+$("input#inputEmail3").val()+ " 请获取并输入密码！" );
 			$("div#r_div_01").hide();
@@ -70,6 +127,27 @@
 			});			
 			
 		}
+		
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+	
+
+
+	
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();		
+		
 	</script>
 </body>
 </html>

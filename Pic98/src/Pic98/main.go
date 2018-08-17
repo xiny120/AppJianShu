@@ -22,6 +22,8 @@ func main() {
 	sMux.Handle("/Account/", rega)
 	regh := http.HandlerFunc(Handler.Register)
 	sMux.Handle("/Account/Register/", regh)
+	regid := http.HandlerFunc(Handler.Id)
+	sMux.Handle("/Account/Register/Id", regid)
 	regLogin := http.HandlerFunc(Handler.Login)
 	sMux.Handle("/Account/Login/", regLogin)
 	regi := http.HandlerFunc(Handler.Image)
