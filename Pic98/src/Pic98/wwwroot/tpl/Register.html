@@ -57,8 +57,12 @@
     {{template "footer"}}
 	<script>
 		function name_onchange(){
-			var jqxhr = $.ajax( "/Account/Register/Id",{'name': 'dddd'} )
-			  .done(function(data,status,xhr) {
+			var jqxhr = $.ajax({
+			type: "POST", 
+			url: "/Account/Register/Id",
+			data:{name: 'dddd'} 
+			}
+			).done(function(data,status,xhr) {
 			    alert(data)
 			  })
 			  .fail(function() {
