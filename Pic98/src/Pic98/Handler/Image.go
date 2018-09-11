@@ -42,7 +42,7 @@ func Image(w http.ResponseWriter, r *http.Request) {
 }
 
 // 获取表数据
-func Get(db *sql.DB) {
+func Get1(db *sql.DB) {
 	rows, err := db.Query("select * from user;")
 	if err != nil {
 		log.Fatal(err)

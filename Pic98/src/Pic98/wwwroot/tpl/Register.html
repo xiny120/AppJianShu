@@ -60,7 +60,7 @@
 			var jqxhr = $.ajax({
 			type: "POST", 
 			url: "/Account/Register/Id",
-			data:{name: 'dddd'} 
+			data:{name: $("#name").val()} 
 			}
 			).done(function(data,status,xhr) {
 			    alert(data)
@@ -69,14 +69,14 @@
 			    alert( "error" );
 			  })
 			  .always(function() {
-			    alert( "complete" );
+			    //alert( "complete" );
 			  });
 			 
 			// Perform other work here ...
 			 
 			// Set another completion function for the request above
 			jqxhr.always(function() {
-			  alert( "second complete" );
+			  //alert( "second complete" );
 			});			
 						
 		}
