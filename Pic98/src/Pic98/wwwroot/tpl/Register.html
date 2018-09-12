@@ -56,14 +56,21 @@
  
     {{template "footer"}}
 	<script>
+		var nameok = false;
 		function name_onchange(){
 			var jqxhr = $.ajax({
 			type: "POST", 
 			url: "/Account/Register/Id",
-			data:{name: $("#name").val()} 
+			data:{name: $("#name").val()},
 			}
 			).done(function(data,status,xhr) {
-			    alert(data)
+				json = JSON.parse(data);
+			    if(json.data.used == 0){
+					nameok = true;
+					$("#name").get(0).setCustomValidity("");
+				}else{
+					$("#name").get(0).setCustomValidity("密码不一致");
+				}
 			  })
 			  .fail(function() {
 			    alert( "error" );
@@ -100,7 +107,12 @@
 			}
 			else{
 				$("#pwd2").get(0).setCustomValidity("");
-			}			
+			}
+	
+			if(nameok){
+				return true;
+			}
+		
 			return false;
 		}
 		function go01(){
