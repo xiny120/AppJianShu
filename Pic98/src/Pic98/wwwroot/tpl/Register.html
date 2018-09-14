@@ -2,8 +2,6 @@
 {{template "header" .}}
 <body>
 	{{template "nav" .}}
-    
-	
 
     <div class="container body-content">
         
@@ -43,16 +41,9 @@
 					</div>
 					<button type="submit" class="btn btn-primary">确认注册</button>
 				</form>			
-			
-					    
 			</div>
 		</div>
-
-
     </div>
-	
-	
-	
  
     {{template "footer"}}
 	<script>
@@ -60,11 +51,14 @@
 		function name_onchange(){
 			var jqxhr = $.ajax({
 			type: "POST", 
-			url: "/Account/Register/Id",
-			data:{name: $("#name").val()},
+			url: "/Account/Register/Cmd",
+			data:{cmd:"QueryId",name: $("#name").val()},
 			}
 			).done(function(data,status,xhr) {
 				json = JSON.parse(data);
+				if(json.status != 0){
+					alert(json.msg);
+				}
 			    if(json.data.used == 0){
 					nameok = true;
 					$("#name").get(0).setCustomValidity("");
@@ -110,7 +104,23 @@
 			}
 	
 			if(nameok){
-				return true;
+					
+				var jqxhr = $.ajax({
+				type: "POST", 
+				url: "/Account/Register/Cmd",
+				data:{cmd:"Register",name: $("#name").val()},
+				}
+				).done(function(data,status,xhr) {
+					json = JSON.parse(data);
+					if(json.status != 0){
+						alert(json.msg);
+					}
+					alert(json.data.register);
+				  })
+				  .fail(function() {
+				    alert( "error" );
+				  });
+				return false;
 			}
 		
 			return false;
