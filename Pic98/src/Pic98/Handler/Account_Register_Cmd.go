@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/satori/go.uuid"
 )
 
 func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
@@ -22,18 +23,19 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 		} else {
 			cmd := r.FormValue("cmd")
 			if cmd != "" {
+				db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/mysql")
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer db.Close()
 				if cmd == "QueryId" {
 					name := r.FormValue("name")
-					db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/mysql")
-					if err != nil {
-						log.Fatal(err)
-					}
-					defer db.Close()
-					used, err := CheckId(db, name)
+
+					used, _ := Account_Register_Cmd_CheckId(db, name)
 					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"used\":%d}}", used)
 				} else if cmd == "Register" {
-
-					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":%d}}", 1)
+					u1, _ := uuid.NewV4()
+					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":%d %s}}", 1, u1)
 				}
 			} else {
 				result = "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd 参数cmd不能为空！\"}"
@@ -47,7 +49,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 }
 
 // 获取表数据
-func CheckId(db *sql.DB, name string) (int, error) {
+func Account_Register_Cmd_CheckId(db *sql.DB, name string) (int, error) {
 	strsql := fmt.Sprintf("SELECT userguid FROM Pic98.useridentify where userid='%s'", name)
 	log.Println(strsql)
 	rows, err := db.Query(strsql)
@@ -60,4 +62,8 @@ func CheckId(db *sql.DB, name string) (int, error) {
 		}
 	}
 	return 1, err
+}
+
+func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string) (int, error) {
+	return 1, nil
 }
