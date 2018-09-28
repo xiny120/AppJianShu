@@ -34,8 +34,10 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					used, _ := Account_Register_Cmd_CheckId(db, name)
 					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"used\":%d}}", used)
 				} else if cmd == "Register" {
+					name := r.FormValue("name")
+					pwd := r.FormValue("pwd")
 					u1, _ := uuid.NewV4()
-					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":%d %s}}", 1, u1)
+					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":%d %s %s %s}}", 1, u1, name, pwd)
 				}
 			} else {
 				result = "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd 参数cmd不能为空！\"}"

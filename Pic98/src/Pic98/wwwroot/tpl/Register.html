@@ -46,6 +46,7 @@
     </div>
  
     {{template "footer"}}
+	<script src="/Js/md5.js"></script>
 	<script>
 		var nameok = false;
 		function name_onchange(){
@@ -108,7 +109,7 @@
 				var jqxhr = $.ajax({
 				type: "POST", 
 				url: "/Account/Register/Cmd",
-				data:{cmd:"Register",name: $("#name").val()},
+				data:{cmd:"Register",name: $("#name").val(),pwd: hex_md5($("#pwd1").val())},
 				}
 				).done(function(data,status,xhr) {
 					json = JSON.parse(data);
