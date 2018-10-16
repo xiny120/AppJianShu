@@ -56,18 +56,20 @@
 			data:{cmd:"QueryId",name: $("#name").val()},
 			}
 			).done(function(data,status,xhr) {
+				nameok = false;
 				json = JSON.parse(data);
 				if(json.status != 0){
 					alert(json.msg);
 				}
-			    if(json.data.used == 0){
+			    if(json.data.CheckId == 0){
 					nameok = true;
 					$("#name").get(0).setCustomValidity("");
 				}else{
-					$("#name").get(0).setCustomValidity("密码不一致");
+					$("#name").get(0).setCustomValidity("此用户名已经被占用，请选用其他用户名。");
 				}
 			  })
 			  .fail(function() {
+				nameok = false;
 			    alert( "error" );
 			  })
 			  .always(function() {
@@ -105,7 +107,7 @@
 			}
 	
 			if(nameok){
-					
+				nameok = false;	
 				var jqxhr = $.ajax({
 				type: "POST", 
 				url: "/Account/Register/Cmd",
@@ -116,7 +118,12 @@
 					if(json.status != 0){
 						alert(json.msg);
 					}
-					alert(json.data.register);
+					if(json.data.register == ""){
+						nameok = false;
+						alert("注册失败，请检查注册信息！");
+					}else{
+						window.localStorage.setItem("token",json.data.register)
+					}
 				  })
 				  .fail(function() {
 				    alert( "error" );
