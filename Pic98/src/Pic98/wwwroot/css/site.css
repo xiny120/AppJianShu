@@ -68,4 +68,8 @@
 .wrap-6 .flex-inner:last-child .flex-item:first-child,   
 .wrap-6 .flex-inner:last-child .flex-item:nth-child(2) {   
       margin-bottom: 1px;   
-}   
+}
+
+.nav_hidden {
+	display: none;
+}

@@ -28,6 +28,8 @@ func main() {
 	sMux.Handle("/Account/Login/", regLogin)
 	regi := http.HandlerFunc(Handler.Image)
 	sMux.Handle("/Image/", regi)
+	regiv := http.HandlerFunc(Handler.Image_Vip)
+	sMux.Handle("/Image/Vip/", regiv)
 	regj := http.HandlerFunc(Handler.Js)
 	sMux.Handle("/Js/", regj)
 	regc := http.HandlerFunc(Handler.Css)

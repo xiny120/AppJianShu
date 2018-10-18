@@ -122,7 +122,8 @@
 						nameok = false;
 						alert("注册失败，请检查注册信息！");
 					}else{
-						window.localStorage.setItem("token",json.data.register)
+						window.localStorage.setItem("ui",JSON.stringify(json.data.ui))
+						window.location = "/";
 					}
 				  })
 				  .fail(function() {

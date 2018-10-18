@@ -9,25 +9,25 @@ import (
 )
 
 type userinfo struct {
-	online_key        string
-	user_uuid         string
-	un                string
-	idol              bool
-	writer            bool
-	distributor_level int
-	distributor_ref0  int
-	distributor_ref1  int
+	Online_key        string
+	User_uuid         string
+	Un                string
+	Idol              bool
+	Writer            bool
+	Distributor_level int
+	Distributor_ref0  int
+	Distributor_ref1  int
 }
 
 var (
 
 	//sessions := map[string]userinfo{}
-	sessions = make(map[string]userinfo)
+	Sessions = make(map[string]userinfo)
 )
 
 // NewV1 returns UUID based on current timestamp and MAC address.
 func Login(un string, pwd string) (string, error) {
-	ui := userinfo{online_key: ""}
+	ui := userinfo{Online_key: ""}
 	db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
 	if err != nil {
 		log.Fatal(err)
@@ -45,11 +45,11 @@ func Login(un string, pwd string) (string, error) {
 		defer rows.Close()
 		if rows.Next() {
 			ok, _ := uuid.NewV4()
-			ui.online_key = ok.String()
-			ui.un = un
+			ui.Online_key = ok.String()
+			ui.Un = un
 
-			sessions[ui.online_key] = ui
+			Sessions[ui.Online_key] = ui
 		}
 	}
-	return ui.online_key, nil
+	return ui.Online_key, nil
 }

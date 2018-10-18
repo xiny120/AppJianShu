@@ -1,8 +1,8 @@
 package Handler
 
 import (
-	//"encoding/json"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -39,8 +39,16 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					name := r.FormValue("name")
 					pwd := r.FormValue("pwd")
 					u1, _ := uuid.NewV4()
+					uidata := ""
 					ret, _ := Account_Register_Cmd_Register(db, name, pwd, u1.String())
-					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":\"%s\"}}", ret)
+					if ret != "" {
+						cookie := http.Cookie{Name: "token", Value: ret, Path: "/", MaxAge: 86400 * 10}
+						http.SetCookie(w, &cookie)
+						log.Println(Member.Sessions[ret])
+						uidata_, _ := json.Marshal(Member.Sessions[ret])
+						uidata = string(uidata_)
+					}
+					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":\"%s\",\"ui\":%s}}", ret, uidata)
 				}
 			} else {
 				result = "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd 参数cmd不能为空！\"}"
@@ -88,6 +96,7 @@ func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid
 	}
 
 	online_key, _ := Member.Login(name, pwd)
+	log.Println(Member.Sessions)
 
 	return online_key, nil
 }

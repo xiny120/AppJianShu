@@ -1,3 +1,4 @@
+# encoding:utf-8
 import tushare as ts
 import pandas as pd
 import pymysql
@@ -35,12 +36,19 @@ for dd in df.values:
                 ticktodayid=datetime.datetime.strftime(today,'%Y%m%d')
                 #print(ticktoday)
 
-                sql = "SELECT dayid,ts_code,value FROM PowerByDay WHERE dayid = %s and ts_code = '%s'"
-                data = (ticktodayid,dd[0])
+                sql = "SELECT dayid,ts_code,value FROM PowerByDay WHERE ts_code = '%s' order by dayid desc"
+                data = (dd[0])
                 cursor.execute(sql % data)
                 if cursor.rowcount > 0:
-                    print(ticktodayid,dd[0],"已有跳过...")
-                    continue
+                    result = cursor.fetchall()
+                    continue_ = False
+                    for item in result:
+                        if item[0] == int(ticktodayid):
+                            continue_ = True
+                            break
+                    if continue_ == True:
+                        print(ticktodayid,dd[0],"已有跳过...")
+                        continue
 
                 tick = ts.get_tick_data(dd[1],ticktoday,3,0,'tt')
                 #print(tick)
@@ -54,10 +62,10 @@ for dd in df.values:
                         powertotal += tick0[3]
 
                 sql = 'INSERT INTO PowerByDay(DayId,ts_code, symbol, name, market,value ) \
-                VALUES (%s, "%s", "%s", "%s","%s",%.2f)' % \
-                (ticktodayid,dd[0],dd[1],dd[2],dd[5],powertotal)
-                print(sql)
-                cursor.execute(sql)
+                VALUES (%s, "%s", "%s", "%s","%s",%.2f)' 
+                data = (ticktodayid,dd[0],dd[1],dd[2],dd[5],powertotal)
+                print(sql % data)
+                cursor.execute(data)
                 db.commit()
             except Exception as e:
                 print(e)
