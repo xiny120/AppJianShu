@@ -1,4 +1,4 @@
-
+﻿
 MeShow/.vs/MeShow/v15/Server/sqlite3/
 MeShow/MeShow/MeShow.Android/bin/
 MeShow/MeShow/MeShow.Android/obj/
@@ -18,3 +18,4 @@ MeShow/.vs/MeShow/xs/sqlite3/storage.ide-wal
 MeShow/.vs/MeShow/xs/UserPrefs.xml
 Pic98/src/Pic98/Pic98.debug.exe
 Pic98/bin/Pic98.exe
+Pic98/src/Pic98/wwwroot/Image/Vip/
