@@ -30,6 +30,8 @@ func main() {
 	sMux.Handle("/Image/", regi)
 	regiv := http.HandlerFunc(Handler.Image_Vip)
 	sMux.Handle("/Image/Vip/", regiv)
+	regibanner := http.HandlerFunc(Handler.Image_Banner)
+	sMux.Handle("/Image/Banner/", regibanner)
 	regj := http.HandlerFunc(Handler.Js)
 	sMux.Handle("/Js/", regj)
 	regc := http.HandlerFunc(Handler.Css)

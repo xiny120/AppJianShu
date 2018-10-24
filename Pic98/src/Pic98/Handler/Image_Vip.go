@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func Image_Vip(w http.ResponseWriter, r *http.Request) {
+func Image_Vip_del(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w, "%s", "Image now!")
 	log.Println(r.RequestURI)
 	//param := strings.Split(r.RequestURI, "/")

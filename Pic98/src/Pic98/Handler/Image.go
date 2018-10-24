@@ -11,11 +11,9 @@ import (
 )
 
 func Image(w http.ResponseWriter, r *http.Request) {
-	//fmt.Fprintf(w, "%s", "Image now!")
 	log.Println(r.RequestURI)
 	param := strings.Split(r.RequestURI, "/")
 	if len(param) >= 3 {
-
 		log.Println(len(param))
 		log.Println(param[2])
 		filePath := "wwwroot/Image/" + param[2]
@@ -24,19 +22,46 @@ func Image(w http.ResponseWriter, r *http.Request) {
 			http.ServeFile(w, r, filePath)
 			return
 		}
-		/*
-			// username: root; password: 123456; database: test
-			db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/mysql")
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer db.Close()
-			// Insert(db)
-			// Update(db)
-			// Delete(db)
-			Get(db)
-		*/
+		http.ServeFile(w, r, "wwwroot/Image/siwa.jpg")
+	}
+}
 
+func Image_Banner(w http.ResponseWriter, r *http.Request) {
+	param := strings.Split(r.RequestURI, "/")
+	if len(param) >= 3 {
+		filePath := "wwwroot/Image/Banner"
+		for _, val := range param[3:] {
+			if val == ".." {
+				continue
+			}
+			filePath = filePath + "/" + val
+
+		}
+		log.Println(filePath)
+		if pe, _ := PathExists(filePath); pe == true {
+			http.ServeFile(w, r, filePath)
+			return
+		}
+		http.ServeFile(w, r, "wwwroot/Image/siwa.jpg")
+	}
+}
+
+func Image_Vip(w http.ResponseWriter, r *http.Request) {
+	param := strings.Split(r.RequestURI, "/")
+	if len(param) >= 3 {
+		filePath := "wwwroot/Image/Vip"
+		for _, val := range param[3:] {
+			if val == ".." {
+				continue
+			}
+			filePath = filePath + "/" + val
+
+		}
+		log.Println(filePath)
+		if pe, _ := FileExists(filePath); pe == true {
+			http.ServeFile(w, r, filePath)
+			return
+		}
 		http.ServeFile(w, r, "wwwroot/Image/siwa.jpg")
 	}
 }

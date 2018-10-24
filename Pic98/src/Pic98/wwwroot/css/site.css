@@ -73,3 +73,20 @@
 .nav_hidden {
 	display: none;
 }
+
+ .demo {
+      background: #666666;
+      font: bold 55px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;;
+      text-transform: uppercase;
+	font-size:30pt;
+  }
+
+.demo7 {
+  color: transparent;
+  text-shadow:0 0 6px #F96, -1px -1px  #FFF, 1px -1px  #444;
+}
+
+.text_red{
+	font-size:26pt;
+	color:red;
+}
