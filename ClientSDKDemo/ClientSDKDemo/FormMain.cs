@@ -7,9 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using Hik_iVMS7200;
+using static Hik_iVMS7200.HikSDK_iVMS7200;
 
 namespace ClientSDKDemo
 {
@@ -52,6 +55,7 @@ namespace ClientSDKDemo
             HikSDK_iVMS7200.AlarmInitLib();
             HikSDK_iVMS7200.InitRSMClientLib();
             Control.CheckForIllegalCrossThreadCalls = false;
+            comboBox1.Text = "子码流";
 
         }
 
@@ -72,6 +76,7 @@ namespace ClientSDKDemo
             textBox10.Text = Desc;
         }
 
+        pRSMAVDataCallBack pRSMAVDataCallBack_;
         private void button9_Click(object sender, EventArgs e)
         {
             //OnBnClickedButtonStoppreview();
@@ -102,7 +107,8 @@ namespace ClientSDKDemo
             stDeviceRSMrequestInfo.nTransPortType = 1;   //The way of Stream media server to access stream :0 UDP ; 1TCP
             stDeviceRSMrequestInfo.szDeviceID = textBox1.Text;       //The ID of device
             StringBuilder sb = new StringBuilder();
-            m_lPlayHandle = HikSDK_iVMS7200.PlayRSMAVStreamByTCP(textBox4.Text, Convert.ToUInt16(textBox5.Text), sb, ref stDeviceRSMrequestInfo, pRSMAVDataCallBack, (IntPtr)0);
+            pRSMAVDataCallBack_ = pRSMAVDataCallBack;
+            m_lPlayHandle = HikSDK_iVMS7200.PlayRSMAVStreamByTCP(textBox4.Text, Convert.ToUInt16(textBox5.Text), sb, ref stDeviceRSMrequestInfo, pRSMAVDataCallBack_, (IntPtr)0);
 
             if (m_lPlayHandle < 0)
             {
@@ -603,6 +609,7 @@ namespace ClientSDKDemo
             }
         }
 
+        pNotifyCallBack pNotifyCallBack_;
         private void button24_Click(object sender, EventArgs e)
         {
             button25_Click(null, null);
@@ -611,7 +618,9 @@ namespace ClientSDKDemo
             stPassbyServer.nAcessServerPort = Convert.ToUInt16(textBox3.Text);
             stPassbyServer.szUserName = "admin";
             stPassbyServer.szUserPwd = "12345";
-            m_iNofifyID = HikSDK_iVMS7200.PPVNotifySubscribe(stPassbyServer, pfnNotifyCallBack,(IntPtr)0);
+            pNotifyCallBack_ = pfnNotifyCallBack;
+            m_iNofifyID = HikSDK_iVMS7200.PPVNotifySubscribe(stPassbyServer, pNotifyCallBack_, (IntPtr)0);
+            
             if (m_iNofifyID < 0)
             {
                 MessageBox.Show("NotifySubscribe Failed!");
@@ -627,35 +636,245 @@ namespace ClientSDKDemo
                 return;
             }
 
-            if (pData->m_iNofifyID == iNotifySubsribeID)
+            if (m_iNofifyID == iNotifySubsribeID)
             {
-                char* pTemp = (char*)pNotifyBuffer;
-
-                CMarkup xml;
-                xml.SetDoc((const char*)pNotifyBuffer );
-                xml.ResetMainPos();
-                if (xml.FindElem("Notify"))
+                string text = Marshal.PtrToStringAnsi(pNotifyBuffer);
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.LoadXml(text);
+                XmlNode root = xmldoc.SelectSingleNode("Notify");//查找<Employees>
+                if(root.Attributes["Type"].Value == "DeviceInfo")
                 {
-                    string strTypeName = xml.GetAttrib("Type");
-                    if (0 == strcmp(strTypeName.c_str(), "DeviceInfo"))//On-line or Off-line for device
+                    XmlNode deviceInfo = root.SelectSingleNode("DeviceID");
+                    string strDevAccount = deviceInfo.InnerText;
+                    XmlNode onoffLine = root.SelectSingleNode("OnOffLine");
+                    string strStatus = onoffLine.InnerText;
+                    StringBuilder sb = new StringBuilder("UNKOWN");
+                    if(strStatus == "On")
                     {
-                        xml.FindChildElem("DeviceID");
-                        string strDevAccount = xml.GetChildData(); //DeviceID
-                        xml.FindChildElem("OnOffLine");
-                        string strStatus = xml.GetChildData();
-                        CString strNodifyMsg("UNKOWN");
-                        if (0 == strcmp(strStatus.c_str(), "On"))
-                        {
-                            strNodifyMsg.Format("ID:%s on-line", strDevAccount.c_str());
-                        }
-                        else if (0 == strcmp(strStatus.c_str(), "Off"))
-                        {
-                            strNodifyMsg.Format("ID:%s off-line", strDevAccount.c_str());
-                        }
-                        pData->m_ctrStaticNotifyMsg.SetWindowText(strNodifyMsg);
+                        sb.Clear();
+                        sb.AppendFormat("ID:{0} on-line", strDevAccount);
+                    }
+                    else
+                    {
+                        sb.Clear();
+                        sb.AppendFormat("ID:{0} off-line", strDevAccount);
+                    }
+                    textBox10.Text = sb.ToString();
+                    sb = null;
+                }
+                xmldoc.RemoveAll();
+                xmldoc = null;
+
+            }
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            HikSDK_iVMS7200.ST_ACCESS_SERVER_INFO stPassbyServer = new HikSDK_iVMS7200.ST_ACCESS_SERVER_INFO();       //Information of Register server
+            stPassbyServer.szAcessServerIP = textBox2.Text;
+            stPassbyServer.nAcessServerPort = Convert.ToUInt16(textBox3.Text);
+            stPassbyServer.szUserName = "admin";
+            stPassbyServer.szUserPwd = "12345";
+            HikSDK_iVMS7200.ST_DEVICEINFO_ONSERVER stDeviceStatus = new HikSDK_iVMS7200.ST_DEVICEINFO_ONSERVER();
+            HikSDK_iVMS7200.PPVGetDeviceInfoOnServer(textBox1.Text, stPassbyServer, ref stDeviceStatus);
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            if (m_iDevice < 0)
+            {
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            uint iSize = 10 * 1024;
+            HikSDK_iVMS7200.PPVGetDeviceWorkStatus(m_iDevice, sb, ref iSize);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if ((m_lPlayHandle >= 0 || m_iPlayBackID >= 0) && m_lPort >= 0)
+            {
+                
+                if (m_bSound)
+                {
+                    HikSDK_iVMS7200.PlayM4_StopSound();
+                    m_bSound = false;
+                    button1.Text = "打开声音";
+
+                }
+                else
+                {
+                    if (HikSDK_iVMS7200.PlayM4_PlaySound(m_lPort))
+                    {
+                        m_bSound = true;
+                        button1.Text = "关闭声音";
                     }
                 }
+                
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // TODO: Add your control notification handler code here
+            //if (!CheckFolderExist(m_strCaptureFilePath.GetBuffer(0)))
+            //{
+            //    return;
+            //}
+
+            if ((m_lPlayHandle >= 0 || m_iPlayBackID >= 0) && m_lPort >= 0)
+            {
+                CapturePicture("test.jpg");
+            }
+        }
+
+
+
+        private bool CapturePicture(String strSnapshotSavePath)
+        {
+            bool bFlag = false;
+            byte [] pBmp = null;
+            try
+            {
+                if (m_lPort < 0)
+                {
+                    return bFlag;
+                }
+
+                int dwHeight = 0, dwWidth = 0;
+                if (!HikSDK_iVMS7200.PlayM4_GetPictureSize(m_lPort, ref dwHeight, ref dwWidth))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendFormat("Error Info:PlayM4_GetPictureSize Failed, error code:{0}!\r\n", HikSDK_iVMS7200.PlayM4_GetLastError(m_lPort));
+                    MessageBox.Show(sb.ToString());
+
+                    return bFlag;
+                }
+
+                uint dwPicSize = 1024 * 1024 * 3;
+
+                pBmp = new byte[dwPicSize];
+                uint dwBmpSize = 0;
+
+                bool bGet = HikSDK_iVMS7200.PlayM4_GetBMP(m_lPort, pBmp, dwPicSize, ref dwBmpSize);//PlayM4_GetJPEG or PlayM4_GetBMP(in Playctrl.dll)
+                if (bGet)
+                {
+                    //CFile file;
+                    //CFileException exError;
+                    //BOOL bOpen = file.Open(strSnapshotSavePath.GetBuffer(0), CFile::modeCreate | CFile::modeWrite, &exError);
+                    try
+                    {
+                        string filePath = Directory.GetCurrentDirectory() + "\\testcapture.jpg";
+                        FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                        fs.Write(pBmp,0, (int)dwBmpSize);
+                        fs.Close();
+                        bFlag = true;
+                    }
+                    catch(Exception e1)
+                    {
+                        MessageBox.Show("PlayM4_GetBMP Open file failed");
+                    }
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendFormat("Error Info:PlayM4_GetPictureSize Failed, error code:{0}!\r\n", HikSDK_iVMS7200.PlayM4_GetLastError(m_lPort));
+                    MessageBox.Show(sb.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                bFlag = false;
+            }
+
+            return bFlag;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (m_lPlayHandle >= 0)
+            {
+                
+                if (!m_bManualRecord)
+                {
+                    if (m_bRecordFileOpen)
+                    {
+                        m_fs.Close();
+                        m_bRecordFileOpen = false;
+                    }
+                    //DeleteFile(m_strManualRecordFilePath.GetBuffer(0));
+                    button3.Text = "停止录像";
+                }
+                else
+                {
+                    if (m_bRecordFileOpen)
+                    {
+                        m_fs.Close();
+                        m_bRecordFileOpen = false;
+                    }
+                    button3.Text = "手动录像";
+                }
+
+                m_bManualRecord = !m_bManualRecord;
+                
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (m_lPlayHandle < 0 || m_iDevice < 0)
+            {
+                return;
+            }
+
+            //PTZ control must operate in real-time preview condition
+            int lSpeed = 3;
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_TILT_UP, 0, lSpeed);//start
+            Thread.Sleep(100);
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_TILT_UP, 1, lSpeed);//stop
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (m_lPlayHandle < 0 || m_iDevice < 0)
+            {
+                return;
+            }
+
+            //PTZ control must operate in real-time preview condition
+            int lSpeed = 3;
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_PAN_RIGHT, 0, lSpeed);//start
+            Thread.Sleep(100);
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_PAN_RIGHT, 1, lSpeed);//stop
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (m_lPlayHandle < 0 || m_iDevice < 0)
+            {
+                return;
+            }
+
+            //PTZ control must operate in real-time preview condition
+            int lSpeed = 3;
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_TILT_DOWN, 0, lSpeed);//start
+            Thread.Sleep(100);
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_TILT_DOWN, 1, lSpeed);//stop
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (m_lPlayHandle < 0 || m_iDevice < 0)
+            {
+                return;
+            }
+
+            //PTZ control must operate in real-time preview condition
+            int lSpeed = 3;
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_PAN_LEFT, 0, lSpeed);//start
+            Thread.Sleep(100);
+            HikSDK_iVMS7200.PPVPTZControl(m_iDevice, m_iChannelno, (int)HikSDK_iVMS7200.EN_PTZ_COMMAND.PTZ_CMD_PAN_LEFT, 1, lSpeed);//stop
         }
     }
 }

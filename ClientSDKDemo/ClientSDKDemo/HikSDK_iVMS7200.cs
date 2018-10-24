@@ -602,6 +602,43 @@ namespace Hik_iVMS7200
         [DllImport(@"Hik7200\libPPVClient2.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int PPVPlayBackControl(int iVodStream, int iControlCmd, int iParamIn, ref int iParamOut);
 
+        /**
+        *@brief 获取设备状态
+        *@param iDevice 设备连接标识	
+        *@retval pszDeviceStatusXML 设备状态的XML文本
+        *@retval nBufferSize 指示获取前缓冲区的大小，以及获取后XML文本的长度	
+        *@return 0代表获取成功;<0代表获取失败
+        *@note XML文本格式
+        < DeviceStatusXML >
+        <!--设备状态,0-正常,1-CPU占用率太高,超过85%,2-硬件错误,例如串口死掉-->
+        <Run>0</Run>		
+        <!--CPU：CPU利用率：0~100代表0%~100%--> 
+        <CPU>20</CPU>
+        <!--Mem：内存利用率：0~100代表0%~100%--> 
+        <Mem>25</Mem>
+        <DSKStatus>									
+        <!--用一串字符串表示多个信息，用“-”分割：硬盘号-硬盘容量(MB)-硬盘剩余空间(MB)-硬盘状态：0-活动；1-休眠（idle状态）；2-不正常-->
+        <DSK>1-60000-30000-0</DSK>
+        <DSK>2-60-30-0/1/2</DSK>
+        </DSKStatus >
+        <CHStatus>
+        <!--数据格式：通道号-录像状态(0:不录像 1:录像)-视频连接信号状态(0 :正常;1:视频信号丢失)-通道编码状态(0:正常;1:异常)-实际码率(kbps)-客户端连接数目-->
+        <CH>1-0-0-0-256-1</CH>
+        <CH>2-0-0-0-256-1</CH>
+        </CHStatus >
+        <!--AlarmInStatus：报警输入通道状态,填入数字对应该报警输入通道有报警,用逗号进行分割否则没有报警-->
+        <AlarmInStatus>1,2,3,6,8</AlarmInStatus>
+        <!--AlarmOutStatus：报警输出通道状态,填入数字对应该报警输出通道有输出,用逗号进行分割，否则没有输出-->
+        <AlarmOutStatus>1,2,3,4,7,16</AlarmOutStatus>
+        <!--LocalDisplayStatus：本地显示状态, 0-正常,1-不正常-->
+        <LocalDisplayStatus>1</LocalDisplayStatus>
+        <Remark></Remark>
+        < /DeviceStatusXML >
+        **/
+        [DllImport(@"Hik7200\libPPVClient2.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int PPVGetDeviceWorkStatus(int iDevice, StringBuilder pszDeviceStatusXML, ref uint nBufferSize);
+
+
 
         //初始化PPV
         [DllImport(@"Hik7200\libPPVClient2.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -829,6 +866,10 @@ namespace Hik_iVMS7200
 
         [DllImport(@"Hik7200\PlayCtrl.dll")]
         public static extern bool PlayM4_ResetBuffer(Int32 nPort, UInt32 nBufType);
+        [DllImport(@"Hik7200\PlayCtrl.dll")]
+        public static extern bool PlayM4_StopSound();
+        [DllImport(@"Hik7200\PlayCtrl.dll")]
+        public static extern bool PlayM4_PlaySound(Int32 nPort);
 
 
         /**	@enum EN_AUDIO_TYPE
