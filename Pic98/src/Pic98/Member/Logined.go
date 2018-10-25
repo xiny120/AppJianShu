@@ -8,7 +8,7 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-type userinfo struct {
+type Userinfo struct {
 	Online_key        string
 	User_uuid         string
 	Un                string
@@ -22,12 +22,12 @@ type userinfo struct {
 var (
 
 	//sessions := map[string]userinfo{}
-	Sessions = make(map[string]userinfo)
+	Sessions = make(map[string]Userinfo)
 )
 
 // NewV1 returns UUID based on current timestamp and MAC address.
-func Login(un string, pwd string) (string, error) {
-	ui := userinfo{Online_key: ""}
+func Login(un string, pwd string) (Userinfo, error) {
+	ui := Userinfo{Online_key: ""}
 	db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
 	if err != nil {
 		log.Fatal(err)
@@ -51,5 +51,5 @@ func Login(un string, pwd string) (string, error) {
 			Sessions[ui.Online_key] = ui
 		}
 	}
-	return ui.Online_key, nil
+	return ui, nil
 }

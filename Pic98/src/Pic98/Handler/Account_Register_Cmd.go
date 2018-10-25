@@ -30,7 +30,24 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					log.Fatal(err)
 				}
 				defer db.Close()
-				if cmd == "QueryId" {
+				if cmd == "Login" {
+					name := r.FormValue("name")
+					pwd := r.FormValue("pwd")
+
+					ui, _ := Account_Register_Cmd_Login(db, name, pwd)
+					t00, _ := json.Marshal(ui)
+					uidata := string(t00)
+					ret := ui.Online_key
+					if ret != "" {
+						cookie := http.Cookie{Name: "token", Value: ret, Path: "/", MaxAge: 86400 * 10}
+						http.SetCookie(w, &cookie)
+						log.Println(ui)
+						uidata_, _ := json.Marshal(ui)
+						uidata = string(uidata_)
+					}
+					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":\"%s\",\"ui\":%s}}", ret, uidata)
+
+				} else if cmd == "QueryId" {
 					name := r.FormValue("name")
 
 					used, _ := Account_Register_Cmd_CheckId(db, name)
@@ -40,12 +57,13 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					pwd := r.FormValue("pwd")
 					u1, _ := uuid.NewV4()
 					uidata := ""
-					ret, _ := Account_Register_Cmd_Register(db, name, pwd, u1.String())
+					ui, _ := Account_Register_Cmd_Register(db, name, pwd, u1.String())
+					ret := ui.Online_key
 					if ret != "" {
 						cookie := http.Cookie{Name: "token", Value: ret, Path: "/", MaxAge: 86400 * 10}
 						http.SetCookie(w, &cookie)
-						log.Println(Member.Sessions[ret])
-						uidata_, _ := json.Marshal(Member.Sessions[ret])
+						log.Println(ui)
+						uidata_, _ := json.Marshal(ui)
 						uidata = string(uidata_)
 					}
 					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/Id调用成功！\",\"data\":{\"register\":\"%s\",\"ui\":%s}}", ret, uidata)
@@ -59,6 +77,12 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 	log.Println(result)
 	w.Write([]byte(result))
 
+}
+
+func Account_Register_Cmd_Login(db *sql.DB, name string, pwd string) (Member.Userinfo, error) {
+	ui, _ := Member.Login(name, pwd)
+	log.Println(Member.Sessions)
+	return ui, nil
 }
 
 // 获取表数据
@@ -77,14 +101,14 @@ func Account_Register_Cmd_CheckId(db *sql.DB, name string) (int, error) {
 	return 1, err
 }
 
-func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid string) (string, error) {
+func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid string) (Member.Userinfo, error) {
 	stmt, _ := db.Prepare("INSERT INTO userinfo(userguid,password,nick_name) VALUES (?,?,?)")
 	log.Println(stmt)
 	defer stmt.Close()
 	_, err := stmt.Exec(userguid, pwd, name)
 	if err != nil {
 		fmt.Printf("insert data error: %v\n", err)
-		return "", nil
+		return Member.Userinfo{Online_key: ""}, nil
 	}
 
 	stmt, _ = db.Prepare("INSERT INTO useridentify (userguid,userid) VALUES(?,?)")
@@ -92,11 +116,11 @@ func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid
 	_, err = stmt.Exec(userguid, name)
 	if err != nil {
 		fmt.Printf("insert data error: %v\n", err)
-		return "", nil
+		return Member.Userinfo{Online_key: ""}, nil
 	}
 
-	online_key, _ := Member.Login(name, pwd)
+	ui, _ := Member.Login(name, pwd)
 	log.Println(Member.Sessions)
 
-	return online_key, nil
+	return ui, nil
 }
