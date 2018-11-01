@@ -108,7 +108,7 @@
 						<td>确认新密码：</td><td>
 					  <input type="password" class="form-control" id="pwd2" placeholder="点此再次键入新 密码" required>
 						<div class="invalid-feedback">
-				          认密码输入不一致！
+				          确认密码输入不一致！
 				        </div>	
 						
 						
@@ -172,12 +172,13 @@
 				$("#pwd2").get(0).setCustomValidity("");
 			}
 	
+			nameok=true;
 			if(nameok){
 				nameok = false;	
 				var jqxhr = $.ajax({
 				type: "POST", 
 				url: "/Account/Register/Cmd",
-				data:{cmd:"Register",name: $("#name").val(),pwd: hex_md5($("#pwd1").val())},
+				data:{cmd:"ModifyPassword",name: $("#name").val(),pwd: hex_md5($("#pwd1").val())},
 				}
 				).done(function(data,status,xhr) {
 					json = JSON.parse(data);
