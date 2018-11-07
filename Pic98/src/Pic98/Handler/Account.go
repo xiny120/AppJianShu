@@ -117,12 +117,13 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 				} else if cmd == "ModifyPassword" {
 					name := r.FormValue("name")
 					pwd := r.FormValue("pwd")
-
+					log.Println(name)
+					log.Println(pwd)
 					ret, _ := Account_Register_Cmd_ModifyPassword(db, name, pwd)
 
 					if ret {
 					}
-					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/ModifyPassword 调用成功！\",\"data\":{\"ModifyPassword\":%s}}", ret)
+					result = fmt.Sprintf("{\"status\":0,\"msg\":\"Account/Register/ModifyPassword 调用成功！\",\"data\":{\"ModifyPassword\":%t}}", ret)
 				}
 			} else {
 				result = "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd 参数cmd不能为空！\"}"

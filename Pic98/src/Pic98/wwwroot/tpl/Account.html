@@ -174,11 +174,14 @@
 	
 			nameok=true;
 			if(nameok){
+				
+				ui = JSON.parse(window.localStorage.getItem("ui"));				
+				
 				nameok = false;	
 				var jqxhr = $.ajax({
 				type: "POST", 
 				url: "/Account/Register/Cmd",
-				data:{cmd:"ModifyPassword",name: $("#name").val(),pwd: hex_md5($("#pwd1").val())},
+				data:{cmd:"ModifyPassword",name: ui.Un,pwd: hex_md5($("#pwd1").val())},
 				}
 				).done(function(data,status,xhr) {
 					json = JSON.parse(data);
