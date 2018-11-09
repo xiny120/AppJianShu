@@ -65,7 +65,7 @@ for dd in df.values:
                 VALUES (%s, "%s", "%s", "%s","%s",%.2f)' 
                 data = (ticktodayid,dd[0],dd[1],dd[2],dd[5],powertotal)
                 print(sql % data)
-                cursor.execute(data)
+                cursor.execute(sql % data)
                 db.commit()
             except Exception as e:
                 print(e)
