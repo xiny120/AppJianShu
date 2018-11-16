@@ -99,7 +99,11 @@
 
 .padding3{
 	padding:3px;
-text-align:center
+	text-align:center
+}
+
+.f16{
+	font-size:20pt;
 }
 
 @media (min-width: 576px) {
