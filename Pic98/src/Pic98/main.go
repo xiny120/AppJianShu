@@ -51,7 +51,7 @@ func main() {
 	sMux.Handle("/Icon/", regIcon)
 	sMux.Handle("/icon/", regIcon)
 
-	log.Println("Listening...")
+	log.Println("请用浏览器打开 http://127.0.0.1:3000 ...")
 	http.ListenAndServe(":3000", sMux)
 
 }
