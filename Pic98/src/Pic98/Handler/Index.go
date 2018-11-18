@@ -41,7 +41,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 		pageidx, _ = strconv.Atoi(r.FormValue("pageidx"))
 	}
 
-	db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
+	db, err := sql.Open("mysql", Config["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,7 +81,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
+	db, err := sql.Open("mysql", Config["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -10,37 +10,11 @@ $(document).ready(function(){
 	setTimeout(gethotidol(), 30);
 	setTimeout(getnewidol(0), 30);
 	
-	/*
-	
-	$(window).scroll(function () {
-        var s = $(document).scrollTop(),
-            h = $(window).height(),
-            documentH = $(document).height();
-        if ( s > (documentH - h) && page<= 30) {
-            if (off_on) {
-				off_on = false;
-				getnewidol(page);
-				//setTimeout(getnewidol(page), 30);
-		        page++;
-		        num++;					
-            }
-        }
-	});
-	*/
-	
-	
-	
     $(window).scroll(function(){
         var windowTop = parseInt($(window).scrollTop());
         var top = parseInt($(document).scrollTop());
         var height = $(window).height();
         var height1 = $(document).height();
-
-        console.log('window距离顶部距离:',windowTop);
-        console.log('文档距离顶部距离:',top);
-        console.log('window高度:',height);
-        console.log('文档的高度:',height1);
-
         var totalHeight = windowTop + height;
 
         if((height1 <= (totalHeight + 100) ) && page<= 30){
@@ -51,8 +25,6 @@ $(document).ready(function(){
 	            num++;
 	            console.log(page,num);
 			}
-            //$('#main').append(`<div style='background-color : red;height: 100px;margin-top: 10px'>${num}</div>`);
-			
         }
     });
 	

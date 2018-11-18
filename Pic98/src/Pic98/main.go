@@ -9,8 +9,12 @@ import (
 	"Pic98/Handler"
 )
 
-func main() {
+var (
+	Config = make(map[string]string)
+)
 
+func main() {
+	Config["tidb"] = "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98"
 	sMux := http.NewServeMux()
 	rh := http.RedirectHandler("http://www.baidu.com", 307)
 	sMux.Handle("/baidu", rh)

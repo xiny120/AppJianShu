@@ -28,7 +28,7 @@ var (
 // NewV1 returns UUID based on current timestamp and MAC address.
 func Login(un string, pwd string) (Userinfo, error) {
 	ui := Userinfo{Online_key: ""}
-	db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
+	db, err := sql.Open("mysql", main.Config["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
