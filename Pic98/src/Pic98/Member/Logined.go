@@ -1,6 +1,7 @@
 package Member
 
 import (
+	"Pic98/Cfg"
 	"database/sql"
 	"log"
 
@@ -28,7 +29,7 @@ var (
 // NewV1 returns UUID based on current timestamp and MAC address.
 func Login(un string, pwd string) (Userinfo, error) {
 	ui := Userinfo{Online_key: ""}
-	db, err := sql.Open("mysql", main.Config["tidb"])
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}

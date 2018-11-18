@@ -2,19 +2,14 @@
 package main
 
 import (
+	"Pic98/Cfg"
+	"Pic98/Handler"
 	"log"
 	"net/http"
 )
-import (
-	"Pic98/Handler"
-)
-
-var (
-	Config = make(map[string]string)
-)
 
 func main() {
-	Config["tidb"] = "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98"
+	Cfg.Cfg["tidb"] = "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98"
 	sMux := http.NewServeMux()
 	rh := http.RedirectHandler("http://www.baidu.com", 307)
 	sMux.Handle("/baidu", rh)

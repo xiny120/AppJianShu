@@ -1,6 +1,7 @@
 package Handler
 
 import (
+	"Pic98/Cfg"
 	"database/sql"
 	"encoding/json"
 	"html/template"
@@ -41,7 +42,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 		pageidx, _ = strconv.Atoi(r.FormValue("pageidx"))
 	}
 
-	db, err := sql.Open("mysql", Config["tidb"])
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,7 +82,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("mysql", Config["tidb"])
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
