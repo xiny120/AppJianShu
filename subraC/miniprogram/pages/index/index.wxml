@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="mapinfo">
+    <map id="myMap"
+      style="width:100vh;height:100vh;"
+      subkey="VERBZ-LYKKX-PIU45-763SC-UR666-6ZFNI"
+      scale='16'>
+        <cover-view class="controls">
+          <cover-view class="time">00:00</cover-view>
+        </cover-view>
+    </map>
+
+  </view>
+
+
+</view>
