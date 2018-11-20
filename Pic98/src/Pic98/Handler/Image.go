@@ -1,6 +1,7 @@
 package Handler
 
 import (
+	"Pic98/Cfg"
 	"database/sql"
 	"fmt"
 	_ "image"
@@ -96,7 +97,7 @@ func Image_Update(w http.ResponseWriter, r *http.Request) {
 		}
 		bounds := m1.Bounds()
 
-		db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
+		db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 		if err != nil {
 			log.Fatal(err)
 		}

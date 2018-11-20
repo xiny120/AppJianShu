@@ -21,6 +21,8 @@ func main() {
 	sMux.Handle("/Index/Newidol", regnewidol)
 	regList := http.HandlerFunc(Handler.List)
 	sMux.Handle("/List/", regList)
+	regDetail := http.HandlerFunc(Handler.Detail)
+	sMux.Handle("/Detail/", regDetail)
 	rega := http.HandlerFunc(Handler.Account)
 	sMux.Handle("/Account/", rega)
 	regh := http.HandlerFunc(Handler.Account_Register)

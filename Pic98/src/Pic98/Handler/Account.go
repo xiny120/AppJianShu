@@ -1,6 +1,7 @@
 package Handler
 
 import (
+	"Pic98/Cfg"
 	"Pic98/Member"
 	"html/template"
 	"log"
@@ -72,7 +73,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 		} else {
 			cmd := r.FormValue("cmd")
 			if cmd != "" {
-				db, err := sql.Open("mysql", "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98")
+				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 				if err != nil {
 					log.Fatal(err)
 				}

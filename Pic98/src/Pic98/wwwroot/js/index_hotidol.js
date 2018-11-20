@@ -5,6 +5,11 @@ var page = 1;
 var off_on = true
 
 $(document).ready(function(){
+	
+
+
+$(".card-img-top").live("click",function(){alert("ok");});
+	
 	hotidolitem = $("#hotidol").children(0).clone();
 	$("#hotidol").empty();
 	setTimeout(gethotidol(), 30);

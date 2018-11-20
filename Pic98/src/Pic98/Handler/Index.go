@@ -82,16 +82,25 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
+	pagesize := 20
+	pageidx := 0
+	errf := r.ParseForm()
+	if errf != nil {
+		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
+	} else {
+		pageidx, _ = strconv.Atoi(r.FormValue("pageidx"))
+	}
+
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
-	stmt, _ := db.Prepare(`SELECT aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit 0,20`)
+	startidx := pageidx * pagesize
+	stmt, _ := db.Prepare(`SELECT aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit ?,?`)
 	log.Println(stmt)
 	defer stmt.Close()
-	rows, err := stmt.Query()
+	rows, err := stmt.Query(startidx, pagesize)
 	log.Println(rows)
 	log.Println(err)
 	if err == nil {
