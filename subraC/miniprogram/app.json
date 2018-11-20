@@ -6,13 +6,16 @@
     "pages/databaseGuide/databaseGuide",
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib"
+    "pages/chooseLib/chooseLib",
+    "pages/forum/forum",
+    "pages/my/my",
+    "pages/map/map"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "人人公交",
+    "navigationBarTitleText": "人人巴士",
     "navigationBarTextStyle": "black"
   }
 }

@@ -4,9 +4,29 @@
     <map id="myMap"
       style="width:100vh;height:100vh;"
       subkey="VERBZ-LYKKX-PIU45-763SC-UR666-6ZFNI"
-      scale='16'>
+      scale='32'>
         <cover-view class="controls">
-          <cover-view class="time">00:00</cover-view>
+          <cover-view class="footer-btn" style="display:flex;flex-direction: row;">
+            <cover-view class="footer-btn1" bindtap='tapforum'>
+              <cover-image class="maintabimg" src='../../images/maintab_bbs.png'></cover-image>
+              <cover-view>
+              巴士圈
+              </cover-view>
+            </cover-view>
+            <cover-view class="footer-btn2" bindtap='tapwait4car'>
+              <cover-image class="maintabimg0" src="../../images/wait4car.png"></cover-image>
+              <cover-view>
+              等车
+              </cover-view>
+            </cover-view>
+            <cover-view class="footer-btn3" bindtap='tapmy'>
+              <cover-image class="maintabimg" src="../../images/my.png"></cover-image>
+              <cover-view>
+              我的
+              </cover-view>
+              
+            </cover-view>
+          </cover-view>
         </cover-view>
     </map>
 

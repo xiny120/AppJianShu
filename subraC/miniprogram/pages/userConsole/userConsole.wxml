@@ -1,6 +1,17 @@
 <!--pages/userConsole/userConsole.wxml-->
 <view class="container">
-
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+    ></button>
+    <view>
+      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
+    </view>
+  </view>
   <view class="list">
     <view class="list-item" bindtap="testCgi">
       <text class="request-text">用户 openid 获取成功</text>
