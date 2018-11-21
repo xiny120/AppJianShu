@@ -129,3 +129,14 @@
         column-count: 5;
     }
 }
+
+.arrow-right{
+        margin-left:5px;
+        display:flex;
+        display:-webkit-flex;
+        align-items:center;
+    }
+    .arrow-right img{
+
+ 
+    }

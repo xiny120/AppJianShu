@@ -12,6 +12,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type Pic struct {
+	Vcategoryguid string `json:"categoryguid"`
+	Vaguid        string `json:"aguid"`
+	Vpicurl       string `json:"picurl"`
+	Vcreatetime   string `json:"createtime"`
+	Vidolguid     string `json:"idolguid"`
+	Vlike         string `json:"like"`
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles(
 		"wwwroot/tpl/Index.html",
@@ -50,7 +59,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 
 	startidx := pageidx * pagesize
 
-	stmt, _ := db.Prepare(`SELECT aguid, picurl, createtime, idolguid, likesum from picinfo order by likemonth desc limit ?,?`)
+	stmt, _ := db.Prepare(`SELECT categoryguid, aguid, picurl, createtime, idolguid, likesum from picinfo order by likemonth desc limit ?,?`)
 	log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query(startidx, pagesize)
@@ -59,19 +68,11 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		defer rows.Close()
 
-		type Pic struct {
-			Vaguid      string `json:"aguid"`
-			Vpicurl     string `json:"picurl"`
-			Vcreatetime string `json:"createtime"`
-			Vidolguid   string `json:"idolguid"`
-			Vlike       string `json:"like"`
-		}
-
 		var pics []Pic
 		for rows.Next() {
 			var pic Pic
 
-			rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
+			rows.Scan(&pic.Vcategoryguid, &pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
 			pics = append(pics, pic)
 		}
 
@@ -97,7 +98,7 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	startidx := pageidx * pagesize
-	stmt, _ := db.Prepare(`SELECT aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit ?,?`)
+	stmt, _ := db.Prepare(`SELECT categoryguid, aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit ?,?`)
 	log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query(startidx, pagesize)
@@ -106,19 +107,11 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		defer rows.Close()
 
-		type Pic struct {
-			Vaguid      string `json:"aguid"`
-			Vpicurl     string `json:"picurl"`
-			Vcreatetime string `json:"createtime"`
-			Vidolguid   string `json:"idolguid"`
-			Vlike       string `json:"like"`
-		}
-
 		var pics []Pic
 		for rows.Next() {
 			var pic Pic
 
-			rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
+			rows.Scan(&pic.Vcategoryguid, &pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
 			pics = append(pics, pic)
 		}
 

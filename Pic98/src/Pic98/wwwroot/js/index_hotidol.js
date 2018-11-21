@@ -3,14 +3,17 @@ var hotidolitem;
 var num = 0;
 var page = 1;
 var off_on = true;
-var ui;
+var online_key="00000000-0000-0000-0000-000000000000";
 
 $(document).ready(function(){
 	$(".card-columns").on("click",".card-img-top",function(){
 		
 	});
 	
-	ui = window.localStorage.getItem("ui");
+	ui = JSON.parse(window.localStorage.getItem("ui"));
+	if(ui != null && ui != undefined){
+		online_key = ui.Online_key;
+	}
 	
 	hotidolitem = $("#hotidol").children(0).clone();
 	$("#hotidol").empty();
@@ -86,7 +89,7 @@ function listappend(container,data){
 	$(data).each(function(idx,item){
 		var hotidol0 = $(hotidolitem).clone();
 		$(hotidol0).find(".card-img-top").attr("src",item.picurl);
-		$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + ui.Online_key);
+		$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + online_key);
 		$(container).append($(hotidol0));
 	});	
 }

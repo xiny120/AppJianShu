@@ -23,6 +23,14 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 	imgurl := strings.Replace(r.RequestURI, "/Detail", "", 1)
 	log.Println(imgurl)
 
+	cookie, err := r.Cookie("token")
+	if err == nil {
+		cookievalue := cookie.Value
+		log.Println(cookievalue)
+	} else {
+		log.Println("未认证用户！游客模式！")
+	}
+
 	data := struct {
 		Title    string
 		Listtype string

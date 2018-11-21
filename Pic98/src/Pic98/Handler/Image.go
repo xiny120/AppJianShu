@@ -57,7 +57,9 @@ func Image_Banner(w http.ResponseWriter, r *http.Request) {
 }
 
 func Image_Vip(w http.ResponseWriter, r *http.Request) {
-	param := strings.Split(r.RequestURI, "/")
+	requri := r.RequestURI
+	split0 := strings.Split(requri, "?")
+	param := strings.Split(split0[0], "/")
 	if len(param) >= 3 {
 		filePath := "wwwroot/Image/Vip"
 		for _, val := range param[3:] {
