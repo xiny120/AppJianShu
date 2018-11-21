@@ -20,19 +20,15 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	log.Println(r.RequestURI)
-	param := strings.Split(r.RequestURI, "/")
-	if len(param) >= 3 {
-		log.Println(len(param))
-		log.Println(param[2])
-	}
+	imgurl := strings.Replace(r.RequestURI, "/Detail", "", 1)
+	log.Println(imgurl)
 
 	data := struct {
 		Title    string
 		Listtype string
 	}{
 		Title:    "列表",
-		Listtype: param[2],
+		Listtype: imgurl,
 	}
 
 	err = t.Execute(w, data)
