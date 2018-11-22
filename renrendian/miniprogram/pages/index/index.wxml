@@ -1,5 +1,35 @@
 <!--index.wxml-->
+<swiper bindchange="imgchange" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay}}' interval='{{interval}}'duration='{{duration}}' circular='{{circular}}'>
+    <block wx:for='{{imgUrls}}'>
+    <swiper-item>
+        <image mode="aspectFit" bindtap='swiperitemtap' data-aduri="{{item[1]}}" style="" mode="" src="{{item[0]}}" binderror="" bindload="" class='swiper-img'></image>
+    </swiper-item>
+    </block>
+</swiper>
+<button style='display:none;'  bindtap="autoplaychange" >{{autoplaytxt}}</button>
 <view class="container">
+  <view class="menu">
+    <view class="menuitem">
+    <image src="../../images/xihu.png"></image>
+      食品
+    </view>
+    <view class="menuitem">
+      <image src="../../images/xihu.png"> </image>
+      厨卫
+    </view>
+    <view class="menuitem">
+      <image src="../../images/xihu.png"> </image>
+      洗护
+    </view>
+    <view class="menuitem">
+      <image src="../../images/xihu.png"> </image>
+      零食
+    </view>
+    <view class="menuitem">
+      <image src="../../images/xihu.png"> </image>
+      酒饮
+    </view>
+  </view>
 
   <!-- 用户 openid -->
   <view class="userinfo">

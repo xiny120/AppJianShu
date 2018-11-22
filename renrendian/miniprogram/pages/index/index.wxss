@@ -7,6 +7,35 @@ page {
   justify-content: flex-start;
 }
 
+.menu{
+  margin: 2px;
+  height: 145rpx;
+  width: 100vw;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.menu .menuitem{
+  margin-top:10rpx;
+  margin-left: 32rpx;
+  margin-right: 32rpx;  
+  height: 140rpx;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 11pt;
+}
+
+.menu image{
+  width:90rpx;
+  height: 90rpx;
+  border-radius: 8px;
+
+}
+
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
   height: 140rpx;
