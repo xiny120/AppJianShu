@@ -1,5 +1,6 @@
 //index.js
-const app = getApp()
+const app = getApp();
+const db = wx.cloud.database({ env: 'renrendian-749a2d'});
 
 Page({
   data: {
@@ -8,11 +9,13 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    imgUrls: [
-      ['https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg','goodsid0'],//图片src
-      ['../../images/ad01.png', 'goodsid1'],
+    bannerUrls: [
+      {uri:'https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg',uuid:'goodsid0'},//图片src
+      {uri:'../../images/ad01.png', uuid:'goodsid1'},
     ],
-    autoplay: true,//是否自动播放
+    bannerMenus:[],
+    ap:false,
+    autoplay1: true,//是否自动播放
     autoplaytxt: "停止自动播放",
     indicatorDots: true,//指示点
     // indicator-color："white",//指示点颜色 暂未启动
@@ -31,6 +34,9 @@ Page({
       })
       return
     }
+
+    this.initbannerads();
+    this.initbannermenu();
 
     // 获取用户信息
     wx.getSetting({
@@ -144,18 +150,67 @@ Page({
     if (this.data.autoplaytxt == "停止自动播放") {
       this.setData({
         autoplaytxt: "开始自动播放",
-        autoplay: !this.data.autoplay
+        autoplay1: !this.data.autoplay1
       })
     } else {
       this.setData({
         autoplaytxt: "停止自动播放",
-        autoplay: !this.data.autoplay
+        autoplay1: !this.data.autoplay1
       })
     };
 
   },
+
   imgchange: function (e) {//监听图片改变函数
     console.log(e.detail.current)//获取当前显示图片的下标值
+  },
+
+  initbannerads: function (){
+    //bannerUrls = [];
+    var this0 = this;
+    //const db = wx.cloud.database({env: 'renrendian-749a2d'});
+    db.collection('store_bannerads').where({
+      storeuuid: 'W_UO50XacNtiP6m5'
+    })
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          //data.bannerUrls.push(res.data);
+          if (res.data.length > 0) {
+            this0.setData({
+              bannerUrls: res.data,
+            })
+          }
+        },
+        fail:function(e){
+          console.log(e);
+        }
+      })    
+
+  },
+
+
+  initbannermenu: function () {
+    //bannerUrls = [];
+    var this0 = this;
+    //const db = wx.cloud.database({ env: 'renrendian-749a2d' });
+    db.collection('store_bannermenu').where({
+      storeuuid: 'W_UO50XacNtiP6m5'
+    })
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          if(res.data.length > 0){
+            this0.setData({
+              bannerMenus: res.data[0].menupages,
+            })
+          }
+        },
+        fail: function (e) {
+          console.log(e);
+        }
+      })
+
   }  
 
 })

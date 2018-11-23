@@ -1,36 +1,43 @@
 <!--index.wxml-->
-<swiper bindchange="imgchange" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay}}' interval='{{interval}}'duration='{{duration}}' circular='{{circular}}'>
-    <block wx:for='{{imgUrls}}'>
+<swiper class="swiper_ads" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}'duration='{{duration}}' circular='{{circular}}'>
+    <block wx:for='{{bannerUrls}}' wx:key='uuid'>
     <swiper-item>
-        <image mode="aspectFit" bindtap='swiperitemtap' data-aduri="{{item[1]}}" style="" mode="" src="{{item[0]}}" binderror="" bindload="" class='swiper-img'></image>
+        <image mode="center"  bindtap='swiperitemtap' data-aduri="{{item.goodsuuid}}" src="{{item.imageuri}}" ></image>
     </swiper-item>
     </block>
 </swiper>
-<button style='display:none;'  bindtap="autoplaychange" >{{autoplaytxt}}</button>
-<view class="container">
-  <view class="menu">
-    <view class="menuitem">
-    <image src="../../images/xihu.png"></image>
-      食品
-    </view>
-    <view class="menuitem">
-      <image src="../../images/xihu.png"> </image>
-      厨卫
-    </view>
-    <view class="menuitem">
-      <image src="../../images/xihu.png"> </image>
-      洗护
-    </view>
-    <view class="menuitem">
-      <image src="../../images/xihu.png"> </image>
-      零食
-    </view>
-    <view class="menuitem">
-      <image src="../../images/xihu.png"> </image>
-      酒饮
-    </view>
-  </view>
 
+<!--
+  <swiper indicator-dots autoplay='{{ap}}' interval='2000' duration='800' current='0' >
+    <swiper-item>
+      abc
+    </swiper-item>
+    <swiper-item>
+      def
+    </swiper-item>
+  </swiper>
+  -->
+
+
+
+<swiper class="swiper_menu" indicator-dots="true" autoplay="{{ap}}" circular="true">
+    <block wx:for='{{bannerMenus}}' wx:key='_id'>
+      <swiper-item>
+        <block wx:for='{{item.rows}}' wx:key='_id'>
+          <view class="menu">
+            <block wx:for='{{item.items}}' wx:key='_id'>
+              <view class="menuitem">
+              <image src="{{item.image}}"></image>
+                {{item.text}}
+              </view>
+            </block>
+          </view>
+        </block>
+      </swiper-item>
+    </block>
+</swiper>
+
+<view class="container">
   <!-- 用户 openid -->
   <view class="userinfo">
     <button 

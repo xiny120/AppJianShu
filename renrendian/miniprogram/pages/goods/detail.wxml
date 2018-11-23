@@ -1,2 +1,10 @@
 <!--miniprogram/pages/goods/detail.wxml-->
 <text>miniprogram/pages/goods/detail.wxml</text>
+  <swiper indicator-dots autoplay="false">
+    <swiper-item>
+      abc
+    </swiper-item>
+    <swiper-item>
+      def
+    </swiper-item>
+  </swiper>
