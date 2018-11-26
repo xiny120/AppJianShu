@@ -9,7 +9,8 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/goods/detail"
+    "pages/goods/detail",
+    "pages/goods/list"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

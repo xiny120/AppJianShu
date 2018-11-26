@@ -14,6 +14,7 @@ Page({
       {uri:'../../images/ad01.png', uuid:'goodsid1'},
     ],
     bannerMenus:[],
+    hotTitleAds:[],
     ap:false,
     autoplay1: true,//是否自动播放
     autoplaytxt: "停止自动播放",
@@ -25,6 +26,8 @@ Page({
     duration: 500,//每个图片滑动速度,
     circular: true,//是否采用衔接滑动
     current: 0,//初始化时第一个显示的图片 下标值（从0）index
+    indicatorDots2:false,
+    autoplay2:true,
   },
 
   onLoad: function() {
@@ -37,6 +40,7 @@ Page({
 
     this.initbannerads();
     this.initbannermenu();
+    this.inithotTitleAds();
 
     // 获取用户信息
     wx.getSetting({
@@ -138,7 +142,7 @@ Page({
   },
 
   swiperitemtap:function(event){
-    const detailuri = '../goods/detail?id=' + event.target.dataset.aduri;
+    const detailuri = '../goods/detail?id=' + event.currentTarget.dataset.aduri;
     console.log(detailuri)
     wx.navigateTo({
       url: detailuri,
@@ -161,14 +165,41 @@ Page({
 
   },
 
+  swipermenu_tap:function(e){
+    const classuri = '../goods/list?id=' + e.currentTarget.dataset.classid;
+    console.log(classuri)    
+    wx.navigateTo({
+      url: classuri,
+    })
+  },
+
   imgchange: function (e) {//监听图片改变函数
     console.log(e.detail.current)//获取当前显示图片的下标值
   },
 
-  initbannerads: function (){
-    //bannerUrls = [];
+  inithotTitleAds:function(){
     var this0 = this;
-    //const db = wx.cloud.database({env: 'renrendian-749a2d'});
+    db.collection('store_hotgoodstitleads').where({
+      storeuuid: 'W_UO50XacNtiP6m5'
+    })
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          if (res.data.length > 0) {
+            this0.setData({
+              hotTitleAds: res.data,
+            })
+          }
+        },
+        fail: function (e) {
+          console.log(e);
+        }
+      })    
+
+  },
+
+  initbannerads: function (){
+    var this0 = this;
     db.collection('store_bannerads').where({
       storeuuid: 'W_UO50XacNtiP6m5'
     })
@@ -188,7 +219,6 @@ Page({
       })    
 
   },
-
 
   initbannermenu: function () {
     //bannerUrls = [];

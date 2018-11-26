@@ -1,18 +1,19 @@
-// miniprogram/pages/goods/detail.js
+// miniprogram/pages/goods/list.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    classid:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    var data = options;
+  onLoad: function (opts) {
+    var data = opts;
+    this.setData({classid:opts.id});
   },
 
   /**

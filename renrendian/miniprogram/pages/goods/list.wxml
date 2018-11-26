@@ -1,0 +1,4 @@
+<!--miniprogram/pages/goods/list.wxml-->
+<view style="background-color:red;height:80rpx; display: flex; flex-direction: column; justify-content: center;  align-items: center;">
+  <text style="">首页 > 公式 > </text>
+</view>
