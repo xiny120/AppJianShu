@@ -1,1 +1,70 @@
 /* miniprogram/pages/goods/list.wxss */
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.container{
+  width:100vw;
+  margin: 0px;
+  padding:0px;
+  align-content: center;
+  
+}
+.rgoods{
+  margin: 0px;
+  margin-top: 3px;
+  margin-bottom:3px;
+  padding: 0px;
+  
+  
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-wrap:wrap;
+}
+
+.rgoodsitem{
+  width:345rpx;
+  
+  background-color: white;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 6px;
+  
+}
+
+.rgoodsitem .image0{
+  border-radius: 8px;
+}
+
+.rgoodsitemintro{
+  height:100rpx;
+  display: flex;
+  flex-direction: column;  
+}
+
+.cols{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin-bottom: 8px;
+  
+}
+
+.font7{
+  font-size:7pt;
+  margin-top:auto;
+  margin-bottom: 0px;
+  margin-left:auto;
+  margin-right: 8px;
+}
+
+.sc_add{
+  width: 20px;
+  
+}

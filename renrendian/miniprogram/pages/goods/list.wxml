@@ -1,4 +1,29 @@
 <!--miniprogram/pages/goods/list.wxml-->
+<!--
 <view style="background-color:red;height:80rpx; display: flex; flex-direction: column; justify-content: center;  align-items: center;">
   <text style="">首页 > 公式 > </text>
+</view>
+-->
+<view class="container">
+  <view>
+  </view>
+  
+    <view class="rgoods">
+      <block wx:for='{{goodslist}}' wx:key='_id'>
+        <view class="rgoodsitem" style='margin-left:3px;margin-right:2px;'>
+          <view style="font-size:9pt;">
+            <image class="image0" style="width:100%;" src='{{item.logo}}' mode="widthFix"></image>
+            <view class="rgoodsitemintro">
+              <text>{{item.text}}</text>
+              <text>{{item.text02}}</text>
+            </view>
+            <view class="cols">
+              <view><image class="sc_add" src="../../images/shoppingcart_add.png" mode="widthFix"></image> ¥{{item.discountprice}}</view>
+              <text class="font7">{{item.svtotal}}人购买</text>
+              
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
 </view>

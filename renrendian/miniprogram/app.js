@@ -10,6 +10,6 @@ App({
       })
     }
 
-    this.globalData = {}
+    this.globalData = { cloudenv: 'renrendian-749a2d'}
   }
 })

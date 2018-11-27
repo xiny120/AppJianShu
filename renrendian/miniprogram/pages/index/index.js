@@ -1,6 +1,6 @@
 //index.js
 const app = getApp();
-const db = wx.cloud.database({ env: 'renrendian-749a2d'});
+const db = wx.cloud.database({ env: app.globalData.cloudenv});
 
 Page({
   data: {

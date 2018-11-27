@@ -1,6 +1,15 @@
 // 云函数模板
 // 部署：在 cloud-functions/login 文件夹右击选择 “上传并部署”
+/*
+1258097582
+SecretId: AKIDWwIl6PeYO5cMxPl7IOSOBb9atWzHtzQl
 
+SecretKey: Kfy78CA0ELJlEvY1QhokWGVcbP6cOBpJ
+
+2018-11-27 00:22:03	已启用
+禁用
+
+ */
 const cloud = require('wx-server-sdk')
 
 // 初始化 cloud

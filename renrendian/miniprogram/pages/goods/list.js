@@ -1,11 +1,16 @@
 // miniprogram/pages/goods/list.js
+
+const app = getApp();
+const db = wx.cloud.database({ env: app.globalData.cloudenv });
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    classid:"",
+    classid: "",
+    goodslist:{},
   },
 
   /**
@@ -14,6 +19,8 @@ Page({
   onLoad: function (opts) {
     var data = opts;
     this.setData({classid:opts.id});
+    this.initgoodslist();
+
   },
 
   /**
@@ -63,5 +70,34 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+
+  initgoodslist: function () {
+    var this0 = this;
+    wx.showLoading({
+      title: '加载中',
+    });
+    db.collection('store_goods').where({
+      storeuuid: 'W_UO50XacNtiP6m5',
+      classid:this.data.classid
+    })
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          //data.bannerUrls.push(res.data);
+          if (res.data.length > 0) {
+            this0.setData({
+              goodslist: res.data,
+            })
+          }
+          wx.hideLoading();
+        },
+        fail: function (e) {
+          console.log(e);
+          wx.hideLoading();
+        }
+      })
+
+  }  
 })

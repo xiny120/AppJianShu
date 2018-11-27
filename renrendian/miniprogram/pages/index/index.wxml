@@ -28,19 +28,64 @@
   <view class="goodsview">
     <!-- 热卖商品 -->
     <view class="hotgoodstitle">
-      <view>热销商品</view>
+      <view>专享折扣</view>
       <view style="margin-left:8px;width:60%;">
-      
-      <swiper style="height:15px;"  vertical="true" autoplay='{{autoplay2}}' indicatorDots='{{indicatorDots2}}' current='0' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
-        <block wx:for='{{hotTitleAds}}' wx:key='_id'>
-          <swiper-item>
-            {{item.text}}
-          </swiper-item>
-        </block>
-      </swiper>
-
+        <swiper style="height:15px;"  vertical="true" autoplay='{{autoplay2}}' indicatorDots='{{indicatorDots2}}' current='0' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
+          <block wx:for='{{hotTitleAds}}' wx:key='_id'>
+            <swiper-item>
+              {{item.text}}
+            </swiper-item>
+          </block>
+        </swiper>
       </view>
     </view>
+
+    <view class="hotgoods">
+      <view class="hotgoodsitem">
+        <view style="font-size:9pt;margin-left:4px;margin-right:2px;">
+          <image style="width:100%;" src="cloud://renrendian-749a2d.7265-renrendian-749a2d/miniapp_images/xihu.png" mode="widthFix"></image>
+          <view>
+          商品标题详情介绍
+          </view>
+          <view class="cols">
+            <view>加购</view>
+            <text class="font7">300人购买</text>
+           
+          </view>
+        </view>
+      </view>
+      <view class="hotgoodsitem">
+        <view style="font-size:9pt;margin-left:2px;margin-right:4px;">
+          <image style="width:100%;" src="../../images/xihu.png" mode="widthFix"></image>
+          <view>
+          商品标题详情介绍
+          </view>
+          <view class="cols">
+            <view>加购</view>
+            <text class="font7">300人购买</text>
+           
+          </view>   
+        </view>    
+      </view>    
+    </view>
+  </view>
+
+
+  <view class="goodsview">
+    <!-- 热卖商品 -->
+    <view class="hotgoodstitle">
+      <view>热销商品</view>
+      <view style="margin-left:8px;width:60%;">
+        <swiper style="height:15px;"  vertical="true" autoplay='{{autoplay2}}' indicatorDots='{{indicatorDots2}}' current='0' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
+          <block wx:for='{{hotTitleAds}}' wx:key='_id'>
+            <swiper-item>
+              {{item.text}}
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+    </view>
+
     <view class="hotgoods">
       <view class="hotgoodsitem">
         <view style="font-size:9pt;margin-left:4px;margin-right:2px;">
