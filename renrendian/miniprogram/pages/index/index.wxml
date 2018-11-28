@@ -26,7 +26,7 @@
   </swiper>
 
   <view class="goodsview">
-    <!-- 热卖商品 -->
+    <!-- 专享折扣 -->
     <view class="hotgoodstitle">
       <view>专享折扣</view>
       <view style="margin-left:8px;width:60%;">
@@ -41,32 +41,21 @@
     </view>
 
     <view class="hotgoods">
-      <view class="hotgoodsitem">
-        <view style="font-size:9pt;margin-left:4px;margin-right:2px;">
-          <image style="width:100%;" src="cloud://renrendian-749a2d.7265-renrendian-749a2d/miniapp_images/xihu.png" mode="widthFix"></image>
-          <view>
-          商品标题详情介绍
-          </view>
-          <view class="cols">
-            <view>加购</view>
-            <text class="font7">300人购买</text>
-           
+      <block wx:for='{{discountlist}}' wx:key='_id'>
+        <view class="hotgoodsitem">
+          <view style="font-size:9pt;margin-left:4px;margin-right:2px;">
+            <image style="width:100%;" src="cloud://renrendian-749a2d.7265-renrendian-749a2d/miniapp_images/xihu.png" mode="widthFix"></image>
+            <view>
+            {{item.text}}
+            </view>
+            <view class="cols">
+              <view>加购</view>
+              <text class="font7">300人购买</text>
+            
+            </view>
           </view>
         </view>
-      </view>
-      <view class="hotgoodsitem">
-        <view style="font-size:9pt;margin-left:2px;margin-right:4px;">
-          <image style="width:100%;" src="../../images/xihu.png" mode="widthFix"></image>
-          <view>
-          商品标题详情介绍
-          </view>
-          <view class="cols">
-            <view>加购</view>
-            <text class="font7">300人购买</text>
-           
-          </view>   
-        </view>    
-      </view>    
+      </block>
     </view>
   </view>
 
@@ -117,35 +106,25 @@
   </view>
 
     <view class="rgoods">
-      <view class="rgoodsitem" style='margin-left:3px;margin-right:2px;'>
-        <view style="font-size:9pt;">
-          <image style="width:100%;" src="../../images/xihu.png" mode="widthFix"></image>
-          <view class="rgoodsitemintro">
-          商品标题详情介绍
-          </view>
-          <view class="cols">
-            <view>加购</view>
-            <text class="font7">300人购买</text>
-           
+      <block wx:for='{{goodslist}}' wx:key='_id'>
+        <view bindtap='goodsitemtap' data-aduri='{{item._id}}' class="rgoodsitem" style='margin-left:3px;margin-right:2px;'>
+          <view style="font-size:9pt;">
+            <image class="image0" style="width:100%;" src='{{item.logo}}' mode="widthFix"></image>
+            <view class="rgoodsitemintro">
+              <text>{{item.text}}</text>
+              <text>{{item.text02}}</text>
+            </view>
+            <view class="cols">
+              <view><image class="sc_add" src="../../images/shoppingcart_add.png" mode="widthFix"></image> ¥{{item.discountprice}}</view>
+              <text class="font7">{{item.svtotal}}人购买</text>
+              
+            </view>
           </view>
         </view>
-      </view>
-      <view class="rgoodsitem" style='margin-left:2px;margin-right:3px;'>
-        <view style="font-size:9pt;">
-          <image style="width:100%;" src="../../images/xihu.png" mode="widthFix"></image>
-          <view class="rgoodsitemintro">
-          商品标题详情介绍
-          </view>
-          <view class="cols">
-            <view>加购</view>
-            <text class="font7">300人购买</text>
-           
-          </view> 
-        </view>    
-      </view>    
+      </block> 
     </view>
 
-
+<!--
     <view class="rgoods">
       <view class="rgoodsitem" style='margin-left:3px;margin-right:2px;'>
         <view style="font-size:9pt;">
@@ -174,5 +153,5 @@
         </view>    
       </view>    
     </view>    
-
+-->
 </view>

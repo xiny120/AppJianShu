@@ -1,10 +1,13 @@
 <!--miniprogram/pages/goods/detail.wxml-->
-<text>miniprogram/pages/goods/detail.wxml</text>
-  <swiper indicator-dots autoplay="false">
-    <swiper-item>
-      abc
-    </swiper-item>
-    <swiper-item>
-      def
-    </swiper-item>
-  </swiper>
+<view class="container">
+  <view style="width:100vw;height:680rpx;">
+    <swiper  class="swiper_ads" style="height:680rpx;" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
+        <block wx:for='{{bannerUrls}}' wx:key='_id'>
+          <swiper-item>
+            <image mode="widthFix" style="width:100%;"  bindtap='swiperitemtap' data-aduri="{{item.goodsuuid}}" src="{{item.imageuri}}" ></image>
+          </swiper-item>
+        </block>
+    </swiper>    
+  </view>
+
+</view>

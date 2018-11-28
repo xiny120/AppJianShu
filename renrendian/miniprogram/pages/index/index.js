@@ -4,6 +4,8 @@ const db = wx.cloud.database({ env: app.globalData.cloudenv});
 
 Page({
   data: {
+    lastcount: 0, // 上次加载了多少条数据。
+    percount: 18, // 每次加载多少条数据。
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     logged: false,
@@ -15,6 +17,9 @@ Page({
     ],
     bannerMenus:[],
     hotTitleAds:[],
+    goodslist:[],
+    discountlist:[],
+    hotlist:[],
     ap:false,
     autoplay1: true,//是否自动播放
     autoplaytxt: "停止自动播放",
@@ -41,6 +46,9 @@ Page({
     this.initbannerads();
     this.initbannermenu();
     this.inithotTitleAds();
+    this.loadgoodsdiscountlist();
+    this.loadgoodslist();
+
 
     // 获取用户信息
     wx.getSetting({
@@ -59,6 +67,13 @@ Page({
       }
     })
   },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    this.loadgoodslist();
+  },  
 
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
@@ -91,55 +106,6 @@ Page({
     })
   },
 
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
-  },
 
   swiperitemtap:function(event){
     const detailuri = '../goods/detail?id=' + event.currentTarget.dataset.aduri;
@@ -170,6 +136,14 @@ Page({
     console.log(classuri)    
     wx.navigateTo({
       url: classuri,
+    })
+  },
+
+  goodsitemtap: function (event) {
+    const detailuri = '../goods/detail?id=' + event.currentTarget.dataset.aduri;
+    console.log(detailuri)
+    wx.navigateTo({
+      url: detailuri,
     })
   },
 
@@ -240,7 +214,81 @@ Page({
           console.log(e);
         }
       })
+  } ,
 
-  }  
+  loadgoodsdiscountlist: function(){
+    var this0 = this;
+    //wx.showLoading({
+    //  title: '加载中',
+    //});
+    const _ = db.command;
+    db.collection('store_goodsdiscount').where({
+      storeuuid: 'W_UO50XacNtiP6m5',
+    })
+      .get({
+        success: function (res) {
+          if (res.data.length > 0) {
+            var gl = [];
+            for (var index in res.data) {
+              gl.push(res.data[index].goodsuuid);
+            }
+            db.collection('store_goods').where({
+              storeuuid:'W_UO50XacNtiP6m5',
+              _id: _.in(gl)//_.in(['5bfcedf84fd3484a16cf6336'])
+            })
+              .get({
+                success: function (res) {
+                  if (res.data.length > 0) {
+                    this0.setData({ discountlist:res.data});
+                  }
+                }
+              })
+
+
+          }
+          //wx.hideLoading();
+        },
+        fail: function (e) {
+          console.log(e);
+          //wx.hideLoading();
+        }
+      })
+
+  },
+
+  loadgoodslist: function () {
+    var this0 = this;
+    wx.showLoading({
+      title: '加载中',
+    });
+    db.collection('store_goods').where({
+      storeuuid: 'W_UO50XacNtiP6m5',
+    }).skip(this0.data.lastcount).limit(this0.data.percount)
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          //data.bannerUrls.push(res.data);
+          if (res.data.length > 0) {
+            var gl = this0.data.goodslist;
+            gl = gl.concat(res.data);
+            this0.setData({
+              goodslist: gl,
+            })
+            this0.data.lastcount += res.data.length;
+          }
+          wx.hideLoading();
+          if (res.data.length <= 0) {
+            wx.showToast({
+              title: '到底了哦！',
+            })
+          }
+        },
+        fail: function (e) {
+          console.log(e);
+          wx.hideLoading();
+        }
+      })
+
+  }    
 
 })

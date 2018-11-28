@@ -35,135 +35,6 @@ page {
 
 }
 
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
-  height: 140rpx;
-  width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  transition: all 300ms ease;
-}
-
-.userinfo-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-  background-size: cover;
-  background-color: white;
-}
-
-.userinfo-avatar:after {
-  border: none;
-}
-
-.userinfo-nickname {
-  font-size: 32rpx;
-  color: #007aff;
-  background-color: white;
-  background-size: cover;
-}
-
-.userinfo-nickname::after {
-  border: none;
-}
-
-.uploader, .tunnel {
-  height: auto;
-  padding: 0 0 0 40rpx;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.uploader-text, .tunnel-text {
-  width: 100%;
-  line-height: 52px;
-  font-size: 34rpx;
-  color: #007aff;
-}
-
-.uploader-container {
-  width: 100%;
-  height: 400rpx;
-  padding: 20rpx 20rpx 20rpx 0;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.uploader-image {
-  width: 100%;
-  height: 360rpx;
-}
-
-.tunnel {
-  padding: 0 0 0 40rpx;
-}
-
-.tunnel-text {
-  position: relative;
-  color: #222;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tunnel-text:first-child {
-  border-top: none;
-}
-
-.tunnel-switch {
-  position: absolute;
-  right: 20rpx;
-  top: -2rpx;
-}
-
-.disable {
-  color: #888;
-}
-
-.service {
-  position: fixed;
-  right: 40rpx;
-  bottom: 40rpx;
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
-  background: linear-gradient(#007aff, #0063ce);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  transition: all 300ms ease;
-}
-
-.service-button {
-  position: absolute;
-  top: 40rpx;
-}
-
-.service:active {
-  box-shadow: none;
-}
-
-.request-text {
-  padding: 20rpx 0;
-  font-size: 24rpx;
-  line-height: 36rpx;
-  word-break: break-all;
-}
-
 .container{
   width:100vw;
   margin: 0px;
@@ -197,7 +68,7 @@ page {
   margin-top:8px;
   padding: 0px;
   border-radius: 8px;
-  width: 94vw;
+  width: 96vw;
   background-color: white;
   margin-bottom: 3px;
 }
@@ -222,13 +93,14 @@ page {
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: border-box;  
+  flex-wrap:wrap;
   
 }
 
 .hotgoodsitem{
-  width:47vw;
+  width:345rpx;
   padding-left: 5rpx;
   padding-right: 5rpx;
 }
@@ -242,43 +114,53 @@ page {
   margin-top: 3px;
   margin-bottom:3px;
   padding: 0px;
-  width:96vw;
-  height: 450rpx;
+  
+  
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: space-between;
-  box-sizing: border-box;  
+  justify-content: center;
+  box-sizing: border-box;
+  flex-wrap:wrap;
 }
 
 .rgoodsitem{
-  width:48vw;
+  width:330rpx;
+  
   background-color: white;
   border-radius: 8px;
-  padding: 8px;
+  padding: 6px;
+  margin-bottom: 6px;
+  
 }
 
-.rgoodsitem image{
+.rgoodsitem .image0{
   border-radius: 8px;
 }
 
 .rgoodsitemintro{
   height:100rpx;
-  
+  display: flex;
+  flex-direction: column;  
 }
 
 .cols{
   display: flex;
   flex-direction: row;
   align-content: center;
+  margin-bottom: 8px;
   
 }
 
-.font7
-{
+.font7{
   font-size:7pt;
   margin-top:auto;
   margin-bottom: 0px;
   margin-left:auto;
   margin-right: 8px;
+}
+
+.sc_add{
+  width: 20px;
+  
 }

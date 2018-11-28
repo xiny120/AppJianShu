@@ -13,6 +13,7 @@ page {
   align-content: center;
   
 }
+
 .rgoods{
   margin: 0px;
   margin-top: 3px;
