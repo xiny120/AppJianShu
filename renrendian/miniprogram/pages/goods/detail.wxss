@@ -1,15 +1,70 @@
 /* miniprogram/pages/goods/detail.wxss */
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .container{
   width:100vw;
   margin: 0px;
   padding:0px;
   align-content: center;
-  
+ 
 }
-
 
 .swiper_ads{
   height: 300rpx;
   width: 100%;
+  background-color: white;
 
+}
+
+.d{
+  background-color: white;
+}
+
+.d_price{
+  width: 100vw;
+  align-content: left;
+  padding: 3px;
+  
+}
+
+.font10{
+  font-size:15pt;
+  color: red;
+  font-weight: bold;
+}
+
+.d_price_ori{
+  margin-left:8px;
+  font-size:9pt;
+  text-decoration:line-through;
+}
+
+.d_text{
+  width: 100vw;
+  align-content: left;
+  padding: 3px;
+}
+
+.f9{
+  font-size:9pt;
+  color:gray;
+}
+
+.fb{
+  font-weight: bold;
+}
+
+.bp{
+  margin-top:10px;
+  height:48px;
+  padding: 8px;
+  background-color: white;
+  width:100vw;
+  vertical-align: middle;
 }

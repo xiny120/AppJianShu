@@ -9,6 +9,7 @@ Page({
   data: {
     goodsuuid:"",
     bannerUrls: [],
+    goods:{},
     autoplay1: false,//是否自动播放
     autoplaytxt: "停止自动播放",
     indicatorDots: true,//指示点
@@ -27,6 +28,7 @@ Page({
   onLoad: function (opts) {
     this.setData({ goodsuuid: opts.id });
     this.initbannerads();
+    this.loadgoods();
   },
 
 
@@ -59,6 +61,38 @@ Page({
 
   },
 
+
+  loadgoods: function () {
+    wx.showLoading({
+      title: '加载中...',
+    })
+    var this0 = this;
+    db.collection('store_goods').where({
+      storeuuid: 'W_UO50XacNtiP6m5',
+      _id: this0.data.goodsuuid
+    })
+      .get({
+        success: function (res) {
+          console.log(res.data)
+          //data.bannerUrls.push(res.data);
+          if (res.data.length > 0) {
+            wx.setNavigationBarTitle({
+              title: res.data[0].text,
+            })
+            this0.setData({
+              goods: res.data[0],
+            })
+          }
+
+          wx.hideLoading();
+        },
+        fail: function (e) {
+          console.log(e);
+          wx.hideLoading();
+        }
+      })
+
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -1,4 +1,6 @@
-<!--miniprogram/pages/goods/detail.wxml-->
+<!--minipro
+
+,,，sfs，,，,,,,dsfkksldafjkl;asdfjolefkjlgram/pages/goods/detail.wxml-->
 <view class="container">
   <view style="width:100vw;height:680rpx;">
     <swiper  class="swiper_ads" style="height:680rpx;" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
@@ -8,6 +10,27 @@
           </swiper-item>
         </block>
     </swiper>    
+  </view>
+  <view class="d">
+    <view class="d_price">
+      <text style='color:red;margin-left:6px;'>¥</text><text class="font10">{{goods.discountprice}}</text><text class="d_price_ori">{{goods.originalprice}}</text>
+      <image mode='widthFix' style='width:20px;position:fixed;right:8px;' src='../../images/share.png'></image>
+    </view>
+    <view class="d_text fb">
+      <text style="margin-left:6px;">{{goods.text}}</text><text>{{goods.text02}}</text>
+    </view>
+    <view class="d_text">
+      <text class="f9" style="margin-left:3px;">3公里内满20免费送到家。</text><text class="f9" style="position: fixed;right:8px;">月销:{{goods.svmonth}}</text>
+    </view>
+  </view>
+
+  <view class="bp f9">
+    <view style="margin-bottom:12px;">
+      <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分30</text><text style="position:fixed;right:8px"> > </text>
+    </view>
+    <view>
+      <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换·极速退款</text><text style="position:fixed;right:8px"> > </text>
+    </view>
   </view>
 
 </view>

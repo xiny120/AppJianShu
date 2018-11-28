@@ -40,7 +40,7 @@ page {
   margin: 0px;
   padding:0px;
   align-content: center;
-  background-color:lightgray;
+
 }
 
 .swiper_ads{
