@@ -6,7 +6,7 @@
     <swiper  class="swiper_ads" style="height:680rpx;" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
         <block wx:for='{{bannerUrls}}' wx:key='_id'>
           <swiper-item>
-            <image mode="widthFix" style="width:100%;"  bindtap='swiperitemtap' data-aduri="{{item.goodsuuid}}" src="{{item.imageuri}}" ></image>
+            <image mode="widthFix" style="width:100%;"  data-aduri="{{item.goodsuuid}}" src="{{item.imageuri}}" ></image>
           </swiper-item>
         </block>
     </swiper>    
@@ -25,7 +25,7 @@
   </view>
 
   <view class="bp f9">
-    <view style="margin-bottom:12px;">
+    <view style="margin-bottom:16px;">
       <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分30</text><text style="position:fixed;right:8px"> > </text>
     </view>
     <view>
@@ -33,4 +33,27 @@
     </view>
   </view>
 
+  <view class="bp f9">
+    <view style="margin-bottom:16px;">
+      <text>规格</text><text style="margin-left:6px;color:black;">选择颜色·分类</text><text style="position:fixed;right:8px"> > </text>
+    </view>
+    <view>
+      <text>参数</text><text style="margin-left:6px;color:black;">品牌·货号...</text><text style="position:fixed;right:8px"> > </text>
+    </view>
+  </view>  
+
+
+  <view class="bp f9">
+    <view style="margin-bottom:16px;">
+      <text>规格</text><text style="margin-left:6px;color:black;">选择颜色·分类</text><text style="position:fixed;right:8px"> > </text>
+    </view>
+    <view>
+      <text>参数</text><text style="margin-left:6px;color:black;">品牌·货号...</text><text style="position:fixed;right:8px"> > </text>
+    </view>
+  </view>    
+
+</view>
+<!-- 底部固定 -->
+<view class="page__hd" style="position:fixed; bottom:0;width: 750rpx;">
+...... 
 </view>

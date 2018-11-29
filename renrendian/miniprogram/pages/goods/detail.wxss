@@ -12,7 +12,6 @@ page {
   margin: 0px;
   padding:0px;
   align-content: center;
- 
 }
 
 .swiper_ads{
@@ -62,7 +61,7 @@ page {
 
 .bp{
   margin-top:10px;
-  height:48px;
+  height:52px;
   padding: 8px;
   background-color: white;
   width:100vw;
