@@ -13,47 +13,86 @@
   </view>
   <view class="d">
     <view class="d_price">
-      <text style='color:red;margin-left:6px;'>¥</text><text class="font10">{{goods.discountprice}}</text><text class="d_price_ori">{{goods.originalprice}}</text>
-      <image mode='widthFix' style='width:20px;position:fixed;right:8px;' src='../../images/share.png'></image>
+      <view>
+      <text style='color:red;'>¥</text><text class="font10">{{goods.discountprice}}</text><text class="d_price_ori">{{goods.originalprice}}</text>
+      </view>
+      <image mode='widthFix' style='width:20px;' src='../../images/share.png'></image>
     </view>
-    <view class="d_text fb">
-      <text style="margin-left:6px;">{{goods.text}}</text><text>{{goods.text02}}</text>
+    <view class="d_price d_text fb">
+      <view><text style="">{{goods.text}}</text><text>{{goods.text02}}</text></view>
     </view>
-    <view class="d_text">
-      <text class="f9" style="margin-left:3px;">3公里内满20免费送到家。</text><text class="f9" style="position: fixed;right:8px;">月销:{{goods.svmonth}}</text>
-    </view>
-  </view>
-
-  <view class="bp f9">
-    <view style="margin-bottom:16px;">
-      <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分30</text><text style="position:fixed;right:8px"> > </text>
-    </view>
-    <view>
-      <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换·极速退款</text><text style="position:fixed;right:8px"> > </text>
+    <view class="d_price d_text">
+      <text class="f9" >3公里内满20免费送到家。</text><text class="f9" style="">月销:{{goods.svmonth}}</text>
     </view>
   </view>
 
-  <view class="bp f9">
-    <view style="margin-bottom:16px;">
-      <text>规格</text><text style="margin-left:6px;color:black;">选择颜色·分类</text><text style="position:fixed;right:8px"> > </text>
+  <view class="d f9" style="margin-top:10px;">
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view>
+        <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分30</text>
+      </view>
+      <text style=""> > </text>
     </view>
-    <view>
-      <text>参数</text><text style="margin-left:6px;color:black;">品牌·货号...</text><text style="position:fixed;right:8px"> > </text>
+    <view class="d_price d_text " style='margin-bottom:12px;'>
+      <view>
+        <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换·极速退款</text>
+      </view>
+      <text style=""> > </text>
     </view>
-  </view>  
+  </view>
 
+  <view class="d f9" style="margin-top:10px;">
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view>
+        <text>规格</text><text style="margin-left:6px;color:black;">选择颜色·分类</text>
+      </view>
+      <text style=""> > </text>
+    </view>
+    <view class="d_price d_text " style='margin-bottom:12px;'>
+      <view>
+        <text>参数</text><text style="margin-left:6px;color:black;">品牌·货号...</text>
+      </view>
+      <text style=""> > </text>
+    </view>
+  </view>
 
-  <view class="bp f9">
-    <view style="margin-bottom:16px;">
-      <text>规格</text><text style="margin-left:6px;color:black;">选择颜色·分类</text><text style="position:fixed;right:8px"> > </text>
+  <view class="d f9" style="margin-top:10px;">
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view>
+        <text>商品评价(5)</text>
+      </view>
+      <text style="color:red;">查看全部 > </text>
     </view>
-    <view>
-      <text>参数</text><text style="margin-left:6px;color:black;">品牌·货号...</text><text style="position:fixed;right:8px"> > </text>
+    <view class="d_price d_text  flex_start" style='margin-bottom:12px;'>
+      <view class="note">真心不错</view><view class="note">买的合算</view><view class="note">还会购买</view>
     </view>
-  </view>    
+
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;flex-direction: column;">
+      <view style='margin-bottom:6px;'>
+        <image src="../../images/vcd_icon.png" style='width:18px;' mode="widthFix"></image><text>我是**小白</text>
+      </view>
+      <text >店家商品真心不错！多次购买的老客户了！送货上门，方便快捷！而且店家有是有促销活动！冲值100送10元，建议多关注店家小程序，抢充值优惠！ </text>
+    </view>
+
+    <view class="d_price" style="margin-top:20px;margin-bottom:12px;">
+      <view>
+        <text>打听打听(5)</text>
+      </view>
+      <text style="color:red;">查看全部 > </text>
+    </view>
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view style='margin-bottom:6px;'>
+        <image src="../../images/vcd_icon.png" style='width:18px;' mode="widthFix"></image><text>我是**小白</text>
+      </view>
+      <text >3个回答 </text>
+    </view>
+
+  </view>
 
 </view>
+<view style="height:50px;">
+</view>
 <!-- 底部固定 -->
-<view class="page__hd" style="position:fixed; bottom:0;width: 750rpx;">
+<view class="page__hd" style="height:50px;position:fixed; bottom:0;width: 750rpx;">
 ...... 
 </view>

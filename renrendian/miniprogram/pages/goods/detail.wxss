@@ -23,15 +23,22 @@ page {
 
 .d{
   background-color: white;
+  width: 750rpx;
 }
 
 .d_price{
-  width: 100vw;
-  align-content: left;
-  padding: 3px;
+  padding-left: 6px;
+  padding-right:8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: row;
   
+  justify-content: space-between;
 }
 
+.flex_start{
+  justify-content: flex-start;
+}
 .font10{
   font-size:15pt;
   color: red;
@@ -45,9 +52,7 @@ page {
 }
 
 .d_text{
-  width: 100vw;
   align-content: left;
-  padding: 3px;
 }
 
 .f9{
@@ -60,10 +65,20 @@ page {
 }
 
 .bp{
+  padding-left: 6px;
+  padding-right:8px;  
+  width: 750rpx;
   margin-top:10px;
-  height:52px;
-  padding: 8px;
   background-color: white;
-  width:100vw;
-  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.note{
+  border-radius: 10px;
+  background-color: pink;
+  padding: 3px 6px;
+  margin: 3px;
+  color: black;
 }
