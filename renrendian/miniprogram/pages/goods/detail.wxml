@@ -93,6 +93,27 @@
 <view style="height:50px;">
 </view>
 <!-- 底部固定 -->
-<view class="page__hd" style="height:50px;position:fixed; bottom:0;width: 750rpx;">
-...... 
+<view class="page__hd">
+  <view class="row0" style='margin-left:6px;'>
+    <view class="col0">
+      <image src="../../images/shop.png" mode="widthFix"></image>
+      <text>店铺</text>
+    </view>
+    <view class="col0">
+      <image src="../../images/services.png" mode="widthFix"></image>
+      <text>客服</text>
+    </view>
+    <view class="col0">
+      <image src="../../images/far.png"  mode="widthFix"></image>
+      <text>收藏</text>
+    </view>
+  </view>
+  <view class="row0" style='margin-right:8px;'>
+    <view class="rad0" style="background-color:orange;">
+      <text>加入购物车</text>
+    </view>
+    <view class="rad0">
+      <text>立即购买</text>
+    </view>
+  </view>
 </view>
