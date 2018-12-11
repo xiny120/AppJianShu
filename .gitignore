@@ -25,3 +25,5 @@ ClientSDKDemo/packages/
 subraC/cloudfunctions/login/node_modules/
 renrendian/cloudfunctions/node_modules/
 SubracBackend/SubracBackend/node_modules/
+renrendianBackend/renrendianBackend/renrendianBackend/node_modules/
+renrendianBackend/renrendianBackend/renrendianBackend/setup/qcloud.json

@@ -1,12 +1,37 @@
-<!--minipro
+<!--miniprogram/pages/goods/detail.wxml-->
+<!-- 底部固定 -->
+<view class="page__hd">
+  <view class="row0" style='margin-left:6px;'>
+    <view class="col0">
+      <image src="../../images/shop.png" mode="widthFix"></image>
+      <text>店铺</text>
+    </view>
+    <view class="col0">
+      <image src="../../images/services.png" mode="widthFix"></image>
+      <text>客服</text>
+    </view>
+    <view class="col0">
+      <image src="../../images/far.png"  mode="widthFix"></image>
+      <text>收藏</text>
+    </view>
+  </view>
+  <view class="row0" style='margin-right:8px;'>
+    <view class="rad0" style="background-color:orange;">
+      <text>加入购物车</text>
+    </view>
+    <view class="rad1">
+      <text>立即购买</text>
+    </view>
+  </view>
+</view>
 
-,,，sfs，,，,,,,dsfkksldafjkl;asdfjolefkjlgram/pages/goods/detail.wxml-->
+<!--页面开始-->
 <view class="container">
   <view style="width:100vw;height:680rpx;">
     <swiper  class="swiper_ads" style="height:680rpx;" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
         <block wx:for='{{bannerUrls}}' wx:key='_id'>
           <swiper-item>
-            <image mode="widthFix" style="width:100%;"  data-aduri="{{item.goodsuuid}}" src="{{item.imageuri}}" ></image>
+            <image mode="widthFix" style="width:100%;"  data-aduri="{{item.goodsuuid}}" src="cloud://subrac-89aa62.7375-subrac-89aa62/{{item.imageuri}}" ></image>
           </swiper-item>
         </block>
     </swiper>    
@@ -89,31 +114,29 @@
 
   </view>
 
+  <view class="d f9" style="margin-top:10px;">
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view class="row0">
+        <image src="../../images/dianpu.png" style="width:50px;" mode="widthFix"></image>
+        <view style="margin-left:6px;">
+          <text style="font-size:13pt;">邻里土特产专门店</text>
+          <view class="row0">
+            <text>购物体验指数：</text><text>★★★★★</text>
+          </view>
+        </view>
+      </view>
+      <view class="row0">
+        <text style="color:red;">随便逛逛 ... </text>
+      </view>
+    </view>
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+      <view class="rowdppj">
+        <text>商品评价 4.9 </text><text>店铺服务 4.8 </text><text>送货服务 4.9</text>
+      </view>
+    </view>    
+  </view>
+
+
 </view>
 <view style="height:50px;">
-</view>
-<!-- 底部固定 -->
-<view class="page__hd">
-  <view class="row0" style='margin-left:6px;'>
-    <view class="col0">
-      <image src="../../images/shop.png" mode="widthFix"></image>
-      <text>店铺</text>
-    </view>
-    <view class="col0">
-      <image src="../../images/services.png" mode="widthFix"></image>
-      <text>客服</text>
-    </view>
-    <view class="col0">
-      <image src="../../images/far.png"  mode="widthFix"></image>
-      <text>收藏</text>
-    </view>
-  </view>
-  <view class="row0" style='margin-right:8px;'>
-    <view class="rad0" style="background-color:orange;">
-      <text>加入购物车</text>
-    </view>
-    <view class="rad0">
-      <text>立即购买</text>
-    </view>
-  </view>
 </view>
