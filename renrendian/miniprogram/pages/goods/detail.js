@@ -8,7 +8,7 @@ Page({
    */
   data: {
     goodsuuid:"",
-    bannerUrls: [],
+    //bannerUrls: [],
     goods:{},
     autoplay1: false,//是否自动播放
     autoplaytxt: "停止自动播放",
@@ -27,7 +27,7 @@ Page({
    */
   onLoad: function (opts) {
     this.setData({ goodsuuid: opts.id });
-    this.initbannerads();
+    //this.initbannerads();
     this.loadgoods();
   },
 
