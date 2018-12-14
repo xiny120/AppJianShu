@@ -1,28 +1,35 @@
 <!--miniprogram/pages/goods/detail.wxml-->
 <!-- 底部固定 -->
 <view class="page__hd">
-  <view class="row0" style='margin-left:6px;'>
-    <view class="col0">
+  <view class="row00" style='margin-left:6px;flex-grow:1;'>
+    <view class="col0" bindtap='toshop' style=''>
       <image src="../../images/shop.png" mode="widthFix"></image>
       <text>店铺</text>
     </view>
-    <view class="col0">
+    <button open-type="contact" class="col0" style='margin:0px;font-size:11pt;padding:8px;padding-top:3px;'>
       <image src="../../images/services.png" mode="widthFix"></image>
       <text>客服</text>
-    </view>
-    <view class="col0">
+    </button>
+    <view class="col0" bindtap='fartap'>
       <image src="../../images/far.png"  mode="widthFix"></image>
       <text>收藏</text>
     </view>
-  </view>
-  <view class="row0" style='margin-right:8px;'>
-    <view class="rad0" style="background-color:orange;">
-      <text>加入购物车</text>
+    <view class="col0">
+      <view class="row0" style='margin-right:8px;'>
+        <view class="rad0" style="background-color:orange;">
+          <text>加入购物车</text>
+        </view>
+        <view class="rad1">
+          <text>立即购买</text>
+        </view>
+      </view>
     </view>
-    <view class="rad1">
-      <text>立即购买</text>
-    </view>
+
   </view>
+  <!--
+  <view style='width:40rpx;'>
+  </view>
+-->
 </view>
 
 <!--页面开始-->
@@ -51,14 +58,14 @@
     </view>
   </view>
 
-  <view class="d f9" style="margin-top:10px;">
-    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+  <view class="d f9" style="margin-top:10px;padding-top:12px;padding-bottom:12px;" bindtap='show'>
+    <view class="d_price" style="margin-bottom:12px;" wx:if="{{goodsjifen > 0}}">
       <view>
-        <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分30</text>
+        <text>专享</text><text style="margin-left:6px;color:black;">购买可享积分 <text>{{goodsjifen}}</text></text>
       </view>
       <text style=""> > </text>
     </view>
-    <view class="d_price d_text " style='margin-bottom:12px;'>
+    <view class="d_price d_text " >
       <view>
         <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换·极速退款</text>
       </view>
@@ -136,7 +143,28 @@
     </view>    
   </view>
 
+  <view class="col1" style="margin-top:10px;">
+    <block wx:for='{{goods.detailintro}}' wx:key='_id'>
+      <image style='width:750rpx;' src='cloud://subrac-89aa62.7375-subrac-89aa62/{{item}}'></image>
+    </block>
+  </view>
+
 
 </view>
-<view style="height:50px;">
+
+
+
+<view class="modal-box" hidden="{{flag}}" bindtap="hide">
+    <view class="modal-body">
+      <view class="modal-content">
+        <view class="col0" style="margin-top:6px;align-items:center;">
+          <text>本商品专享积分</text>
+          <text>购买可获得专享积分 <text>{{goodsjifen}}</text></text>
+        </view>
+        <button class="knowBtn" bindtap="hide">完成</button>
+     </view>
+    </view>
+  </view>
+
+<view style="height:60px;">
 </view>

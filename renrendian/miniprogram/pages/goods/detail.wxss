@@ -93,13 +93,22 @@ page {
   flex-direction: row;
   justify-content: space-between;
   font-size: 11pt;
+  flex-grow:1;
 }
+
+.col1{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  
+}
+
 
 .col0{
   display: flex;
   flex-direction: column;
   justify-content:center;
-  margin-right: 35rpx;
+  
 }
 
 .col0 image{
@@ -110,6 +119,13 @@ page {
   display: flex;
   flex-direction: row;
   justify-content:center;
+  align-items: center;
+}
+
+.row00{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
   align-items: center;
 }
 
@@ -127,7 +143,7 @@ page {
   border-bottom-left-radius: 10px;
   background-color: red;
   
-  padding: 3px 20px;
+  padding: 8px 8px;
   margin-top: 6px;
   margin-bottom:6px;
   font-size:11pt;
@@ -142,7 +158,7 @@ page {
   border-bottom-right-radius: 10px;
   background-color: red;
   margin-right: 6px;
-  padding: 3px 20px;
+  padding: 8px 8px;
   margin-top: 6px;
   margin-bottom:6px;
   font-size:11pt;
@@ -150,4 +166,50 @@ page {
   display: flex; 
   justify-content: center;
   align-items: center;  
+}
+
+.modal-box{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  }
+
+.modal-body{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.modal-content{
+  /* width: 60%; */
+  overflow: hidden;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+
+.modal-content{
+  width: 98vw;
+  height:80vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;  
+}
+.modal-content .fenxiang{
+  width: 100%;
+  height: 40%;
+}
+
+.modal-content .knowBtn{
+  background-color: orange;
+  color: white;
+  width: 90%;
+  margin-bottom: 12px;
 }

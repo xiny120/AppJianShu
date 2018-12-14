@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    flag: true,
     goodsuuid:"",
+    goodsjifen:0,
     //bannerUrls: [],
     goods:{},
     autoplay1: false,//是否自动播放
@@ -30,7 +32,22 @@ Page({
     //this.initbannerads();
     this.loadgoods();
   },
+  /**
+   * 弹出层函数
+   */
+  //出现
+  show: function () {
 
+    this.setData({ flag: false })
+
+  },
+  //消失
+
+  hide: function () {
+
+    this.setData({ flag: true })
+
+  },
 
   initbannerads: function () {
     wx.showLoading({
@@ -81,6 +98,7 @@ Page({
             })
             this0.setData({
               goods: res.data[0],
+              goodsjifen: parseInt(res.data[0].discountprice / 100)
             })
           }
 
@@ -92,6 +110,23 @@ Page({
         }
       })
 
+  },
+
+  toshop: function (event) {
+    const detailuri = '../index/index' ;
+    console.log(detailuri)
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
+
+  fartap:function (e){
+    wx.showToast({
+      title: "收藏成功",
+      duration: 1000,
+      icon: "sucess",
+      make: true
+    })
   },
 
   /**
