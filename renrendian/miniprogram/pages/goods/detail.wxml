@@ -65,9 +65,9 @@
       </view>
       <text style=""> > </text>
     </view>
-    <view class="d_price d_text " >
+    <view class="d_price d_text "  wx:if="{{fuwu > 0}}">
       <view>
-        <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换·极速退款</text>
+        <text>服务</text><text style="margin-left:6px;color:black;">正品保证·七天退换</text>
       </view>
       <text style=""> > </text>
     </view>
@@ -158,8 +158,9 @@
     <view class="modal-body">
       <view class="modal-content">
         <view class="col0" style="margin-top:6px;align-items:center;">
-          <text>本商品专享积分</text>
-          <text>购买可获得专享积分 <text>{{goodsjifen}}</text></text>
+          <text>本商品专享服务</text>
+          <text wx:if="{{goodsjifen > 0}}">购买可获得专享积分 <text>{{goodsjifen}}</text></text>
+          <text wx:if="{{fuwu > 0}}">正品保证·七天退换</text>
         </view>
         <button class="knowBtn" bindtap="hide">完成</button>
      </view>
