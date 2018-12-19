@@ -89,7 +89,7 @@
   </view>
 
   <view class="d f9" style="margin-top:10px;">
-    <view class="d_price" style="margin-top:12px;margin-bottom:12px;">
+    <view class="d_price" style="margin-top:12px;margin-bottom:12px;" bindtap='tapreviews'>
       <view>
         <text>商品评价(5)</text>
       </view>

@@ -113,6 +113,12 @@ Page({
 
   },
 
+  tapreviews:function(e){
+    wx.navigateTo({
+      url: '/pages/goods/reviews?id=' + this.data.goodsuuid,
+    })
+  },
+
   toshop: function (event) {
     const detailuri = '../index/index' ;
     console.log(detailuri)

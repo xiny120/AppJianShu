@@ -21,6 +21,7 @@ page {
 
 }
 
+
 .d{
   background-color: white;
   width: 750rpx;
@@ -39,6 +40,26 @@ page {
 .flex_start{
   justify-content: flex-start;
 }
+
+
+.d_text{
+  align-content: left;
+}
+
+.f9{
+  font-size:9pt;
+  color:gray;
+}
+
+.note{
+  border-radius: 10px;
+  background-color: pink;
+  padding: 3px 6px;
+  margin: 3px;
+  color: black;
+}
+
+
 .font10{
   font-size:15pt;
   color: red;
@@ -51,14 +72,6 @@ page {
   text-decoration:line-through;
 }
 
-.d_text{
-  align-content: left;
-}
-
-.f9{
-  font-size:9pt;
-  color:gray;
-}
 
 .fb{
   font-weight: bold;
@@ -75,13 +88,7 @@ page {
   justify-content: space-between;
 }
 
-.note{
-  border-radius: 10px;
-  background-color: pink;
-  padding: 3px 6px;
-  margin: 3px;
-  color: black;
-}
+
 
 .page__hd{
   background-color:white;
