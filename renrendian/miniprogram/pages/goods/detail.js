@@ -7,8 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    stylename:"默认",
     fuwu:true,
     flag: true,
+    stylesflag:true,
     goodsuuid:"",
     goodsjifen:0,
     //bannerUrls: [],
@@ -30,56 +32,19 @@ Page({
    */
   onLoad: function (opts) {
     this.setData({ goodsuuid: opts.id });
-    //this.initbannerads();
     this.loadgoods();
   },
   /**
    * 弹出层函数
    */
   //出现
-  show: function () {
-
-    this.setData({ flag: false })
-
+  show: function () {this.setData({ flag: false }); },
+  hide: function () {this.setData({ flag: true }); },
+  stylesshow: function () { this.setData({ stylesflag: false }); },
+  styleshide: function () { this.setData({ stylesflag: true }); },
+  stopPageScroll() {
+    return
   },
-  //消失
-
-  hide: function () {
-
-    this.setData({ flag: true })
-
-  },
-
-  initbannerads: function () {
-    wx.showLoading({
-      title: '加载中...',
-    })
-    var this0 = this;
-    db.collection('store_goodsswiper').where({
-      storeuuid: 'W_UO50XacNtiP6m5',
-      goodsuuid:this0.data.goodsuuid
-    })
-      .get({
-        success: function (res) {
-          console.log(res.data)
-          //data.bannerUrls.push(res.data);
-          if (res.data.length > 0) {
-            this0.setData({
-              bannerUrls: res.data,
-            })
-          }
-
-          wx.hideLoading();
-        },
-        fail: function (e) {
-          console.log(e);
-          wx.hideLoading();
-        }
-      })
-
-  },
-
-
   loadgoods: function () {
     wx.showLoading({
       title: '加载中...',
@@ -92,14 +57,30 @@ Page({
       .get({
         success: function (res) {
           console.log(res.data)
-          //data.bannerUrls.push(res.data);
           if (res.data.length > 0) {
             wx.setNavigationBarTitle({
               title: res.data[0].text,
             })
+
+            var guige = "默认";
+            
+            if (res.data[0].styles && res.data[0].styles.length > 0) {
+              guige = "";
+              res.data[0].styles.forEach(function (value, index, arrSelf) {
+                if(guige==""){
+                  guige = value.name;
+                }else{
+                  guige += "·" + value.name;
+                }
+              });
+            }
+
+            
             this0.setData({
               goods: res.data[0],
-              goodsjifen: parseInt(res.data[0].discountprice / 100)
+              goodsjifen: parseInt(res.data[0].discountprice / 100),
+              stylename:guige,
+
             })
           }
 
