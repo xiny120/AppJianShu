@@ -168,33 +168,35 @@
 </view>
 
 <view class="modal-box" hidden="{{stylesflag}}" catchtouchmove='stopPageScroll'>
-  <view class="modal-body">
+  <view class="modal-body" style='font-size:11pt;'>
     <view class="modal-content">
-      <view class="row0" style="margin-top:10px;margin-right:6px;justify-content:space-between;">
-        <view style="width:100%;padding:10px;">
-          <image mode="aspectFit" style="width:20%;"  data-aduri="{{goods._id}}" src="cloud://subrac-89aa62.7375-subrac-89aa62/{{goods.detailbanners[0]}}" ></image>
+      <view class="row0" style="margin:6px;justify-content:space-between;">
+        <view class="row01" style="width:90vw;height:20vh;">
+          <view style="width:30vw;height:20vh;">
+            <image mode="scaleToFill" style="width:100%;height:20vh;"  data-aduri="{{goods._id}}" src="cloud://subrac-89aa62.7375-subrac-89aa62/{{goods.detailbanners[0]}}" ></image>
+          </view>
+          <view class="col0" style="margin-left:8px;">
+            <text style='color:red;'>¥50</text>
+            <text>库存:60</text>
+            <text>请选择</text>
+          </view>
         </view>
-        <view>
+        <view class="rt">
           <icon type="clear" size='18px' bindtap="styleshide"></icon>
         </view>
       </view>
       
-      <scroll-view scroll-y="true" style="background-color:red;height:50vh;margin-top:6px;">
-        <view style="height:60vh;">
-          111
-        </view>
-        <view style="height:60vh;">
-          222
-        </view>
-        <view style="height:60vh;">
-          333
-        </view>
-        <view style="height:60vh;">
-          444
-        </view>
-        <view style="height:60vh;">
-          555
-        </view>
+      <scroll-view scroll-y="true" style="height:45vh;padding:6px;">
+        <block wx:for='{{goods.styles}}' wx:for-index="idx" wx:key='_id'>
+          <view style="width:100%;">
+            <text>{{item.name}}</text>
+            <view class="d_price d_text  flex_start" style="margin:8px;justify-content:flex_start;">
+              <block wx:for='{{item.values}}'  wx:key='_id'>
+                <view class="{{styles[idx] == 'item.name' ? 'styles_active' : 'styles'}}" data-value="{{item.value}}">{{item.name}}</view>
+              </block>
+            </view>
+          </view>
+        </block>
       </scroll-view>
                   
 

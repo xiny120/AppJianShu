@@ -136,6 +136,13 @@ page {
   align-items: center;
 }
 
+.row01{
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+}
+
 .rowdppj{
   width: 100%;
   display: flex;
@@ -220,4 +227,36 @@ page {
   color: white;
   width: 90%;
   margin-bottom: 12px;
+}
+
+.rt{
+  height:20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.styles{
+  border-radius: 10px;
+  background-color:ghostwhite;
+  padding: 3px 10px;
+  margin: 3px;
+  color: black;
+}
+
+.styles{
+  border-radius: 10px;
+  background-color:ghostwhite;
+  padding: 3px 10px;
+  margin: 3px;
+  color: black;
+}
+
+.styles_active{
+  border-radius: 10px;
+  background-color:ghostwhite;
+  padding: 3px 10px;
+  margin: 3px;
+  color:red;
+  border: 2rpx solid red;
 }

@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    styles:[],
     stylename:"默认",
     fuwu:true,
     flag: true,
@@ -65,6 +66,7 @@ Page({
             var guige = "默认";
             
             if (res.data[0].styles && res.data[0].styles.length > 0) {
+              //styles = [];
               guige = "";
               res.data[0].styles.forEach(function (value, index, arrSelf) {
                 if(guige==""){
@@ -72,6 +74,8 @@ Page({
                 }else{
                   guige += "·" + value.name;
                 }
+                styles.push("");
+                
               });
             }
 
