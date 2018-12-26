@@ -7,7 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    detailbanner:"",
+    ccstylechoose: "请选择",
+    skuchoose:[],
+    stylechoose:"请选择",
+    stock:"_",
     styles:[],
+    stylesname:[],
     stylename:"默认",
     fuwu:true,
     flag: true,
@@ -35,6 +41,41 @@ Page({
     this.setData({ goodsuuid: opts.id });
     this.loadgoods();
   },
+
+
+  testFunction() {
+    if(this.data.skuchoose.length < 1){
+      wx.showToast({
+        title: '请选择商品规格！',
+        icon:'none',
+      })
+      return;
+    }
+
+    wx.cloud.callFunction({
+      name: 'shoppingcart_add',
+      data: {
+        goodsuuid: this.data.goodsuuid,
+        sku: this.data.skuchoose,
+      },
+      success: res => {
+        wx.showToast({
+          icon: 'none',
+          title: '加入购物车成功！',
+        })
+
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '加入购物车失败！',
+        })
+        console.error('[云函数] [sum] 调用失败：', err)
+      }
+    })
+  },
+
+
   /**
    * 弹出层函数
    */
@@ -64,9 +105,10 @@ Page({
             })
 
             var guige = "默认";
-            
+            var styles0 = [];
+            var sc = "请选择: ";
             if (res.data[0].styles && res.data[0].styles.length > 0) {
-              //styles = [];
+              styles0 = new Array(res.data[0].styles.length);
               guige = "";
               res.data[0].styles.forEach(function (value, index, arrSelf) {
                 if(guige==""){
@@ -74,8 +116,8 @@ Page({
                 }else{
                   guige += "·" + value.name;
                 }
-                styles.push("");
-                
+                sc = sc + " " + value.name;
+                styles0[index] = "";
               });
             }
 
@@ -84,6 +126,10 @@ Page({
               goods: res.data[0],
               goodsjifen: parseInt(res.data[0].discountprice / 100),
               stylename:guige,
+              styles:styles0,
+              stylechoose:sc,
+              ccstylechoose:sc,
+              detailbanner: res.data[0].detailbanners[0],
 
             })
           }
@@ -98,10 +144,111 @@ Page({
 
   },
 
+  stylestap:function(e){
+    var this0 = this;
+    var sc = this.data.ccstylechoose;
+    var sced = "已选择:";
+    var s = this.data.styles;
+    var sn = this.data.stylesname
+    if (s[e.target.dataset.idx] == ""){
+      s[e.target.dataset.idx] = e.target.dataset.value;
+      sn[e.target.dataset.idx] = e.target.dataset.name;
+    }else{
+      if (s[e.target.dataset.idx] == e.target.dataset.value)
+        s[e.target.dataset.idx] = "";
+      else
+        s[e.target.dataset.idx] = e.target.dataset.value;
+        sn[e.target.dataset.idx] = e.target.dataset.name;
+    }
+    var idx = 0;
+    sc = "请选择:";
+    s.forEach(function (value, index, arrSelf) {
+      if(value == "") {
+        sc = sc + " " + this0.data.goods.styles[index].name;
+        idx = 1;
+      }else{
+        //sced = sced + " " + this0.data.stylesname[index];
+      }
+    });
+
+    if(idx < 1){
+      //sc = sced;
+
+      db.collection('store_goodsskus').where({
+        storeuuid: 'W_UO50XacNtiP6m5',
+        goodsuuid: this0.data.goodsuuid,
+      })
+        .get({
+          success: function (res) {
+            console.log(res.data)
+            if (res.data.length > 0) {
+              var sku = null;
+              res.data[0].skus.forEach(function(val,idx,arr){
+                var count = 0;
+                val.sku.forEach(function(val0,idx0,arro){
+                  if(val0 == s[idx0])
+                    count ++;
+                  else
+                    return;
+                });
+
+                if(count == val.sku.length){ // 有此SKU
+                  sku = val;
+                  return;
+                }else{
+                  // this0.setData({
+                  //  stock: "_",
+                  //  stylechoose: "此型号无货，请重新选择！",
+                  //});                  
+                }
+
+              });
+              if(sku == null){
+                  this0.setData({
+                    skuchoose:[],
+                    stock: "_",
+                    stylechoose: "此型号无货，请重新选择！",
+                  });  
+              }else{
+                this0.setData({
+                  skuchoose:sku,
+                  stock: sku.stock,
+                  stylechoose: "已选择：" + sku.intro,
+                });
+              }
+
+            }
+          },
+          fail: function (e) {
+            console.log(e);
+          }
+        })        
+
+    }
+
+    this.setData({
+      stylesname:sn,
+      styles:s,
+      stylechoose:sc,
+    });
+  },
+
   tapreviews:function(e){
     wx.navigateTo({
       url: '/pages/goods/reviews?id=' + this.data.goodsuuid,
     })
+  },
+
+  tappage__cart:function(e){
+    const detailuri = '../shoppingcart/shoppingcart';
+    console.log(detailuri)
+    wx.switchTab({
+      url: '/pages/shoppingcart/shoppingcart',
+    })
+    //wx.navigateTo({
+    //  url: '/pages/shoppingcart/shoppingcart',
+    //})    
+
   },
 
   toshop: function (event) {

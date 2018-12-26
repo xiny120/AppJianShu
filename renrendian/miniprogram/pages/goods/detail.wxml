@@ -1,5 +1,8 @@
 <!--miniprogram/pages/goods/detail.wxml-->
 <!-- 底部固定 -->
+<view class="page__cart" bindtap='tappage__cart'>
+  <image src='../../images/shoppingcart.png' style="width:26px;height:26px;"></image>
+</view>
 <view class="page__hd">
   <view class="row00" style='margin-left:6px;flex-grow:1;'>
     <view class="col0" bindtap='toshop' style=''>
@@ -38,7 +41,7 @@
     <swiper  class="swiper_ads" style="height:680rpx;" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
         <block wx:for='{{goods.detailbanners}}' wx:key='_id'>
           <swiper-item>
-            <image mode="widthFix" style="width:100%;"  data-aduri="{{goods._id}}" src="cloud://subrac-89aa62.7375-subrac-89aa62/{{item}}" ></image>
+            <image mode="widthFix" style="width:100%;"  data-aduri="{{goods._id}}" src='cloud://subrac-89aa62.7375-subrac-89aa62/{{item}}' ></image>
           </swiper-item>
         </block>
     </swiper>    
@@ -148,11 +151,7 @@
       <image style='width:750rpx;' src='cloud://subrac-89aa62.7375-subrac-89aa62/{{item}}'></image>
     </block>
   </view>
-
-
 </view>
-
-
 
 <view class="modal-box" hidden="{{flag}}" bindtap="hide">
   <view class="modal-body">
@@ -173,12 +172,14 @@
       <view class="row0" style="margin:6px;justify-content:space-between;">
         <view class="row01" style="width:90vw;height:20vh;">
           <view style="width:30vw;height:20vh;">
-            <image mode="scaleToFill" style="width:100%;height:20vh;"  data-aduri="{{goods._id}}" src="cloud://subrac-89aa62.7375-subrac-89aa62/{{goods.detailbanners[0]}}" ></image>
+            <image mode="scaleToFill" style="width:100%;height:20vh;"  data-aduri="{{goods._id}}" src='cloud://subrac-89aa62.7375-subrac-89aa62/{{detailbanner}}' ></image>
           </view>
           <view class="col0" style="margin-left:8px;">
-            <text style='color:red;'>¥50</text>
-            <text>库存:60</text>
-            <text>请选择</text>
+            <view>
+              <text style='color:red;'>¥</text><text class="font10">{{goods.discountprice}}</text><text class="d_price_ori">{{goods.originalprice}}</text>
+            </view>
+            <text>库存:{{stock}}</text>
+            <text>{{stylechoose}}</text>
           </view>
         </view>
         <view class="rt">
@@ -191,18 +192,17 @@
           <view style="width:100%;">
             <text>{{item.name}}</text>
             <view class="d_price d_text  flex_start" style="margin:8px;justify-content:flex_start;">
-              <block wx:for='{{item.values}}'  wx:key='_id'>
-                <view class="{{styles[idx] == 'item.name' ? 'styles_active' : 'styles'}}" data-value="{{item.value}}">{{item.name}}</view>
+              <block wx:for='{{item.values}}'  wx:for-index="idx1"  wx:key='_id'>
+                <view bindtap='stylestap' data-x00="{{styles[idx]}}" class="{{styles[idx] == item.value ? 'styles_active' : 'styles'}}" data-name="{{item.name}}" data-value="{{item.value}}" data-idx="{{idx}}">{{item.name}}</view>
               </block>
             </view>
           </view>
         </block>
       </scroll-view>
-                  
 
       <view>
         <view class="row0" style='margin-right:8px;'>
-          <view class="rad0" style="background-color:orange;">
+          <view class="rad0" style="background-color:orange;" bindtap='testFunction'>
             <text>加入购物车</text>
           </view>
           <view class="rad1">

@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "热销商品"
+  "navigationBarTitleText": "热销商品",
+  "window": {
+    "navigationStyle": "default"
+  }
 }

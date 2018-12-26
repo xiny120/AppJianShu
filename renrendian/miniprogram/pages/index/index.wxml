@@ -1,4 +1,6 @@
 <!--index.wxml-->
+
+
 <view class="container">
   <swiper class="swiper_ads" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay1}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}'>
       <block wx:for='{{bannerUrls}}' wx:key='uuid'>

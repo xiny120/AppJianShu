@@ -103,6 +103,23 @@ page {
   flex-grow:1;
 }
 
+.page__cart{
+  background-color:white;
+  height:30px;
+  width:30px;
+  position:fixed;
+  bottom:58px;
+  right:12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 11pt;
+  flex-grow:1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.20);
+}
+
 .col1{
   display: flex;
   flex-direction: column;

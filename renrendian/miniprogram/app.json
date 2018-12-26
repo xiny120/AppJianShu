@@ -20,6 +20,9 @@
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
+    "usingComponents": {
+      "navbar": "com/navbar"
+    },
   "tabBar": {
     "list": [
       {

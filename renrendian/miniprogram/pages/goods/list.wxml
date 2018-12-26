@@ -12,7 +12,7 @@
       <block wx:for='{{goodslist}}' wx:key='_id'>
         <view  bindtap='goodsitemtap' data-aduri='{{item._id}}'  class="rgoodsitem" style='margin-left:3px;margin-right:2px;'>
           <view style="font-size:9pt;">
-            <image class="image0" style="width:100%;" src='{{item.logo}}' mode="widthFix"></image>
+            <image class="image0" style="width:100%;" src='cloud://subrac-89aa62.7375-subrac-89aa62/{{item.logo}}' mode="widthFix"></image>
             <view class="rgoodsitemintro">
               <text>{{item.text}}</text>
               <text>{{item.text02}}</text>
