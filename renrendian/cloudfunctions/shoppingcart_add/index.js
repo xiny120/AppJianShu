@@ -1,17 +1,27 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({ env:'subrac-89aa62'})
 const db = cloud.database();
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
+
+/*
+  return await db.collection('store_shoppingcart').add({
+    data: {
+      goodsuuid: event.goodsuuid,
+      'sku.sku': event.sku,
+    }
+  })
+  */
+
   
   try {
-    console.log("查询商品是否以进购物车\r\n");
+    console.log("查询商品是否以进购物车 \r\n" + event.goodsuuid + "\r\n");
     await db.collection('store_shoppingcart').where({
       goodsuuid:event.goodsuuid,
-      'sku.sku':event.sku,
+      //'sku.sku':event.sku,
 
     }).get({
       success: function (res) {

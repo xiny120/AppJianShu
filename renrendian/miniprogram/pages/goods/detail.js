@@ -44,7 +44,8 @@ Page({
 
 
   testFunction() {
-    if(this.data.skuchoose.length < 1){
+    var this0 = this;
+    if(this0.data.skuchoose.length < 1){
       wx.showToast({
         title: '请选择商品规格！',
         icon:'none',
@@ -52,6 +53,53 @@ Page({
       return;
     }
 
+    db.collection('store_shoppingcart').where({
+      storeuuid: 'W_UO50XacNtiP6m5',
+      goodsuuid: this0.data.goodsuuid,
+      sku: this.data.skuchoose,
+    }).get({
+        success: function (res) {
+          if (res.data.length > 0) {
+            db.collection('store_shoppingcart').doc(res.data[0]._id).update({
+              data: {
+                count: res.data[0].count + 1
+              },
+              success: styleshide(),
+              fail: console.error
+            })            
+
+          }else
+          {
+
+            db.collection('store_shoppingcart').add({
+              data: {
+                storeuuid: 'W_UO50XacNtiP6m5',
+                goodsuuid: this0.data.goodsuuid,
+                count:0,
+                sku: this0.data.skuchoose
+              },
+              success(res) {
+                styleshide();
+                console.log(res)
+              },
+              complete(res){
+                console.log(res)
+              }
+            })
+
+
+
+          }
+
+        },
+        fail: function (e) {
+          console.log(e);
+        }
+      })
+
+
+
+    /*
     wx.cloud.callFunction({
       name: 'shoppingcart_add',
       data: {
@@ -73,6 +121,7 @@ Page({
         console.error('[云函数] [sum] 调用失败：', err)
       }
     })
+    */
   },
 
 
