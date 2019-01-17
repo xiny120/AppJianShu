@@ -22,6 +22,7 @@ func Account(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/Account.html",
 		"wwwroot/tpl/public/header.html",
 		"wwwroot/tpl/public/nav.html",
+		"wwwroot/tpl/Post.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
 		log.Fatal(err)
@@ -244,6 +245,7 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/Register.html",
 		"wwwroot/tpl/public/header.html",
 		"wwwroot/tpl/public/nav.html",
+
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
 		log.Fatal(err)

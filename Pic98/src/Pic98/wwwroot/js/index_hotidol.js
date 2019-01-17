@@ -51,14 +51,6 @@ function gethotidol(){
 	function (data,status) {
 		if(data != null){
 			listappend($("#hotidol"),data);
-			/*
-			$(data).each(function(idx,item){
-				var hotidol0 = $(hotidolitem).clone();
-				$(hotidol0).find(".card-img-top").attr("src",item.picurl);
-				$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl);
-				$("#hotidol").append($(hotidol0));
-			})
-			*/
 		}
 	},'json');
 }
@@ -71,14 +63,6 @@ function getnewidol(pageidx){
 	function (data,status) {
 		if(data != null){
 			listappend($("#newidol"),data);
-			/*
-			$(data).each(function(idx,item){
-				var hotidol0 = $(hotidolitem).clone();
-				$(hotidol0).find(".card-img-top").attr("src",item.picurl);
-				$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl);
-				$("#newidol").append($(hotidol0));
-			});
-			*/
 			off_on = true;
 		}
 	},'json');
@@ -88,7 +72,7 @@ function getnewidol(pageidx){
 function listappend(container,data){
 	$(data).each(function(idx,item){
 		var hotidol0 = $(hotidolitem).clone();
-		$(hotidol0).find(".card-img-top").attr("src",item.picurl);
+		$(hotidol0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
 		$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + online_key);
 		$(container).append($(hotidol0));
 	});	

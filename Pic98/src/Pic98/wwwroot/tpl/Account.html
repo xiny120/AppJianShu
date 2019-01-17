@@ -3,6 +3,46 @@
 	{{template "nav" .}}
 	
 	<div class="margin_top30" style="">
+  
+  
+    <div class="row">
+      <div class="col-1" style="min-width:150px; margin:8px;">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+            发表文章
+          </a>
+          <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+            收益
+          </a>
+          <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+            钱包
+          </a>
+          <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+            账户中心
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <div class="tab-content" id="v-pills-tabContent">
+          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            {{template "Post" .}}
+          </div>
+          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            2...
+          </div>
+          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+            3...
+          </div>
+          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+            4...
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+  
+ <!-- 
+  
 		<table class="table table-borderless" style="height:500px;">
 			<tbody>
 		    	<tr>
@@ -12,7 +52,7 @@
 						    <tr>
 						      <td onclick="showpanel(2)">修改密码</td>
 						    </tr>
-<!--						    <tr>
+						    <tr>
 						      <td onclick="showpanel(0)">用户信息</td>
 						    </tr>
 						    <tr>
@@ -24,7 +64,7 @@
 						    <tr>
 						      <td onclick="showpanel(4)">钱包</td>
 						    </tr>
-							-->
+
 						  </tbody>
 						</table>
 					</td>
@@ -157,7 +197,8 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+    							-->
+
  
     {{template "footer"}}
 	<script src="/Js/md5.js"></script>
