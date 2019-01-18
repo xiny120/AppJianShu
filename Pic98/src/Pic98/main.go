@@ -5,10 +5,13 @@ import (
 	"Pic98/Cfg"
 	"Pic98/Handler"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func main() {
+	rand.Seed(time.Now().Unix())
 	Cfg.Cfg["tidb"] = "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98"
 	sMux := http.NewServeMux()
 	rh := http.RedirectHandler("http://www.baidu.com", 307)
@@ -31,6 +34,8 @@ func main() {
 	sMux.Handle("/Account/Register/Cmd", regid)
 	regLogin := http.HandlerFunc(Handler.Account_Login)
 	sMux.Handle("/Account/Login/", regLogin)
+	regPost := http.HandlerFunc(Handler.Account_Post)
+	sMux.Handle("/Account/Post/", regPost)
 	regi := http.HandlerFunc(Handler.Image)
 	sMux.Handle("/Image/", regi)
 	regiv := http.HandlerFunc(Handler.Image_Vip)

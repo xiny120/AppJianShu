@@ -71,7 +71,7 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 
 		// resize to width 1000 using Lanczos resampling
 		// and preserve aspect ratio
-		m := resize.Resize(200, 0, img, resize.Lanczos3)
+		m := resize.Resize(160, 0, img, resize.Lanczos3)
 		pathstrd := strings.Replace(path, "wwwroot", "wwwroot/thumbnail/", 1)
 		createFile(pathstrd)
 

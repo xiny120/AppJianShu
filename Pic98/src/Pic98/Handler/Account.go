@@ -262,3 +262,8 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 }
+
+func Account_Post(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "%s", "register now!")
+
+}
