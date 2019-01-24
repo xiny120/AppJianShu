@@ -140,3 +140,33 @@
 
  
     }
+
+
+        #lrcontainer {
+        	margin-top:12px;
+        }
+
+        #lrwrapper {
+            display: inline-block;
+            border-left: 200px solid white;
+            position: relative;
+            vertical-align: bottom;
+        }
+        
+        #lrsidebar {
+            float: left;
+            width: 200px;
+            margin-left: -200px;
+            position: relative;            
+        }
+        
+        #lrmain {
+            float: left;
+        }    
+
+        #lrmain,
+        #lrsidebar{
+            min-height: 200px;
+            height: auto !important;
+            height: 200px;
+        }
