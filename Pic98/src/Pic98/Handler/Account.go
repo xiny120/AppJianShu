@@ -145,7 +145,6 @@ func Account_Register_Cmd_Login(db *sql.DB, name string, pwd string) (Member.Use
 	return ui, nil
 }
 
-// 获取表数据
 func Account_Register_Cmd_CheckId(db *sql.DB, name string) (int, error) {
 	strsql := fmt.Sprintf("SELECT userguid FROM Pic98.useridentify where userid='%s'", name)
 	log.Println(strsql)
@@ -277,4 +276,31 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "%s", "register now!")
+}
+
+func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
+	ui := Userinfo{Online_key: ""}
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	stmt, _ := db.Prepare(`SELECT a.userguid FROM Pic98.useridentify a, Pic98.userinfo b 
+	where a.userid=? and a.userguid = b.userguid and b.password = ?`)
+	log.Println(stmt)
+	defer stmt.Close()
+	rows, err := stmt.Query(un, pwd)
+	log.Println(rows)
+	log.Println(err)
+	if err == nil {
+		defer rows.Close()
+		if rows.Next() {
+			ok, _ := uuid.NewV4()
+			ui.Online_key = ok.String()
+			ui.Un = un
+
+			Sessions[ui.Online_key] = ui
+		}
+	}
+	return ui, nil
 }
