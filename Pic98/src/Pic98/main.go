@@ -45,18 +45,6 @@ func main() {
 	regiu := http.HandlerFunc(Handler.Image_Update)
 	sMux.Handle("/Image/Update", regiu)
 
-	//regj := http.HandlerFunc(Handler.Js)
-	//sMux.Handle("/Js/", regj)
-	//regc := http.HandlerFunc(Handler.Css)
-	//sMux.Handle("/Css/", regc)
-	//sMux.Handle("/css/", regc)
-	//regFonts := http.HandlerFunc(Handler.Fonts)
-	//sMux.Handle("/Fonts/", regFonts)
-	//sMux.Handle("/fonts/", regFonts)
-	//regIcon := http.HandlerFunc(Handler.Icon)
-	//sMux.Handle("/Icon/", regIcon)
-	//sMux.Handle("/icon/", regIcon)
-
 	makeThumbnail := http.HandlerFunc(Handler.MakeThumbnail)
 	sMux.Handle("/MakeThumbnail/", makeThumbnail)
 
@@ -67,11 +55,11 @@ func main() {
 	sMux.Handle("/php_ueditor_controller/", php_ueditor_controller)
 
 	log.Println("请用浏览器打开 http://127.0.0.1:3000 ...")
-	sMux.Handle("/Js/", http.StripPrefix("/Js/", http.FileServer(http.Dir("wwwroot/js"))))
-	sMux.Handle("/Css/", http.StripPrefix("/Css/", http.FileServer(http.Dir("wwwroot/css"))))
-	sMux.Handle("/Fonts/", http.StripPrefix("/Fonts/", http.FileServer(http.Dir("wwwroot/fonts"))))
-	sMux.Handle("/Icon/", http.StripPrefix("/Icon/", http.FileServer(http.Dir("wwwroot/icon"))))
-	sMux.Handle("/3rd/", http.StripPrefix("/3rd/", http.FileServer(http.Dir("wwwroot/3rd"))))
+	sMux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("wwwroot/static"))))
+	//sMux.Handle("/Css/", http.StripPrefix("/Css/", http.FileServer(http.Dir("wwwroot/css"))))
+	//sMux.Handle("/Fonts/", http.StripPrefix("/Fonts/", http.FileServer(http.Dir("wwwroot/fonts"))))
+	//sMux.Handle("/Icon/", http.StripPrefix("/Icon/", http.FileServer(http.Dir("wwwroot/icon"))))
+	//sMux.Handle("/3rd/", http.StripPrefix("/3rd/", http.FileServer(http.Dir("wwwroot/3rd"))))
 	http.ListenAndServe(":3000", sMux)
 
 }

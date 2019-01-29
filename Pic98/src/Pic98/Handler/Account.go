@@ -265,6 +265,16 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func Account_Post(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "%s", "register now!")
+	//editorValue title
+	err := r.ParseForm()
+	if err != nil {
+		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
+	} else {
+		for k, v := range r.Form {
+			fmt.Printf("key: %v\n", k)
+			fmt.Printf("val: %v\n", strings.Join(v, ";"))
+		}
+	}
 
+	fmt.Fprintf(w, "%s", "register now!")
 }

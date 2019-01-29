@@ -32,7 +32,7 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 		op := r.FormValue("action")
 		switch op {
 		case "config": //这里是conf/config.json
-			file, err := os.Open("wwwroot/3rd/UMeditor/utf8-php/php/config.json")
+			file, err := os.Open("wwwroot/static/3rd/UMeditor/utf8-php/php/config.json")
 			if err != nil {
 				log.Fatal(err)
 				os.Exit(1)

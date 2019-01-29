@@ -62,16 +62,35 @@
     <script type="text/javascript" charset="utf-8" src="/3rd/UMeditor/utf8-php/lang/zh-cn/zh-cn.js"></script>
 
 <div>
-<form name='form66' action="Post" method="post">
+<form name='form66' action="Post/" method="post">
   <div class="form-group">
-    <input class="form-control" type="text" placeholder="请输入标题.">
+    <input name="title" class="form-control" type="text" placeholder="请输入标题." required>
+    <div class="invalid-feedback">
+      要输入标题哦！
+    </div>    
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">标签(增加标签可以增加文章推荐率)</label>
     <div>
-    <button type="button" class="btn btn-danger">Danger</button>
-    <button type="button" class="btn btn-danger">Danger</button>
-    <button type="button" class="btn btn-danger">Danger</button>
+      <!--
+    	<div class="checkbox">
+    		<label>
+    			<input type="checkbox" name="label01" value="value01"> 请打勾
+    		</label>
+    	</div>    
+
+    	<div class="checkbox">
+    		<label>
+    			<input type="checkbox" name="label02" value="value02"> 请打勾
+    		</label>
+    	</div>
+      -->
+    
+    
+    <button type="button" class="btn-label btn btn-danger">Danger</button>
+    <button type="button" class="btn-label btn btn-danger">Danger</button>
+    <button type="button" class="btn-label btn btn-danger">Danger</button>
+    
     </div>
   </div>
   <div class="form-group">
@@ -83,7 +102,7 @@
           <option value="1">本站签约模特</option>
         </select>      
       </div>
-      <div class="col-auto my-1">
+      <div class="col-auto my-1" style="display:none;">
         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
           <option selected>tiya</option>
           <option value="1">amilia</option>
@@ -95,35 +114,37 @@
   </div>  
 
   <div class="form-group">
-
     <script id="editor123" type="text/plain" style="height:350px;">
-
-   
     </script>
     
     <script type="text/javascript">
       window.UEDITOR_HOME_URL = "/3rd/UMeditor/utf8-php/"
-      //实例化编辑器
-      //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       var ue = UE.getEditor('editor123');
-
       
       $(document).ready(function() {
-
-        //$("#tijiao").click(function(){
+        
         $("form[name='form66']").on('submit', function() {
-          alert("shit submit");
     		    $(this).ajaxSubmit({
+              type: 'post', // 提交方式 get/post
     			    success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
                 alert("登录失败,请重试!");				     
     	        }
     		    });          
           return false;
         });
-        //});
-        
 
       });
+      
+      var param_url = "/Index/Newidol";
+      function getparam(){
+      	$.post(newidolurl, { pageidx:pageidx},
+      	function (data,status) {
+      		if(data != null){
+      			listappend($("#newidol"),data);
+      			off_on = true;
+      		}
+      	},'json');
+      }      
       
     </script>
     
