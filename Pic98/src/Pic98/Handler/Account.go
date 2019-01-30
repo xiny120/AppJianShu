@@ -269,38 +269,87 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
 	} else {
-		for k, v := range r.Form {
-			fmt.Printf("key: %v\n", k)
-			fmt.Printf("val: %v\n", strings.Join(v, ";"))
+		//for k, v := range r.Form {
+		//	fmt.Printf("key: %v\n", k)
+		//	fmt.Printf("val: %v\n", strings.Join(v, ";"))
+		//}
+		Title := r.FormValue("title")
+		HotLabelText := r.FormValue("hotlabeltext")
+		Idol-type := r.FormValue("idol-type")
+		Idol-name := "00000000-0000-0000-0000-000000000000"
+		if(Idol-type > 0){
+			Idol-name = r.FormValue("idol-name")
 		}
+		Content := r.FormValue("editorValue")
+		aguid, _ := uuid.NewV4()
+		
 	}
 
 	fmt.Fprintf(w, "%s", "register now!")
 }
 
 func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
-	ui := Userinfo{Online_key: ""}
+	type tag struct {
+		Aguid string
+		Label string
+	}
+
+	tags := []tag{}
+
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	stmt, _ := db.Prepare(`SELECT a.userguid FROM Pic98.useridentify a, Pic98.userinfo b 
-	where a.userid=? and a.userguid = b.userguid and b.password = ?`)
+	stmt, _ := db.Prepare(`SELECT aguid,label FROM Pic98.tags`)
 	log.Println(stmt)
 	defer stmt.Close()
-	rows, err := stmt.Query(un, pwd)
+	rows, err := stmt.Query()
 	log.Println(rows)
 	log.Println(err)
 	if err == nil {
 		defer rows.Close()
-		if rows.Next() {
-			ok, _ := uuid.NewV4()
-			ui.Online_key = ok.String()
-			ui.Un = un
-
-			Sessions[ui.Online_key] = ui
+		for rows.Next() {
+			tag0 := tag{Aguid: "", Label: ""}
+			rows.Scan(&tag0.Aguid, &tag0.Label)
+			tags = append(tags, tag0)
 		}
 	}
-	return ui, nil
+	tags_, _ := json.Marshal(tags)
+	result := string(tags_)
+	log.Println(result)
+	w.Write([]byte(result))
+}
+
+func Account_Post_Param_Idol(w http.ResponseWriter, r *http.Request) {
+	type tag struct {
+		Userguid  string
+		Nick_name string
+	}
+
+	tags := []tag{}
+
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	stmt, _ := db.Prepare(`SELECT userguid,nick_name FROM Pic98.userinfo where idol > 0`)
+	log.Println(stmt)
+	defer stmt.Close()
+	rows, err := stmt.Query()
+	log.Println(rows)
+	log.Println(err)
+	if err == nil {
+		defer rows.Close()
+		for rows.Next() {
+			tag0 := tag{Userguid: "", Nick_name: ""}
+			rows.Scan(&tag0.Userguid, &tag0.Nick_name)
+			tags = append(tags, tag0)
+		}
+	}
+	tags_, _ := json.Marshal(tags)
+	result := string(tags_)
+	log.Println(result)
+	w.Write([]byte(result))
 }

@@ -38,6 +38,10 @@ func main() {
 	HttpMux.Handle("/Account/Login/", regLogin)
 	regPost := http.HandlerFunc(Handler.Account_Post)
 	HttpMux.Handle("/Account/Post/", regPost)
+	regPostParam := http.HandlerFunc(Handler.Account_Post_Param)
+	HttpMux.Handle("/Account/Post/Param", regPostParam)
+	regPostParamIdol := http.HandlerFunc(Handler.Account_Post_Param_Idol)
+	HttpMux.Handle("/Account/Post/Param/Idol/", regPostParamIdol)
 	regi := http.HandlerFunc(Handler.Image)
 	HttpMux.Handle("/Image/", regi)
 	regiv := http.HandlerFunc(Handler.Image_Vip)
@@ -54,7 +58,7 @@ func main() {
 	HttpMux.Handle("/thumbnail/", thumbnail)
 
 	php_ueditor_controller := http.HandlerFunc(Handler.Php_ueditor_controller)
-	HttpMux.Handle("/php_ueditor_controller/", php_ueditor_controller)ß
+	HttpMux.Handle("/php_ueditor_controller/", php_ueditor_controller)
 
 	log.Println("请用浏览器打开 http://127.0.0.1:3000 ...")
 	HttpMux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("wwwroot/static"))))
