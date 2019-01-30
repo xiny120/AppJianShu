@@ -10,7 +10,10 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/satori/go.uuid"
@@ -265,6 +268,7 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 
 func Account_Post(w http.ResponseWriter, r *http.Request) {
 	//editorValue title
+	result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
 	err := r.ParseForm()
 	if err != nil {
 		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
@@ -275,17 +279,34 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 		//}
 		Title := r.FormValue("title")
 		HotLabelText := r.FormValue("hotlabeltext")
-		Idol-type := r.FormValue("idol-type")
-		Idol-name := "00000000-0000-0000-0000-000000000000"
-		if(Idol-type > 0){
-			Idol-name = r.FormValue("idol-name")
+		Idol_type, _ := strconv.Atoi(r.FormValue("idol-type"))
+		Idol_name := "00000000-0000-0000-0000-000000000000"
+		if Idol_type > 0 {
+			Idol_name = r.FormValue("idol-name")
 		}
 		Content := r.FormValue("editorValue")
-		aguid, _ := uuid.NewV4()
-		
+		aguid, aguide := uuid.NewV4()
+		if Title == "" || HotLabelText == "" || Idol_name == "" || Content == "" || aguide != nil {
+			result = "{\"status\":1,\"msg\":\"WebApi Account/Post 标题，标签，模特，内容，uuid  失败\"}"
+		} else {
+			log.Println(aguid)
+			// Load the HTML document
+			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Content))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			// Find the review items
+			doc.Find("img").Each(func(i int, s *goquery.Selection) {
+				// For each item fou
+				log.Println(s.Attr("src"))
+			})
+
+		}
+
 	}
 
-	fmt.Fprintf(w, "%s", "register now!")
+	fmt.Fprintf(w, "%s", result)
 }
 
 func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
