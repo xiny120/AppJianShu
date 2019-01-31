@@ -62,11 +62,11 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 	startidx := pageidx * pagesize
 
 	stmt, _ := db.Prepare(`SELECT categoryguid, aguid, picurl, createtime, idolguid, likesum from picinfo order by likemonth desc limit ?,?`)
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query(startidx, pagesize)
-	log.Println(rows)
-	log.Println(err)
+	//log.Println(rows)
+	//log.Println(err)
 	if err == nil {
 		defer rows.Close()
 
@@ -79,7 +79,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 		}
 
 		usersBytes, _ := json.Marshal(&pics)
-		log.Println(string(usersBytes))
+		//log.Println(string(usersBytes))
 		w.Write(usersBytes)
 	}
 }
@@ -101,11 +101,11 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 	startidx := pageidx * pagesize
 	stmt, _ := db.Prepare(`SELECT categoryguid, aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit ?,?`)
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query(startidx, pagesize)
-	log.Println(rows)
-	log.Println(err)
+	//log.Println(rows)
+	//log.Println(err)
 	if err == nil {
 		defer rows.Close()
 
@@ -118,7 +118,7 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 		}
 
 		usersBytes, _ := json.Marshal(&pics)
-		log.Println(string(usersBytes))
+		//log.Println(string(usersBytes))
 		w.Write(usersBytes)
 	}
 }

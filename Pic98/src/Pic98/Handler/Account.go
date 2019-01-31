@@ -10,6 +10,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"image/jpeg"
+	"os"
 	"strconv"
 	"strings"
 
@@ -94,7 +96,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					if ret != "" {
 						cookie := http.Cookie{Name: "token", Value: ret, Path: "/", MaxAge: 86400 * 10}
 						http.SetCookie(w, &cookie)
-						log.Println(ui)
+						//log.Println(ui)
 						uidata_, _ := json.Marshal(ui)
 						uidata = string(uidata_)
 					}
@@ -115,7 +117,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 					if ret != "" {
 						cookie := http.Cookie{Name: "token", Value: ret, Path: "/", MaxAge: 86400 * 10}
 						http.SetCookie(w, &cookie)
-						log.Println(ui)
+						//log.Println(ui)
 						uidata_, _ := json.Marshal(ui)
 						uidata = string(uidata_)
 					}
@@ -123,8 +125,8 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 				} else if cmd == "ModifyPassword" {
 					name := r.FormValue("name")
 					pwd := r.FormValue("pwd")
-					log.Println(name)
-					log.Println(pwd)
+					//log.Println(name)
+					//log.Println(pwd)
 					ret, _ := Account_Register_Cmd_ModifyPassword(db, name, pwd)
 
 					if ret {
@@ -137,23 +139,23 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 	}
-	log.Println(result)
+	//log.Println(result)
 	w.Write([]byte(result))
 
 }
 
 func Account_Register_Cmd_Login(db *sql.DB, name string, pwd string) (Member.Userinfo, error) {
 	ui, _ := Member.Login(name, pwd)
-	log.Println(Member.Sessions)
+	//log.Println(Member.Sessions)
 	return ui, nil
 }
 
 func Account_Register_Cmd_CheckId(db *sql.DB, name string) (int, error) {
 	strsql := fmt.Sprintf("SELECT userguid FROM Pic98.useridentify where userid='%s'", name)
-	log.Println(strsql)
+	//log.Println(strsql)
 	rows, err := db.Query(strsql)
-	log.Println(rows)
-	log.Println(err)
+	//log.Println(rows)
+	//log.Println(err)
 	if err == nil {
 		defer rows.Close()
 		if !rows.Next() {
@@ -165,11 +167,11 @@ func Account_Register_Cmd_CheckId(db *sql.DB, name string) (int, error) {
 
 func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid string) (Member.Userinfo, error) {
 	stmt, _ := db.Prepare("INSERT INTO userinfo(userguid,password,nick_name) VALUES (?,?,?)")
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	_, err := stmt.Exec(userguid, pwd, name)
 	if err != nil {
-		fmt.Printf("insert data error: %v\n", err)
+		//fmt.Printf("insert data error: %v\n", err)
 		return Member.Userinfo{Online_key: ""}, nil
 	}
 
@@ -177,23 +179,23 @@ func Account_Register_Cmd_Register(db *sql.DB, name string, pwd string, userguid
 	defer stmt.Close()
 	_, err = stmt.Exec(userguid, name)
 	if err != nil {
-		fmt.Printf("insert data error: %v\n", err)
+		//fmt.Printf("insert data error: %v\n", err)
 		return Member.Userinfo{Online_key: ""}, nil
 	}
 
 	ui, _ := Member.Login(name, pwd)
-	log.Println(Member.Sessions)
+	//log.Println(Member.Sessions)
 
 	return ui, nil
 }
 
 func Account_Register_Cmd_ModifyPassword(db *sql.DB, name string, pwd string) (bool, error) {
 	stmt, _ := db.Prepare("update userinfo  left join useridentify  on userinfo.userguid = useridentify.userguid set userinfo.password = ? where useridentify.userid=?")
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	_, err := stmt.Exec(pwd, name)
 	if err != nil {
-		fmt.Printf("insert data error: %v\n", err)
+		//fmt.Printf("insert data error: %v\n", err)
 		return false, err
 	}
 
@@ -270,13 +272,13 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 	//editorValue title
 	result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
 	err := r.ParseForm()
+	//cookie, err0 := r.Cookie("token")
+	ui, err0 := Member.LoadUserinfo(r)
 	if err != nil {
 		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
-	} else {
-		//for k, v := range r.Form {
-		//	fmt.Printf("key: %v\n", k)
-		//	fmt.Printf("val: %v\n", strings.Join(v, ";"))
-		//}
+	} else if err0 == nil {
+		userguid := ui.Userguid
+
 		Title := r.FormValue("title")
 		HotLabelText := r.FormValue("hotlabeltext")
 		Idol_type, _ := strconv.Atoi(r.FormValue("idol-type"))
@@ -285,21 +287,54 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 			Idol_name = r.FormValue("idol-name")
 		}
 		Content := r.FormValue("editorValue")
-		aguid, aguide := uuid.NewV4()
+		aguid_topic, aguide := uuid.NewV4()
 		if Title == "" || HotLabelText == "" || Idol_name == "" || Content == "" || aguide != nil {
 			result = "{\"status\":1,\"msg\":\"WebApi Account/Post 标题，标签，模特，内容，uuid  失败\"}"
 		} else {
-			log.Println(aguid)
+			log.Println(aguid_topic)
 			// Load the HTML document
 			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Content))
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 
 			// Find the review items
 			doc.Find("img").Each(func(i int, s *goquery.Selection) {
 				// For each item fou
-				log.Println(s.Attr("src"))
+				src, _ := s.Attr("src")
+				file := "wwwroot/" + src
+				//log.Println(file)
+
+				aguid, _ := uuid.NewV4()
+
+				f1, errjpg := os.Open(file)
+				if errjpg != nil {
+					//panic(errjpg)
+				}
+				defer f1.Close()
+
+				m1, errm := jpeg.Decode(f1)
+				if errm != nil {
+					//panic(errm)
+				}
+				bounds := m1.Bounds()
+
+				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+				if err != nil {
+					log.Println(err)
+				}
+				defer db.Close()
+				file = strings.Replace(file, "wwwroot/", "", -1)
+				//log.Println(file)
+				stmt, _ := db.Prepare("INSERT INTO picinfo(aguid,picurl,width,height,userguid,idolguid) VALUES (?,?,?,?,?,?)")
+				//log.Println(stmt)
+				defer stmt.Close()
+				_, erri := stmt.Exec(aguid, "/"+file,
+					bounds.Dx(), bounds.Dy(), userguid, Idol_name)
+				if erri != nil {
+					fmt.Printf("insert data error: %v\n", err)
+				}
+
 			})
 
 		}
@@ -323,11 +358,11 @@ func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	stmt, _ := db.Prepare(`SELECT aguid,label FROM Pic98.tags`)
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query()
-	log.Println(rows)
-	log.Println(err)
+	//log.Println(rows)
+	//log.Println(err)
 	if err == nil {
 		defer rows.Close()
 		for rows.Next() {
@@ -338,7 +373,7 @@ func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
 	}
 	tags_, _ := json.Marshal(tags)
 	result := string(tags_)
-	log.Println(result)
+	//log.Println(result)
 	w.Write([]byte(result))
 }
 
@@ -356,11 +391,11 @@ func Account_Post_Param_Idol(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	stmt, _ := db.Prepare(`SELECT userguid,nick_name FROM Pic98.userinfo where idol > 0`)
-	log.Println(stmt)
+	//log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query()
-	log.Println(rows)
-	log.Println(err)
+	//log.Println(rows)
+	//log.Println(err)
 	if err == nil {
 		defer rows.Close()
 		for rows.Next() {
@@ -371,6 +406,6 @@ func Account_Post_Param_Idol(w http.ResponseWriter, r *http.Request) {
 	}
 	tags_, _ := json.Marshal(tags)
 	result := string(tags_)
-	log.Println(result)
+	//log.Println(result)
 	w.Write([]byte(result))
 }

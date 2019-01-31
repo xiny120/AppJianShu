@@ -238,6 +238,6 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-	log.Println(result)
+	//log.Println(result)
 	w.Write([]byte(result))
 }

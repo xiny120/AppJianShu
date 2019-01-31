@@ -5,6 +5,7 @@ import (
 	"image/jpeg"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path"
 	"path/filepath"
@@ -26,6 +27,8 @@ func Thumbnail(w http.ResponseWriter, r *http.Request) {
 			filePath = filePath + "/" + val
 
 		}
+
+		filePath, _ = url.QueryUnescape(filePath)
 		log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)

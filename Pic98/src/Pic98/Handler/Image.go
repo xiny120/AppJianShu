@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -21,13 +22,14 @@ import (
 )
 
 func Image(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.RequestURI)
+	//log.Println(r.RequestURI)
 	param := strings.Split(r.RequestURI, "/")
 	if len(param) >= 3 {
-		log.Println(len(param))
-		log.Println(param[2])
+		//log.Println(len(param))
+		//log.Println(param[2])
 		filePath := "wwwroot/Image/" + param[2]
-		log.Println(filePath)
+		//log.Println(filePath)
+		filePath, _ = url.QueryUnescape(filePath)
 		if pe, _ := PathExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return
@@ -47,7 +49,7 @@ func Image_Banner(w http.ResponseWriter, r *http.Request) {
 			filePath = filePath + "/" + val
 
 		}
-		log.Println(filePath)
+		//log.Println(filePath)
 		if pe, _ := PathExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return
@@ -69,7 +71,8 @@ func Image_Vip(w http.ResponseWriter, r *http.Request) {
 			filePath = filePath + "/" + val
 
 		}
-		log.Println(filePath)
+		filePath, _ = url.QueryUnescape(filePath)
+		//log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return

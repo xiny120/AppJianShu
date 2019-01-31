@@ -104,6 +104,17 @@
       window.UEDITOR_HOME_URL = "/static/3rd/UMeditor/utf8-php/"
       var ue = UE.getEditor('editor123');
       
+      ue.addListener('afterExecCommand',function(t, e, arg){
+      afterUploadImage(e);
+      });
+      //e为事件类型
+      
+      function afterUploadImage() {
+      if(arguments[0]=="inserthtml" || arguments[0]=="insertimage"){
+      ue.execCommand( 'insertparagraph' );
+      }
+      }      
+      
       $(document).ready(function() {
         $(document).on("change", "#idol-type",function () { 
           //alert("idol-type");
