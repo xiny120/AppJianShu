@@ -29,7 +29,7 @@ func Thumbnail(w http.ResponseWriter, r *http.Request) {
 		}
 
 		filePath, _ = url.QueryUnescape(filePath)
-		log.Println(filePath)
+		//log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return
