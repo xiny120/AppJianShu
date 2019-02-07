@@ -130,6 +130,16 @@
     }
 }
 
+
+ .box-cc {
+ display：inline-block; 
+ -webkit-column-break-inside：avoid; 
+ -moz-column-break-inside：avoid; 
+ column-break-inside：avoid; 
+ padding：1px; 
+ width：100％; 
+} 
+
 .arrow-right{
         margin-left:5px;
         display:flex;
@@ -170,3 +180,25 @@
             height: auto !important;
             height: 200px;
         }
+		
+		
+ .masonry {
+	
+}
+
+ .masonry    * {
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+    
+ .masonry    img {
+        width: 100%;
+        display: block;
+    }
+    
+ .masonry    .item {
+        box-shadow: 2px 2px 2px #999;
+        position: absolute;
+		background-color:red;
+    }
