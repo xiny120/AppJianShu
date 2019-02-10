@@ -1,11 +1,14 @@
 
+var hotidol;
 var hotidolitem;
 var num = 0;
 var page = 1;
 var off_on = true;
 var online_key="00000000-0000-0000-0000-000000000000";
+var column_count = parseInt($("#hotidol").css("column-count"));
 
 $(document).ready(function(){
+	//return;
 	$(".card-columns").on("click",".card-img-top",function(){
 		
 	});
@@ -15,8 +18,9 @@ $(document).ready(function(){
 		online_key = ui.Online_key;
 	}
 	
-	hotidolitem = $("#hotidol").children(0).clone();
-	$("#hotidol").empty();
+	hotidol = $("#hotidol").children(0).clone();
+	hotidolitem = $("#hotidol").children(0).children(0).clone();
+	$("#hotidol").children(0).empty();
 	setTimeout(gethotidol(), 30);
 	setTimeout(getnewidol(0), 30);
 	
@@ -70,10 +74,17 @@ function getnewidol(pageidx){
 
 
 function listappend(container,data){
+	var hotidol0 = $(hotidol).clone();
 	$(data).each(function(idx,item){
-		var hotidol0 = $(hotidolitem).clone();
-		$(hotidol0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
-		$(hotidol0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + online_key);
-		$(container).append($(hotidol0));
+		//var items = $(container).children();
+		//if(items.length >= column_count){
+		//	console.log(items.length);
+		//}
+		var hotidolitem0 = $(hotidolitem).clone();
+		$(hotidolitem0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
+		$(hotidolitem0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + online_key);
+		$(hotidol0).append($(hotidolitem0));
 	});	
+	$(container).append(hotidol0);
+	
 }

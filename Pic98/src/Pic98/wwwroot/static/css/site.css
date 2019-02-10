@@ -181,24 +181,3 @@
             height: 200px;
         }
 		
-		
- .masonry {
-	
-}
-
- .masonry    * {
-        margin: 0;
-        padding: 0;
-        position: relative;
-    }
-    
- .masonry    img {
-        width: 100%;
-        display: block;
-    }
-    
- .masonry    .item {
-        box-shadow: 2px 2px 2px #999;
-        position: absolute;
-		background-color:red;
-    }

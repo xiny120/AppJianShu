@@ -85,7 +85,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
-	pagesize := 20
+	pagesize := 60
 	pageidx := 0
 	errf := r.ParseForm()
 	if errf != nil {
