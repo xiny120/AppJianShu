@@ -12169,8 +12169,11 @@ UE.commands["insertimage"] = {
           ci.src +
           '" ' +
           (ci._src ? ' _src="' + ci._src + '" ' : "") +
-          (ci.width ? 'width="' + ci.width + '" ' : "") +
-          (ci.height ? ' height="' + ci.height + '" ' : "") +
+          //(ci.width ? 'width="' + ci.width + '" ' : "") +
+          //(ci.height ? ' height="' + ci.height + '" ' : "") +
+          //(ci.width ? 'width="' + ci.width + '" ' : "") +
+          //(ci.height ? ' height="' + ci.height + '" ' : "") +
+		
           (ci["floatStyle"] == "left" || ci["floatStyle"] == "right"
             ? ' style="float:' + ci["floatStyle"] + ';"'
             : "") +
@@ -12198,9 +12201,9 @@ UE.commands["insertimage"] = {
             '><img src="' +
             ci.src +
             '" ' +
-            (ci.width ? 'width="' + ci.width + '" ' : "") +
+            //(ci.width ? 'width="' + ci.width + '" ' : "") +
             (ci._src ? ' _src="' + ci._src + '" ' : "") +
-            (ci.height ? ' height="' + ci.height + '" ' : "") +
+            //(ci.height ? ' height="' + ci.height + '" ' : "") +
             ' style="' +
             (ci["floatStyle"] && ci["floatStyle"] != "center"
               ? "float:" + ci["floatStyle"] + ";"

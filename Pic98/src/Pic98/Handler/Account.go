@@ -298,12 +298,9 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 				log.Println(err)
 			}
 
-			// Find the review items
 			doc.Find("img").Each(func(i int, s *goquery.Selection) {
-				// For each item fou
 				src, _ := s.Attr("src")
 				file := "wwwroot/" + src
-				//log.Println(file)
 
 				aguid, _ := uuid.NewV4()
 
