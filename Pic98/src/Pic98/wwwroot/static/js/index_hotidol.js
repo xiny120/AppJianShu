@@ -8,7 +8,6 @@ var online_key="00000000-0000-0000-0000-000000000000";
 var column_count = parseInt($("#hotidol").css("column-count"));
 
 $(document).ready(function(){
-	//return;
 	$(".card-columns").on("click",".card-img-top",function(){
 		
 	});
@@ -41,10 +40,6 @@ $(document).ready(function(){
 			}
         }
     });
-	
-	
-	
-	
 }); 
 
 
@@ -54,7 +49,7 @@ function gethotidol(){
 	$.post(hotidolurl, { cpid:null},
 	function (data,status) {
 		if(data != null){
-			listappend($("#hotidol"),data);
+			//listappend($("#hotidol"),data);
 		}
 	},'json');
 }
@@ -72,19 +67,14 @@ function getnewidol(pageidx){
 	},'json');
 }
 
-
 function listappend(container,data){
 	var hotidol0 = $(hotidol).clone();
+	$(hotidol0).empty();
 	$(data).each(function(idx,item){
-		//var items = $(container).children();
-		//if(items.length >= column_count){
-		//	console.log(items.length);
-		//}
 		var hotidolitem0 = $(hotidolitem).clone();
 		$(hotidolitem0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
-		$(hotidolitem0).find(".card_a").attr("href","/Detail/" + item.picurl + "?guid=" + online_key);
+		$(hotidolitem0).find(".card_a").attr("href","/topic/" + item.aguid + ".html");
 		$(hotidol0).append($(hotidolitem0));
 	});	
 	$(container).append(hotidol0);
-	
 }

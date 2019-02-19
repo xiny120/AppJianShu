@@ -10,8 +10,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"image/jpeg"
+	_ "image/jpeg"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -272,13 +273,10 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 	//editorValue title
 	result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
 	err := r.ParseForm()
-	//cookie, err0 := r.Cookie("token")
 	ui, err0 := Member.LoadUserinfo(r)
 	if err != nil {
-		//result := "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd ParseForm失败\"}"
 	} else if err0 == nil {
 		userguid := ui.Userguid
-
 		Title := r.FormValue("title")
 		HotLabelText := r.FormValue("hotlabeltext")
 		Idol_type, _ := strconv.Atoi(r.FormValue("idol-type"))
@@ -287,60 +285,128 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 			Idol_name = r.FormValue("idol-name")
 		}
 		Content := r.FormValue("editorValue")
-		aguid_topic, aguide := uuid.NewV4()
-		if Title == "" || HotLabelText == "" || Idol_name == "" || Content == "" || aguide != nil {
+		//aguid_topic, aguide := uuid.NewV4()
+		if Title == "" || HotLabelText == "" || Idol_name == "" || Content == "" { // || aguide != nil {
 			result = "{\"status\":1,\"msg\":\"WebApi Account/Post 标题，标签，模特，内容，uuid  失败\"}"
 		} else {
-			log.Println(aguid_topic)
+			//log.Println(aguid_topic)
 			// Load the HTML document
+			coverimg := ""
 			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Content))
 			if err != nil {
 				log.Println(err)
+			} else {
+				doc.Find("img").Each(func(i int, s *goquery.Selection) {
+					src, _ := s.Attr("src")
+					file := "wwwroot/" + src
+
+					if i < 5 {
+						src0 := strings.Replace(src, "Vip", "free", 1)
+						file0 := "wwwroot/" + src0
+						os.MkdirAll(filepath.Dir(file0), 0777)
+						os.Rename(file, file0)
+						s.SetAttr("src", src0)
+
+						file1 := file
+						file1 = strings.Replace(file1, "wwwroot", "wwwroot/thumbnail/", 1)
+						file2 := strings.Replace(file1, "Vip", "free", 1)
+						os.MkdirAll(filepath.Dir(file2), 0777)
+						os.Rename(file1, file2)
+
+						file = file0
+						src = src0
+						if i == 0 {
+							coverimg = src0
+						}
+
+					}
+
+					/*
+
+						aguid, _ := uuid.NewV4()
+
+						f1, errjpg := os.Open(file)
+						if errjpg != nil {
+							//panic(errjpg)
+						}
+						defer f1.Close()
+
+						m1, errm := jpeg.Decode(f1)
+						if errm != nil {
+							//panic(errm)
+						}
+						bounds := m1.Bounds()
+
+						db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+						if err != nil {
+							log.Println(err)
+						}
+						defer db.Close()
+						file = strings.Replace(file, "wwwroot/", "", -1)
+						//log.Println(file)
+						stmt, _ := db.Prepare("INSERT INTO picinfo(aguid,picurl,width,height,userguid,idolguid) VALUES (?,?,?,?,?,?)")
+						//log.Println(stmt)
+						defer stmt.Close()
+						_, erri := stmt.Exec(aguid, "/"+file,
+							bounds.Dx(), bounds.Dy(), userguid, Idol_name)
+						if erri != nil {
+							fmt.Printf("insert data error: %v\n", err)
+						} else {
+							append2tag2pic(HotLabelText, aguid.String())
+						}
+					*/
+				})
+				//intro := ""
+				intro := doc.Text()
+				Content, _ = doc.Html()
+				Content = strings.Replace(Content, "<html><head></head><body>", "", 1)
+				Content = strings.Replace(Content, "</body></html>", "", 1)
+				append2topic(HotLabelText, userguid, Idol_name, Title, Content, intro, coverimg)
 			}
-
-			doc.Find("img").Each(func(i int, s *goquery.Selection) {
-				src, _ := s.Attr("src")
-				file := "wwwroot/" + src
-
-				aguid, _ := uuid.NewV4()
-
-				f1, errjpg := os.Open(file)
-				if errjpg != nil {
-					//panic(errjpg)
-				}
-				defer f1.Close()
-
-				m1, errm := jpeg.Decode(f1)
-				if errm != nil {
-					//panic(errm)
-				}
-				bounds := m1.Bounds()
-
-				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
-				if err != nil {
-					log.Println(err)
-				}
-				defer db.Close()
-				file = strings.Replace(file, "wwwroot/", "", -1)
-				//log.Println(file)
-				stmt, _ := db.Prepare("INSERT INTO picinfo(aguid,picurl,width,height,userguid,idolguid) VALUES (?,?,?,?,?,?)")
-				//log.Println(stmt)
-				defer stmt.Close()
-				_, erri := stmt.Exec(aguid, "/"+file,
-					bounds.Dx(), bounds.Dy(), userguid, Idol_name)
-				if erri != nil {
-					fmt.Printf("insert data error: %v\n", err)
-				} else {
-					append2tag2pic(HotLabelText, aguid.String())
-				}
-
-			})
 
 		}
 
 	}
 
 	fmt.Fprintf(w, "%s", result)
+}
+
+func append2topic(tagguid string, userguid string, Idol_name string, title string, content string, intro string, coverimg string) {
+	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+	//coverimg := ""
+	aguid_topic, _ := uuid.NewV4()
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+	if title != "" {
+
+		stmt, _ := db.Prepare("INSERT INTO Pic98.topic (aguid,coverimg,userguid,idolguid,title,intro,content,tags) VALUES(?,?,?,?,?,?,?,?)")
+		//log.Println(stmt)
+		defer stmt.Close()
+		_, erri := stmt.Exec(aguid_topic, coverimg, userguid, Idol_name, title, intro, content, tagguid)
+		if erri != nil {
+			fmt.Printf("insert data error: %v\n", err)
+		}
+	}
+
+	tagguids := strings.Split(tagguid, ",")
+	for _, val := range tagguids {
+		if val == "" {
+			continue
+		}
+		aguid, _ := uuid.NewV4()
+		stmt, _ := db.Prepare("INSERT INTO tags2topic(aguid,tagguid,topicguid) VALUES (?,?,?)")
+		//log.Println(stmt)
+		defer stmt.Close()
+		log.Println(aguid)
+		log.Println(val)
+		log.Println(aguid_topic)
+		_, erri := stmt.Exec(aguid, val, aguid_topic)
+		if erri != nil {
+			fmt.Printf("insert data error: %v\n", err)
+		}
+	}
 }
 
 func append2tag2pic(tagguid string, picguid string) {

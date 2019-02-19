@@ -17,8 +17,12 @@ type Pic struct {
 	Vaguid        string `json:"aguid"`
 	Vpicurl       string `json:"picurl"`
 	Vcreatetime   string `json:"createtime"`
+	Vuserguid     string `json:"userguid"`
 	Vidolguid     string `json:"idolguid"`
 	Vlike         string `json:"like"`
+	Vtitle        string `json:"title"`
+	Vintro        string `json:"intro"`
+	Vtags         string `json:"tags"`
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +104,7 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	startidx := pageidx * pagesize
-	stmt, _ := db.Prepare(`SELECT categoryguid, aguid, picurl, createtime, idolguid, likesum from picinfo order by createtime desc limit ?,?`)
+	stmt, _ := db.Prepare(`SELECT aguid,coverimg,createtime,likesum,userguid,idolguid,title,intro,tags FROM Pic98.topic order by createtime desc limit ?,?`)
 	//log.Println(stmt)
 	defer stmt.Close()
 	rows, err := stmt.Query(startidx, pagesize)
@@ -113,7 +117,7 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var pic Pic
 
-			rows.Scan(&pic.Vcategoryguid, &pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
+			rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vlike, &pic.Vuserguid, &pic.Vidolguid, &pic.Vtitle, &pic.Vintro, &pic.Vtags)
 			pics = append(pics, pic)
 		}
 

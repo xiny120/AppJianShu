@@ -116,29 +116,6 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 					log.Fatalf("failed to save image: %v", err)
 				}
 
-				/*
-					img, err := jpeg.Decode(file)
-					if err != nil {
-						//log.Fatal(err)
-					} else {
-						// resize to width 1000 using Lanczos resampling
-						// and preserve aspect ratio
-						m := resize.Resize(160, 0, img, resize.Lanczos3)
-
-						createFile(pathstrd)
-
-						out, err := os.Create(pathstrd)
-						if err != nil {
-							//log.Fatal(err)
-						} else {
-							defer out.Close()
-
-							// write new image to file
-							jpeg.Encode(out, m, nil)
-						}
-					}
-				*/
-
 			}
 
 			result = "{\"state\": \"SUCCESS\", \"url\": \"" + strings.Replace(path1, "./wwwroot", "", 1) + "\", \"title\": \"" + h.Filename + "\", \"original\": \"" + h.Filename + "\"}"

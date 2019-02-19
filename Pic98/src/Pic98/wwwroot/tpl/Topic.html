@@ -1,0 +1,21 @@
+{{template "header" .}}
+<body>
+	{{template "nav" .}}
+  <h1 style="display:none;">{{.Title}}</h1>
+	<input type="hidden" id="listtype" value="{{.Listtype}}" />
+  <div>
+    <div>
+      {{.Any}}
+    </div>
+    <div style="text-align:center">
+     {{.Topic}}
+    </div>
+  </div>	
+
+
+	
+ 
+  {{template "footer"}}
+	
+</body>
+</html>

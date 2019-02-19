@@ -60,6 +60,9 @@ func main() {
 	php_ueditor_controller := http.HandlerFunc(Handler.Php_ueditor_controller)
 	HttpMux.Handle("/php_ueditor_controller/", php_ueditor_controller)
 
+	topicHandler := http.HandlerFunc(Handler.Topic)
+	HttpMux.Handle("/topic/", topicHandler)
+
 	log.Println("请用浏览器打开 http://127.0.0.1:3000 ...")
 	HttpMux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("wwwroot/static"))))
 
