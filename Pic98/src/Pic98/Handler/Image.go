@@ -94,15 +94,25 @@ func Image_Vip(w http.ResponseWriter, r *http.Request) {
 			if ui.Userguid != "" {
 				filePath = "wwwroot/Image/Vip"
 			}
-		}
+		} else {
 
+			//
+		}
+		url0 := "/thumbnail/Image/Vip/"
 		for _, val := range param[3:] {
 			if val == ".." {
 				continue
 			}
 			filePath = filePath + "/" + val
+			url0 = url0 + val
 
 		}
+
+		if err0 != nil {
+			http.Redirect(w, r, url0, http.StatusMovedPermanently)
+			return
+		}
+
 		filePath, _ = url.QueryUnescape(filePath)
 		log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
