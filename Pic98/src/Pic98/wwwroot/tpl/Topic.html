@@ -4,10 +4,10 @@
   <h1 style="display:none;">{{.Title}}</h1>
 	<input type="hidden" id="listtype" value="{{.Listtype}}" />
   <div>
-    <div>
+    <div class="topic_any" style="text-align:center;margin:16px;">
       {{.Any}}
     </div>
-    <div style="text-align:center">
+    <div class="topic_container">
      {{.Topic}}
     </div>
   </div>	
@@ -16,6 +16,22 @@
 	
  
   {{template "footer"}}
+  <script>
+  var vallast = null;
+  var topic_any = $(".topic_any").clone();
+  $.each($(".topic_container img"), function(i,val){  
+    console.log($(val).attr("src"));
+    if(i == 4){
+      $(topic_any).insertAfter($(val))
+    }
+       //alert($(val).attr("href"));
+       //alert(i);
+      vallast = val;
+  });
+  
+  if(vallast != null) 
+    $(topic_any).clone().insertAfter($(vallast))
+  </script>
 	
 </body>
 </html>

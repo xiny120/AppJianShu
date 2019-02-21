@@ -17,7 +17,7 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	imgurl := strings.Replace(r.RequestURI, "/Detail", "", 1)
@@ -41,7 +41,7 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	//fmt.Fprintf(w, "%s", t.e)
 }

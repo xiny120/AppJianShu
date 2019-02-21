@@ -7,7 +7,7 @@ import (
 	_ "image/jpeg"
 	"io"
 	"io/ioutil"
-	"log"
+	_ "log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -34,8 +34,8 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 		case "config": //这里是conf/config.json
 			file, err := os.Open("wwwroot/static/3rd/UMeditor/utf8-php/php/config.json")
 			if err != nil {
-				log.Fatal(err)
-				os.Exit(1)
+				//log.Fatal(err)
+				//os.Exit(1)
 			}
 			defer file.Close()
 			fd, err := ioutil.ReadAll(file)
@@ -105,7 +105,7 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 				// Open a test image.
 				src, err := imaging.Open(path1)
 				if err != nil {
-					log.Fatalf("failed to open image: %v", err)
+					//log.Fatalf("failed to open image: %v", err)
 				}
 				// Resize the cropped image to width = 200px preserving the aspect ratio.
 				src = imaging.Resize(src, 160, 0, imaging.Lanczos)
@@ -113,7 +113,7 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 				// Save the resulting image as JPEG.
 				err = imaging.Save(src, pathstrd)
 				if err != nil {
-					log.Fatalf("failed to save image: %v", err)
+					//log.Fatalf("failed to save image: %v", err)
 				}
 
 			}

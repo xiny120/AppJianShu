@@ -17,7 +17,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	log.Println(r.RequestURI)
@@ -37,7 +37,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	//fmt.Fprintf(w, "%s", t.e)
 }

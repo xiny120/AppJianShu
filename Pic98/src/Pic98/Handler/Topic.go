@@ -26,7 +26,7 @@ func Topic(w http.ResponseWriter, r *http.Request) {
 		Title    string
 		Listtype string
 		Topic    template.HTML
-		Any      string
+		Any      template.HTML
 	}{
 		Title:    "列表",
 		Listtype: "",
@@ -40,12 +40,12 @@ func Topic(w http.ResponseWriter, r *http.Request) {
 	if len(params) > 1 {
 		topicguid := params[1]
 		log.Println(topicguid)
-		cookie, err := r.Cookie("token")
-		Any := "未认证用户！游客模式！"
+		_, err := r.Cookie("token")
+		Any := template.HTML("<a href=\"/Account/Register\">匿名游客只能浏览前五幅高清大图！查看全部图片请注册！</a> 或 <a href=\"/Account/Login\">登录</a>")
 		if err == nil {
-			cookievalue := cookie.Value
+			//cookievalue := cookie.Value
 			//log.Println(cookievalue)
-			Any = cookievalue
+			Any = template.HTML("") //cookievalue
 		}
 
 		data.Any = Any
@@ -70,6 +70,7 @@ func Topic(w http.ResponseWriter, r *http.Request) {
 					rows.Scan(&createtime, &like, &userguid, &idolguid, &title, &content, &tags)
 				}
 				data.Topic = template.HTML(content)
+				data.Title = title
 			}
 		}
 

@@ -3,7 +3,7 @@ package Handler
 import (
 	"html/template"
 	"image/jpeg"
-	"log"
+	_ "log"
 	"net/http"
 	"net/url"
 	"os"
@@ -46,7 +46,7 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	path := "wwwroot/Image/Vip/"
@@ -63,12 +63,12 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 
 		file, err := os.Open(path)
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
 		}
 
 		img, err := jpeg.Decode(file)
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
 		}
 		file.Close()
 
@@ -80,7 +80,7 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 
 		out, err := os.Create(pathstrd)
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
 		}
 		defer out.Close()
 
@@ -91,7 +91,7 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 		return nil
 	})
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	data := struct {
@@ -104,7 +104,7 @@ func MakeThumbnail(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 }
 

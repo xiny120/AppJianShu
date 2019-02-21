@@ -32,7 +32,7 @@ func Account(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/Article.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+
 	}
 
 	data := struct {
@@ -43,7 +43,7 @@ func Account(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+
 	}
 }
 
@@ -55,7 +55,7 @@ func Account_Setup(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav_m_ucenter.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+
 	}
 
 	data := struct {
@@ -66,7 +66,7 @@ func Account_Setup(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+
 	}
 }
 
@@ -83,7 +83,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 			if cmd != "" {
 				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 				if err != nil {
-					log.Fatal(err)
+
 				}
 				defer db.Close()
 				if cmd == "Login" {
@@ -211,7 +211,7 @@ func Account_Login(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	err = r.ParseForm()
@@ -241,7 +241,7 @@ func Account_Login(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 }
 
@@ -254,7 +254,7 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	data := struct {
@@ -265,7 +265,7 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 }
 
@@ -442,7 +442,7 @@ func Account_Post_Param(w http.ResponseWriter, r *http.Request) {
 
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	defer db.Close()
 	stmt, _ := db.Prepare(`SELECT aguid,label FROM Pic98.tags`)
@@ -475,7 +475,7 @@ func Account_Post_Param_Idol(w http.ResponseWriter, r *http.Request) {
 
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	defer db.Close()
 	stmt, _ := db.Prepare(`SELECT userguid,nick_name FROM Pic98.userinfo where idol > 0`)

@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"html/template"
-	"log"
+	_ "log"
 	"net/http"
 	"strconv"
 
@@ -32,7 +32,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 
 	data := struct {
@@ -43,7 +43,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, data)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 }
 
@@ -59,7 +59,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	defer db.Close()
 
@@ -100,7 +100,7 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 
 	db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	defer db.Close()
 	startidx := pageidx * pagesize

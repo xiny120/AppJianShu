@@ -46,6 +46,8 @@ func main() {
 	HttpMux.Handle("/Image/", regi)
 	regiv := http.HandlerFunc(Handler.Image_Vip)
 	HttpMux.Handle("/Image/Vip/", regiv)
+	regif := http.HandlerFunc(Handler.Image_Free)
+	HttpMux.Handle("/Image/free/", regif)
 	regibanner := http.HandlerFunc(Handler.Image_Banner)
 	HttpMux.Handle("/Image/Banner/", regibanner)
 	regiu := http.HandlerFunc(Handler.Image_Update)

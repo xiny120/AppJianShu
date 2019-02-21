@@ -2,6 +2,7 @@ package Handler
 
 import (
 	"Pic98/Cfg"
+	"Pic98/Member"
 	"database/sql"
 	"fmt"
 	_ "image"
@@ -58,12 +59,12 @@ func Image_Banner(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Image_Vip(w http.ResponseWriter, r *http.Request) {
+func Image_Free(w http.ResponseWriter, r *http.Request) {
 	requri := r.RequestURI
 	split0 := strings.Split(requri, "?")
 	param := strings.Split(split0[0], "/")
 	if len(param) >= 3 {
-		filePath := "wwwroot/Image/Vip"
+		filePath := "wwwroot/Image/free"
 		for _, val := range param[3:] {
 			if val == ".." {
 				continue
@@ -73,6 +74,37 @@ func Image_Vip(w http.ResponseWriter, r *http.Request) {
 		}
 		filePath, _ = url.QueryUnescape(filePath)
 		//log.Println(filePath)
+		if pe, _ := FileExists(filePath); pe == true {
+			http.ServeFile(w, r, filePath)
+			return
+		}
+		http.ServeFile(w, r, "wwwroot/Image/siwa.jpg")
+	}
+}
+
+func Image_Vip(w http.ResponseWriter, r *http.Request) {
+	requri := r.RequestURI
+	split0 := strings.Split(requri, "?")
+	param := strings.Split(split0[0], "/")
+	if len(param) >= 3 {
+
+		ui, err0 := Member.LoadUserinfo(r)
+		filePath := "wwwroot/thumbnail/Image/Vip"
+		if err0 == nil {
+			if ui.Userguid != "" {
+				filePath = "wwwroot/Image/Vip"
+			}
+		}
+
+		for _, val := range param[3:] {
+			if val == ".." {
+				continue
+			}
+			filePath = filePath + "/" + val
+
+		}
+		filePath, _ = url.QueryUnescape(filePath)
+		log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return
@@ -104,7 +136,7 @@ func Image_Update(w http.ResponseWriter, r *http.Request) {
 
 		db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
 		}
 		defer db.Close()
 		file = strings.Replace(file, "wwwroot/", "", -1)
@@ -159,7 +191,7 @@ func GetAllFiles(dirPth string) (files []string, err error) {
 func getCurrentDirectory() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	return strings.Replace(dir, "\\", "/", -1)
 }
@@ -168,12 +200,12 @@ func getCurrentDirectory() string {
 func Get1(db *sql.DB) {
 	rows, err := db.Query("select * from user;")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	defer rows.Close()
 	cloumns, err := rows.Columns()
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 	// for rows.Next() {
 	//  err := rows.Scan(&cloumns[0], &cloumns[1], &cloumns[2])
@@ -190,7 +222,7 @@ func Get1(db *sql.DB) {
 	for rows.Next() {
 		err = rows.Scan(scanArgs...)
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
 		}
 		var value string
 		for i, col := range values {
@@ -204,6 +236,6 @@ func Get1(db *sql.DB) {
 		fmt.Println("------------------")
 	}
 	if err = rows.Err(); err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
 	}
 }
