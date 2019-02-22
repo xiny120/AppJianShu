@@ -23,13 +23,9 @@ import (
 )
 
 func Image(w http.ResponseWriter, r *http.Request) {
-	//log.Println(r.RequestURI)
 	param := strings.Split(r.RequestURI, "/")
 	if len(param) >= 3 {
-		//log.Println(len(param))
-		//log.Println(param[2])
 		filePath := "wwwroot/Image/" + param[2]
-		//log.Println(filePath)
 		filePath, _ = url.QueryUnescape(filePath)
 		if pe, _ := PathExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
@@ -109,12 +105,13 @@ func Image_Vip(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if err0 != nil {
-			http.Redirect(w, r, url0, http.StatusMovedPermanently)
+			w.Header().Set("Location", url0)
+			http.Redirect(w, r, url0, http.StatusTemporaryRedirect)
 			return
 		}
 
 		filePath, _ = url.QueryUnescape(filePath)
-		log.Println(filePath)
+		//log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
 			return

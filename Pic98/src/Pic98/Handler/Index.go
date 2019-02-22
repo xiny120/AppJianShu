@@ -45,6 +45,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		//log.Fatal(err)
 	}
+
 }
 
 func Index_Hotidol(w http.ResponseWriter, r *http.Request) {

@@ -91,7 +91,6 @@ func LoadUserinfo(r *http.Request) (Userinfo, error) {
 	cookie, err0 := r.Cookie("token")
 	if err0 == nil {
 		online_key := cookie.Value
-
 		db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 		if err != nil {
 			log.Println(err)
@@ -103,6 +102,7 @@ func LoadUserinfo(r *http.Request) (Userinfo, error) {
 			if err != nil {
 				log.Println(rows)
 			} else {
+				defer rows.Close()
 				if rows.Next() {
 					var uidata string
 					rows.Scan(&uidata)
@@ -112,8 +112,8 @@ func LoadUserinfo(r *http.Request) (Userinfo, error) {
 					if err != nil {
 						log.Println(err)
 					}
-
 				}
+
 			}
 		}
 	}

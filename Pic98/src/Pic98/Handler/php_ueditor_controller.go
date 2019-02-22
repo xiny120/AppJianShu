@@ -2,7 +2,7 @@ package Handler
 
 import (
 	_ "encoding/base64"
-	"encoding/json"
+	_ "encoding/json"
 	"fmt"
 	_ "image/jpeg"
 	"io"
@@ -47,9 +47,9 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 			// src = re.ReplaceAllString(src, "\n")
 			//当把<和>换成/*和*\时，斜杠/和*之间加双斜杠\\才行。
 			src = re.ReplaceAllString(src, "")
-			tt := []byte(src)
-			var r0 interface{}
-			json.Unmarshal(tt, &r0) //这个byte要解码
+			////tt := []byte(src)
+			////var r0 interface{}
+			////json.Unmarshal(tt, &r0) //这个byte要解码
 			//c.Data["json"] = r
 			//c.ServeJson()
 			result = src
@@ -88,7 +88,7 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 			}
 			defer file.Close()
 			path1 := path0 + time.Now().Format("02150405") + strconv.Itoa(rand.Intn(100)) + "_" + h.Filename
-			fmt.Println(path1)
+			//fmt.Println(path1)
 			f, err := os.Create(path1)
 			if err != nil {
 				//beego.Error(err)
@@ -101,17 +101,15 @@ func Php_ueditor_controller(w http.ResponseWriter, r *http.Request) {
 			}
 
 			if op == "uploadimage" {
-
-				// Open a test image.
 				src, err := imaging.Open(path1)
 				if err != nil {
 					//log.Fatalf("failed to open image: %v", err)
 				}
 				// Resize the cropped image to width = 200px preserving the aspect ratio.
-				src = imaging.Resize(src, 160, 0, imaging.Lanczos)
+				dest := imaging.Resize(src, 160, 0, imaging.Lanczos)
 				pathstrd := strings.Replace(path1, "wwwroot", "wwwroot/thumbnail/", 1)
 				// Save the resulting image as JPEG.
-				err = imaging.Save(src, pathstrd)
+				err = imaging.Save(dest, pathstrd)
 				if err != nil {
 					//log.Fatalf("failed to save image: %v", err)
 				}

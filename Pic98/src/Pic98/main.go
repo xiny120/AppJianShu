@@ -7,12 +7,25 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	_ "net/http/pprof"
+	_ "runtime"
+	_ "strconv"
 	"time"
 )
 
 var HttpMux = http.NewServeMux()
 
 func main() {
+	go func() {
+		//mux := http.NewServeMux()
+		//mux.HandleFunc("/go", func(w http.ResponseWriter, r *http.Request) {
+		//	num := strconv.FormatInt(int64(runtime.NumGoroutine()), 10)
+		//	w.Write([]byte(num))
+		//})
+		//http.ListenAndServe(":6061", mux)
+		http.ListenAndServe(":6060", nil)
+	}()
+
 	rand.Seed(time.Now().Unix())
 	Cfg.Cfg["tidb"] = "pic98:vck123456@tcp(106.14.145.51:4000)/Pic98"
 

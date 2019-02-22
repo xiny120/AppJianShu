@@ -74,6 +74,7 @@ function listappend(container,data){
 		var hotidolitem0 = $(hotidolitem).clone();
 		$(hotidolitem0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
 		$(hotidolitem0).find(".card_a").attr("href","/topic/" + item.aguid + ".html");
+		$(hotidolitem0).find(".card_a").attr("alt",item.title);
 		$(hotidol0).append($(hotidolitem0));
 	});	
 	$(container).append(hotidol0);

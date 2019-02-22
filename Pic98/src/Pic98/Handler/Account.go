@@ -140,7 +140,7 @@ func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 	}
-	//log.Println(result)
+	log.Println(result)
 	w.Write([]byte(result))
 
 }
@@ -292,10 +292,13 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 			//log.Println(aguid_topic)
 			// Load the HTML document
 			coverimg := ""
-			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Content))
+			ir := strings.NewReader(Content)
+
+			doc, err := goquery.NewDocumentFromReader(ir)
 			if err != nil {
 				log.Println(err)
 			} else {
+
 				doc.Find("img").Each(func(i int, s *goquery.Selection) {
 					src, _ := s.Attr("src")
 					file := "wwwroot/" + src
@@ -321,40 +324,6 @@ func Account_Post(w http.ResponseWriter, r *http.Request) {
 
 					}
 
-					/*
-
-						aguid, _ := uuid.NewV4()
-
-						f1, errjpg := os.Open(file)
-						if errjpg != nil {
-							//panic(errjpg)
-						}
-						defer f1.Close()
-
-						m1, errm := jpeg.Decode(f1)
-						if errm != nil {
-							//panic(errm)
-						}
-						bounds := m1.Bounds()
-
-						db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
-						if err != nil {
-							log.Println(err)
-						}
-						defer db.Close()
-						file = strings.Replace(file, "wwwroot/", "", -1)
-						//log.Println(file)
-						stmt, _ := db.Prepare("INSERT INTO picinfo(aguid,picurl,width,height,userguid,idolguid) VALUES (?,?,?,?,?,?)")
-						//log.Println(stmt)
-						defer stmt.Close()
-						_, erri := stmt.Exec(aguid, "/"+file,
-							bounds.Dx(), bounds.Dy(), userguid, Idol_name)
-						if erri != nil {
-							fmt.Printf("insert data error: %v\n", err)
-						} else {
-							append2tag2pic(HotLabelText, aguid.String())
-						}
-					*/
 				})
 				//intro := ""
 				intro := doc.Text()
@@ -399,9 +368,9 @@ func append2topic(tagguid string, userguid string, Idol_name string, title strin
 		stmt, _ := db.Prepare("INSERT INTO tags2topic(aguid,tagguid,topicguid) VALUES (?,?,?)")
 		//log.Println(stmt)
 		defer stmt.Close()
-		log.Println(aguid)
-		log.Println(val)
-		log.Println(aguid_topic)
+		//log.Println(aguid)
+		//log.Println(val)
+		//log.Println(aguid_topic)
 		_, erri := stmt.Exec(aguid, val, aguid_topic)
 		if erri != nil {
 			fmt.Printf("insert data error: %v\n", err)
