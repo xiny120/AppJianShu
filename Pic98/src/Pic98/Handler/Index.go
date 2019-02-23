@@ -2,6 +2,7 @@ package Handler
 
 import (
 	"Pic98/Cfg"
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"html/template"
@@ -31,14 +32,49 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		"wwwroot/tpl/public/header.html",
 		"wwwroot/tpl/public/nav.html",
 		"wwwroot/tpl/public/footer.html")
-	if err != nil {
-		//log.Fatal(err)
-	}
 
 	data := struct {
-		Title string
+		Title   string
+		Newidol template.HTML
 	}{
-		Title: "首页",
+		Title:   "首页 - 街拍，美腿，丝袜，细高跟，制服,cosplay",
+		Newidol: "",
+	}
+
+	if err != nil {
+		//log.Fatal(err)
+	} else {
+
+		db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+		if err != nil {
+			//log.Fatal(err)
+		} else {
+			defer db.Close()
+			stmt, _ := db.Prepare(`SELECT aguid,coverimg,createtime,likesum,userguid,idolguid,title,intro,tags FROM Pic98.topic order by createtime desc limit ?,?`)
+			//log.Println(stmt)
+			defer stmt.Close()
+			rows, err := stmt.Query(0, 60)
+			//log.Println(rows)
+			//log.Println(err)
+			if err == nil {
+				defer rows.Close()
+				var buffer bytes.Buffer
+				for rows.Next() {
+					var pic Pic
+
+					rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vlike, &pic.Vuserguid, &pic.Vidolguid, &pic.Vtitle, &pic.Vintro, &pic.Vtags)
+					buffer.WriteString("<div class=\"card p-1 box-cc\"><a href=\"/topic/")
+					buffer.WriteString(pic.Vaguid)
+					buffer.WriteString(".html\" class=\"card_a\" alt=\"")
+					buffer.WriteString(pic.Vtitle)
+					buffer.WriteString("\"><img class=\"card-img-top\" src=\"")
+					buffer.WriteString(pic.Vpicurl)
+					buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
+
+				}
+				data.Newidol = template.HTML(buffer.String())
+			}
+		}
 	}
 
 	err = t.Execute(w, data)
