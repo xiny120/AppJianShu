@@ -50,7 +50,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			//log.Fatal(err)
 		} else {
 			defer db.Close()
-			stmt, _ := db.Prepare(`SELECT aguid,coverimg,createtime,likesum,userguid,idolguid,title,intro,tags FROM Pic98.topic order by createtime desc limit ?,?`)
+			stmt, _ := db.Prepare(`SELECT aguid,coverimg,likesum,title FROM Pic98.topic order by createtime desc limit ?,?`)
 			//log.Println(stmt)
 			defer stmt.Close()
 			rows, err := stmt.Query(0, 60)
@@ -62,12 +62,12 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				for rows.Next() {
 					var pic Pic
 
-					rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vlike, &pic.Vuserguid, &pic.Vidolguid, &pic.Vtitle, &pic.Vintro, &pic.Vtags)
+					rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vlike, &pic.Vtitle)
 					buffer.WriteString("<div class=\"card p-1 box-cc\"><a href=\"/topic/")
 					buffer.WriteString(pic.Vaguid)
 					buffer.WriteString(".html\" class=\"card_a\" alt=\"")
 					buffer.WriteString(pic.Vtitle)
-					buffer.WriteString("\"><img class=\"card-img-top\" src=\"")
+					buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail/")
 					buffer.WriteString(pic.Vpicurl)
 					buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
 

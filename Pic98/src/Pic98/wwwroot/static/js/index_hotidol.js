@@ -20,8 +20,8 @@ $(document).ready(function(){
 	hotidol = $("#hotidol").children(0).clone();
 	hotidolitem = $("#hotidol").children(0).children(0).clone();
 	$("#hotidol").children(0).empty();
-	setTimeout(gethotidol(), 30);
-	setTimeout(getnewidol(0), 30);
+	//setTimeout(gethotidol(), 30);
+	//setTimeout(getnewidol(0), 30);
 	
     $(window).scroll(function(){
         var windowTop = parseInt($(window).scrollTop());
