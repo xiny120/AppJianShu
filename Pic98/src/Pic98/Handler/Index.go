@@ -6,8 +6,10 @@ import (
 	"database/sql"
 	"encoding/json"
 	"html/template"
+	"log"
 	_ "log"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,59 +29,71 @@ type Pic struct {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles(
-		"wwwroot/tpl/Index.html",
-		"wwwroot/tpl/public/header.html",
-		"wwwroot/tpl/public/nav.html",
-		"wwwroot/tpl/public/footer.html")
 
-	data := struct {
-		Title   string
-		Newidol template.HTML
-	}{
-		Title:   "首页 - 街拍，美腿，丝袜，细高跟，制服,cosplay",
-		Newidol: "",
-	}
+	u, err := url.Parse(r.RequestURI)
+	if err == nil {
 
-	if err != nil {
-		//log.Fatal(err)
-	} else {
-
-		db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
-		if err != nil {
-			//log.Fatal(err)
+		filePath := "wwwroot/static/www/" + u.Path
+		log.Println(filePath)
+		if pe, _ := FileExists(filePath); pe == true {
+			http.ServeFile(w, r, filePath)
+			return
 		} else {
-			defer db.Close()
-			stmt, _ := db.Prepare(`SELECT aguid,coverimg,likesum,title FROM Pic98.topic order by createtime desc limit ?,?`)
-			//log.Println(stmt)
-			defer stmt.Close()
-			rows, err := stmt.Query(0, 60)
-			//log.Println(rows)
-			//log.Println(err)
-			if err == nil {
-				defer rows.Close()
-				var buffer bytes.Buffer
-				for rows.Next() {
-					var pic Pic
+			t, err := template.ParseFiles(
+				"wwwroot/tpl/Index.html",
+				"wwwroot/tpl/public/header.html",
+				"wwwroot/tpl/public/nav.html",
+				"wwwroot/tpl/public/footer.html")
 
-					rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vlike, &pic.Vtitle)
-					buffer.WriteString("<div class=\"card p-1 box-cc\"><a href=\"/topic/")
-					buffer.WriteString(pic.Vaguid)
-					buffer.WriteString(".html\" class=\"card_a\" alt=\"")
-					buffer.WriteString(pic.Vtitle)
-					buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail/")
-					buffer.WriteString(pic.Vpicurl)
-					buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
+			data := struct {
+				Title   string
+				Newidol template.HTML
+			}{
+				Title:   "首页 - 街拍，美腿，丝袜，细高跟，制服,cosplay",
+				Newidol: "",
+			}
 
+			if err != nil {
+				//log.Fatal(err)
+			} else {
+
+				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
+				if err != nil {
+					//log.Fatal(err)
+				} else {
+					defer db.Close()
+					stmt, _ := db.Prepare(`SELECT aguid,coverimg,likesum,title FROM Pic98.topic order by createtime desc limit ?,?`)
+					//log.Println(stmt)
+					defer stmt.Close()
+					rows, err := stmt.Query(0, 60)
+					//log.Println(rows)
+					//log.Println(err)
+					if err == nil {
+						defer rows.Close()
+						var buffer bytes.Buffer
+						for rows.Next() {
+							var pic Pic
+
+							rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vlike, &pic.Vtitle)
+							buffer.WriteString("<div class=\"card p-1 box-cc\"><a href=\"/topic/")
+							buffer.WriteString(pic.Vaguid)
+							buffer.WriteString(".html\" class=\"card_a\" alt=\"")
+							buffer.WriteString(pic.Vtitle)
+							buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail/")
+							buffer.WriteString(pic.Vpicurl)
+							buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
+
+						}
+						data.Newidol = template.HTML(buffer.String())
+					}
 				}
-				data.Newidol = template.HTML(buffer.String())
+			}
+
+			err = t.Execute(w, data)
+			if err != nil {
+				//log.Fatal(err)
 			}
 		}
-	}
-
-	err = t.Execute(w, data)
-	if err != nil {
-		//log.Fatal(err)
 	}
 
 }
