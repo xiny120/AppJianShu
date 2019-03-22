@@ -72,7 +72,7 @@ function listappend(container,data){
 	$(hotidol0).empty();
 	$(data).each(function(idx,item){
 		var hotidolitem0 = $(hotidolitem).clone();
-		$(hotidolitem0).find(".card-img-top").attr("src","/thumbnail/" + item.picurl);
+		$(hotidolitem0).find(".card-img-top").attr("src","/thumbnail" + item.picurl);
 		$(hotidolitem0).find(".card_a").attr("href","/topic/" + item.aguid + ".html");
 		$(hotidolitem0).find(".card_a").attr("alt",item.title);
 		$(hotidol0).append($(hotidolitem0));

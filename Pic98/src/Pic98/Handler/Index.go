@@ -33,7 +33,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.RequestURI)
 	if err == nil {
 
-		filePath := "wwwroot/static/www/" + u.Path
+		filePath := "wwwroot/static/www" + u.Path
 		log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
 			http.ServeFile(w, r, filePath)
@@ -65,7 +65,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 					stmt, _ := db.Prepare(`SELECT aguid,coverimg,likesum,title FROM Pic98.topic order by createtime desc limit ?,?`)
 					//log.Println(stmt)
 					defer stmt.Close()
-					rows, err := stmt.Query(0, 60)
+					rows, err := stmt.Query(0, 20)
 					//log.Println(rows)
 					//log.Println(err)
 					if err == nil {
@@ -79,7 +79,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 							buffer.WriteString(pic.Vaguid)
 							buffer.WriteString(".html\" class=\"card_a\" alt=\"")
 							buffer.WriteString(pic.Vtitle)
-							buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail/")
+							buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail")
 							buffer.WriteString(pic.Vpicurl)
 							buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
 
@@ -140,7 +140,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
-	pagesize := 60
+	pagesize := 30
 	pageidx := 0
 	errf := r.ParseForm()
 	if errf != nil {
