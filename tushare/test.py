@@ -4,6 +4,7 @@ import pandas as pd
 import pymysql
 import time
 import datetime
+import os
 
 rest = ["20180924","20181001","20181002","20181003","20181004","20181005","20181231","20190101","20190204","20190205","20190206","20190207",
 "20190208"]
@@ -29,20 +30,23 @@ df = pro.stock_basic()
 print('-------')
 db = pymysql.connect(**config)
 cursor = db.cursor()
-
+idx = 0
 for dd in df.values:
+    idx = idx+1
+    if idx % 50 == 0:
+        os.system("cls")
     try:
         today=datetime.date.today()
         oneday=datetime.timedelta(days=1)
         li=[]
-        for i in range(0,120):
+        for i in range(0,5):
             try:
                 today=today-oneday
                 ticktoday=datetime.datetime.strftime(today,'%Y-%m-%d')
                 ticktodayid=datetime.datetime.strftime(today,'%Y%m%d')                
                 weekd = today.weekday()
                 if weekd == 5 or weekd == 6:
-                    print(ticktodayid,dd[0],"已有跳过(双休日)...")
+                    print(datetime.date.today(),ticktodayid,dd[0],"已有跳过(双休日)...")
                     continue
 
                 continue0_ = False
@@ -55,7 +59,7 @@ for dd in df.values:
                     continue
                         
                 #print(ticktoday)
-
+                
                 sql = "SELECT dayid,ts_code,value FROM PowerByDay WHERE ts_code = '%s' and dayid='%s' order by dayid desc"
                 data = (dd[0],ticktodayid)
                 cursor.execute(sql % data)
@@ -69,7 +73,8 @@ for dd in df.values:
                     if continue_ == True:
                         print(ticktodayid,dd[0],"已有跳过(已入库)...")
                         continue
-                time.sleep(3)
+
+                time.sleep(2)
                 tick = ts.get_tick_data(dd[1],ticktoday,3,0,'tt')
                 #print(tick)
                 if tick is None : 
@@ -84,8 +89,8 @@ for dd in df.values:
 
                 sql = 'INSERT INTO PowerByDay(DayId,ts_code, symbol, name, market,value ) VALUES (%s, "%s", "%s", "%s","%s",%.2f)' 
                 data = (ticktodayid,dd[0],dd[1],dd[2],dd[5],powertotal)
-                print('%d\t%s\t%s\t%s\ttickcount：%d' % (i,ticktodayid,dd[0],dd[2],tick.values.size))
-                print(sql % data)
+                print('%d\t%d\t%s\t%s\t%s\ttickcount：%d' % (idx,i,ticktodayid,dd[0],dd[2],tick.values.size))
+                print(datetime.date.today(),sql % data)
                 cursor.execute(sql % data)
                 db.commit()
             except Exception as e:
