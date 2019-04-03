@@ -18,7 +18,7 @@ config = {
 ts.set_token('0ec5e057cd24f22904e0bfe44001c4456837061d9871b204e808fc54')
 pro = ts.pro_api()
 
-today=datetime.date.today()
+today=datetime.date.today()-datetime.timedelta(days=1)
 ticktodayid=datetime.datetime.strftime(today,'%Y%m%d')
 
 dicts = {}
@@ -44,7 +44,7 @@ for dd in df.values:
         os.system("cls")
 
     try:
-        np.append(dd,dicts[dd[0]])
+        #np.append(dd,dicts[dd[0]])
         #sql = "select sum(T.value) from (SELECT * FROM Stocks.PowerByDay where ts_code='%s' order by DayId desc limit 0 ,60) T"
         sql = "SELECT value FROM Stocks.PowerByDay where ts_code='%s' order by DayId desc limit 0 ,240"
         data = (dd[0])
@@ -54,11 +54,19 @@ for dd in df.values:
             powercalc = 0
             idx = 0
             pc5 = 0
+            pc5_ = 0
             pc10 = 0
+            pc10_ = 0
             pc20 = 0
+            pc20_ = 0
             pc60 = 0
+            pc60_ = 0
             pc120 = 0
+            pc120_ = 0
             pc240 = 0
+            pc240_ = 0
+            freeshare = dicts[dd[0]]
+
 
             for item in result:
                 if item[0] is None:
@@ -78,12 +86,25 @@ for dd in df.values:
                 elif idx == 240:
                     pc240 = powercalc
 
+
+            pc5_ = pc5 / freeshare
+            pc10_ = pc10 / freeshare
+            pc20_ = pc20 / freeshare
+            pc60_ = pc60 / freeshare
+            pc120_ = pc120 / freeshare
+            pc240_ = pc240 / freeshare
+
             ts_code = dd[0]
-            sql = "INSERT INTO `Stocks`.`PowerCalc` (`ts_code`,`ts_name`,`ts_market`,`market`,`powercalc5`,`powercalc10`,`powercalc20`,`powercalc60`,`powercalc120`,`powercalc240`) VALUES('%s','%s','%s','%s',%f,%f,%f,%f,%f,%f);"
-            data = (sql % (dd[0],dd[2],dd[5],ts_code[-2:],pc5,pc10,pc20,pc60,pc120,pc240))
+            sql = '''INSERT INTO `Stocks`.`PowerCalc` 
+            (`ts_code`,`ts_name`,`ts_market`,`market`,
+            `powercalc5`,`powercalc10`,`powercalc20`,`powercalc60`,`powercalc120`,`powercalc240`,
+            `powercalc5_`,`powercalc10_`,`powercalc20_`,`powercalc60_`,`powercalc120_`,`powercalc240_`
+            ) VALUES('%s','%s','%s','%s',%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f);'''
+            data = (sql % (dd[0],dd[2],dd[5],ts_code[-2:],pc5,pc10,pc20,pc60,pc120,pc240,pc5_,pc10_,pc20_,pc60_,pc120_,pc240_))
             cursor.execute(data)
             print(data)
             db.commit()
+            #'中小板' '创业板''主板'
 
 
     except Exception as e:
