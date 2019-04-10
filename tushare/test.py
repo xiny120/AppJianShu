@@ -7,7 +7,7 @@ import datetime
 import os
 
 rest = ["20180924","20181001","20181002","20181003","20181004","20181005","20181231","20190101","20190204","20190205","20190206","20190207",
-"20190208"]
+"20190208","20190405"]
 
 for k, v in enumerate(rest):
     print( k, v)
@@ -39,7 +39,7 @@ for dd in df.values:
         today=datetime.date.today()
         oneday=datetime.timedelta(days=1)
         li=[]
-        for i in range(0,5):
+        for i in range(0,7):
             try:
                 today=today-oneday
                 ticktoday=datetime.datetime.strftime(today,'%Y-%m-%d')
