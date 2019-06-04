@@ -11,6 +11,8 @@
 	"appid": "wx9252e10223cb5939",
 	"projectname": "renrendian",
 	"libVersion": "2.4.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

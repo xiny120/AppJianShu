@@ -11,11 +11,12 @@ import (
 	"regexp"
 	"strings"
 
+	// goconfig
 	_ "github.com/Unknwon/goconfig"
 )
 
+// Topic ok
 func Topic(w http.ResponseWriter, r *http.Request) {
-
 	t, err := template.ParseFiles(
 		"wwwroot/tpl/Topic.html",
 		"wwwroot/tpl/public/header.html",
@@ -24,38 +25,26 @@ func Topic(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	data := struct {
-		Title    string
-		Listtype string
-		Topic    template.HTML
-		Any      template.HTML
-	}{
-		Title:    "列表",
-		Listtype: "",
-		Topic:    "test",
-		Any:      "",
-	}
-
+	data := PageData
+	data0 := struct {
+		Topic template.HTML
+		Any   template.HTML
+	}{}
+	//data.Data = data0
 	u, err := url.Parse(r.RequestURI)
 	if err == nil {
-		//log.Println("test" + u.Path)
-
 		flysnowRegexp := regexp.MustCompile(`^/topic/([\w-]+).html$`)
 		params := flysnowRegexp.FindStringSubmatch(u.Path)
-
 		if len(params) > 1 {
 			topicguid := params[1]
 			log.Println(topicguid)
 			_, err := r.Cookie("token")
 			Any := template.HTML("<a href=\"/Account/Register\">匿名游客只能浏览前五幅高清大图！查看全部图片请注册！</a> 或 <a href=\"/Account/Login\">登录</a>")
 			if err == nil {
-				//cookievalue := cookie.Value
-				//log.Println(cookievalue)
-				Any = template.HTML("") //cookievalue
+				Any = template.HTML("")
 			}
 
-			data.Any = Any
+			data0.Any = Any
 			db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 			if err != nil {
 				log.Println(err)
@@ -80,13 +69,10 @@ func Topic(w http.ResponseWriter, r *http.Request) {
 					_, err0 := Member.LoadUserinfo(r)
 					if err0 != nil {
 						content = strings.Replace(content, "/Image/Vip/", "/thumbnail/Image/Vip/", -1)
-					} else {
-
-						//
 					}
-
-					data.Topic = template.HTML(content)
+					data0.Topic = template.HTML(content)
 					data.Title = title
+					data.Data = data0
 				}
 			}
 		}

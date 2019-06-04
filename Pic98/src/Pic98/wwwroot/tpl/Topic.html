@@ -2,23 +2,21 @@
 <body>
 	{{template "nav" .}}
   <h1 style="display:none;">{{.Title}}</h1>
-	<input type="hidden" id="listtype" value="{{.Listtype}}" />
   <div>
     <div>
     <h3>{{.Title}}</h3>
     </div>
+    {{with .Data}}
     <div class="topic_any" style="text-align:center;margin:16px;">
       {{.Any}}
     </div>
     <div class="topic_container">
      {{.Topic}}
     </div>
+    {{end}}
   </div>	
-
-
-	
  
-  {{template "footer"}}
+  {{template "footer" .}}
   <script>
   var vallast = null;
   var topic_any = $(".topic_any").clone();
@@ -27,8 +25,6 @@
     if(i == 4){
       $(topic_any).insertAfter($(val))
     }
-       //alert($(val).attr("href"));
-       //alert(i);
       vallast = val;
   });
   

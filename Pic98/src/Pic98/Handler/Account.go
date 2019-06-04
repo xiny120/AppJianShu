@@ -10,6 +10,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+
+	// jpeg
 	_ "image/jpeg"
 	"os"
 	"path/filepath"
@@ -17,13 +19,13 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-
+	// mysql
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/satori/go.uuid"
 )
 
+// Account ok
 func Account(w http.ResponseWriter, r *http.Request) {
-
 	t, err := template.ParseFiles(
 		"wwwroot/tpl/Account.html",
 		"wwwroot/tpl/public/header.html",
@@ -35,11 +37,8 @@ func Account(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	data := struct {
-		Title string
-	}{
-		Title: "用户中心",
-	}
+	data := PageData
+	data.Title = "用户中心"
 
 	err = t.Execute(w, data)
 	if err != nil {
@@ -47,6 +46,7 @@ func Account(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Account_Setup ok
 func Account_Setup(w http.ResponseWriter, r *http.Request) {
 
 	t, err := template.ParseFiles(
@@ -70,6 +70,7 @@ func Account_Setup(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Account_Register_Cmd ok
 func Account_Register_Cmd(w http.ResponseWriter, r *http.Request) {
 	var result string
 	result = "{\"status\":1,\"msg\":\"WebApi Account/Register/Cmd 参数错误！\"}"
@@ -232,12 +233,8 @@ func Account_Login(w http.ResponseWriter, r *http.Request) {
 
 		}
 	}
-
-	data := struct {
-		Title string
-	}{
-		Title: "用户登陆",
-	}
+	data := PageData
+	data.Title = "用户登陆"
 
 	err = t.Execute(w, data)
 	if err != nil {
@@ -257,11 +254,8 @@ func Account_Register(w http.ResponseWriter, r *http.Request) {
 		//log.Fatal(err)
 	}
 
-	data := struct {
-		Title string
-	}{
-		Title: "注册新用户",
-	}
+	data := PageData
+	data.Title = "注册新用户"
 
 	err = t.Execute(w, data)
 	if err != nil {

@@ -20,9 +20,9 @@
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
-    "usingComponents": {
-      "navbar": "com/navbar"
-    },
+  "usingComponents": {
+    "navbar": "com/navbar"
+  },
   "tabBar": {
     "list": [
       {
@@ -50,5 +50,6 @@
         "selectedIconPath": "images/wallet_focus.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

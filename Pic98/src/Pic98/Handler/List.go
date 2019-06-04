@@ -27,13 +27,9 @@ func List(w http.ResponseWriter, r *http.Request) {
 		log.Println(param[2])
 	}
 
-	data := struct {
-		Title    string
-		Listtype string
-	}{
-		Title:    "列表",
-		Listtype: param[2],
-	}
+	data := PageData
+	data.Title = "列表"
+	data.Data = param[2]
 
 	err = t.Execute(w, data)
 	if err != nil {

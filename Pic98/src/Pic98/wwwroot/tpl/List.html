@@ -2,7 +2,7 @@
 <body>
 	{{template "nav" .}}
 
-	<input type="hidden" id="listtype" value="{{.Listtype}}" />
+	<input type="hidden" id="listtype" value="{{.Data}}" />
 	
 
     <div style="margin-top:8px;margin-bottom:3px;" >
@@ -41,7 +41,7 @@
 	</div>	
 	
  
-    {{template "footer"}}
+    {{template "footer" .}}
 	
 	<script src="/Js/List.js"></script>
 	<script src="/Js/index_hotidol.js?20180101"></script>

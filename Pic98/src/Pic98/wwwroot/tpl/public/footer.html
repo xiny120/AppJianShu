@@ -1,12 +1,10 @@
 {{define "footer"}}
-    <hr />
-    <footer>
-		<p>&copy; 2018 - [图酒吧] pic98.com <a href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备17042145号-3</a></p>
-	</footer>
-      <script src="/static/js/jquery-3.3.1.min.js"></script>
-      <script src="/static/js/jquery.cookie.js"></script>
-      <script src="/static/js/jquery.form.js"></script>
-      <script src="/static/js/bootstrap.min.js"></script>  
-  <script src="/static/js/site.js"></script>
+
+		<p><div>&copy; 2018 - {{.SiteName}} <a href="http://www.miitbeian.gov.cn" target="_blank">{{.MiitGov}}</a></div></p>
+    
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.form.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>  
+    <script src="/static/js/site.js"></script>
 	
 {{end}}

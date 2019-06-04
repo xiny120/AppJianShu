@@ -78,9 +78,10 @@ func main() {
 	topicHandler := http.HandlerFunc(Handler.Topic)
 	HttpMux.Handle("/topic/", topicHandler)
 
-	log.Println("请用浏览器打开 http://127.0.0.1:3000 ...")
+	log.Println("请用浏览器打开 http://127.0.0.1:3160 ...")
 	HttpMux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("wwwroot/static"))))
 
-	http.ListenAndServe(":3000", HttpMux)
+	err := http.ListenAndServe(":3160", HttpMux)
+	log.Println(err)
 
 }

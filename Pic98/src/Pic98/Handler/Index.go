@@ -2,7 +2,6 @@ package Handler
 
 import (
 	"Pic98/Cfg"
-	"bytes"
 	"database/sql"
 	"encoding/json"
 	"html/template"
@@ -15,7 +14,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Pic struct {
+// oPic do
+type oPic struct {
 	Vcategoryguid string `json:"categoryguid"`
 	Vaguid        string `json:"aguid"`
 	Vpicurl       string `json:"picurl"`
@@ -28,11 +28,32 @@ type Pic struct {
 	Vtags         string `json:"tags"`
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
+// TData do
+type TData struct {
+	Title       string
+	SiteName    string
+	Keywords    string
+	Description string
+	Data        interface{}
+	MiitGov     string
+}
 
+var (
+	// PageData ok
+	PageData = TData{
+		Title:       "首页 - 街拍，美腿，丝袜，细高跟，制服,cosplay",
+		SiteName:    "Pic98.com [图酒吧]",
+		Keywords:    "摄影，街拍，丝袜，美腿，约拍，外拍模特",
+		Description: "全网最新，最全街拍美腿，高清图片，丝袜视频，同城交友，约拍，没有看不到！只有想不到！",
+		MiitGov:     "沪ICP备17042145号-3",
+		Data:        []oPic{},
+	}
+)
+
+// Index do
+func Index(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.RequestURI)
 	if err == nil {
-
 		filePath := "wwwroot/static/www" + u.Path
 		log.Println(filePath)
 		if pe, _ := FileExists(filePath); pe == true {
@@ -44,47 +65,26 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				"wwwroot/tpl/public/header.html",
 				"wwwroot/tpl/public/nav.html",
 				"wwwroot/tpl/public/footer.html")
-
-			data := struct {
-				Title   string
-				Newidol template.HTML
-			}{
-				Title:   "首页 - 街拍，美腿，丝袜，细高跟，制服,cosplay",
-				Newidol: "",
-			}
+			data := PageData
 
 			if err != nil {
-				//log.Fatal(err)
 			} else {
-
 				db, err := sql.Open("mysql", Cfg.Cfg["tidb"])
 				if err != nil {
-					//log.Fatal(err)
 				} else {
 					defer db.Close()
 					stmt, _ := db.Prepare(`SELECT aguid,coverimg,likesum,title FROM Pic98.topic order by createtime desc limit ?,?`)
-					//log.Println(stmt)
 					defer stmt.Close()
 					rows, err := stmt.Query(0, 20)
-					//log.Println(rows)
-					//log.Println(err)
 					if err == nil {
 						defer rows.Close()
-						var buffer bytes.Buffer
+						var pics []oPic
 						for rows.Next() {
-							var pic Pic
-
+							var pic oPic
 							rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vlike, &pic.Vtitle)
-							buffer.WriteString("<div class=\"card p-1 box-cc\"><a href=\"/topic/")
-							buffer.WriteString(pic.Vaguid)
-							buffer.WriteString(".html\" class=\"card_a\" alt=\"")
-							buffer.WriteString(pic.Vtitle)
-							buffer.WriteString("\"><img class=\"card-img-top\" src=\"/thumbnail")
-							buffer.WriteString(pic.Vpicurl)
-							buffer.WriteString("\" alt=\"Card image cap\"></a></div>")
-
+							pics = append(pics, pic)
 						}
-						data.Newidol = template.HTML(buffer.String())
+						data.Data = pics
 					}
 				}
 			}
@@ -98,6 +98,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Index_Hotidol ok
 func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 	pagesize := 20
 	pageidx := 0
@@ -125,9 +126,9 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		defer rows.Close()
 
-		var pics []Pic
+		var pics []oPic
 		for rows.Next() {
-			var pic Pic
+			var pic oPic
 
 			rows.Scan(&pic.Vcategoryguid, &pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vidolguid, &pic.Vlike)
 			pics = append(pics, pic)
@@ -139,6 +140,7 @@ func Index_Hotidol(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Index_Newidol ok
 func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	pagesize := 30
 	pageidx := 0
@@ -164,9 +166,9 @@ func Index_Newidol(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		defer rows.Close()
 
-		var pics []Pic
+		var pics []oPic
 		for rows.Next() {
-			var pic Pic
+			var pic oPic
 
 			rows.Scan(&pic.Vaguid, &pic.Vpicurl, &pic.Vcreatetime, &pic.Vlike, &pic.Vuserguid, &pic.Vidolguid, &pic.Vtitle, &pic.Vintro, &pic.Vtags)
 			pics = append(pics, pic)

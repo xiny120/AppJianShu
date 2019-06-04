@@ -43,8 +43,10 @@ for dd in df.values:
             try:
                 today=today-oneday
                 ticktoday=datetime.datetime.strftime(today,'%Y-%m-%d')
-                ticktodayid=datetime.datetime.strftime(today,'%Y%m%d')                
+                ticktodayid=datetime.datetime.strftime(today,'%Y%m%d')    
+                            
                 weekd = today.weekday()
+                
                 if weekd == 5 or weekd == 6:
                     print(datetime.date.today(),ticktodayid,dd[0],"已有跳过(双休日)...")
                     continue
